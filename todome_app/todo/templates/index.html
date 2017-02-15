@@ -1,0 +1,17 @@
+{% if todo_list %}
+    <ul>
+    {% for todo in todo_list %}
+        <li>
+            <form>
+                <input type="radio"> {{ todo.todo_text }} </form>
+            </form>
+        </li>
+    {% endfor %}
+        <li><a href="#"> -- Make more tasks ! </a></li>
+    </ul>
+
+# Button something
+
+{% else %}
+    <p> Nothing here!! :( </p>
+{% endif %}
