@@ -1,11 +1,11 @@
-from django.http import HttpResponse
+from django.http import Http404
+from django.shortcuts import render
 from .models import Todo
 from django.template import loader
 
 def index(request):
     todo_list = Todo.objects.order_by('-date')
-    template = loader.get_template('index.html')
     context = {
         'todo_list': todo_list,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'index.html', context)
