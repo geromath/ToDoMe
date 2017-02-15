@@ -1,3 +1,0 @@
-# ToDoMe
-#Barneporno
-#vås
