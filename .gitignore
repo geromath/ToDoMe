@@ -3,7 +3,7 @@ root/db.sqlite3
 /.idea/*
 .idea/workspace.xml
 *.pyc
-*/__pycache__/
+**/__pycache__/**
 __pycache__
 .DS_Store
 *.xml
