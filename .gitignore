@@ -1,6 +1,5 @@
 ### DATABASE FILER ###
-root/__pycache__/
-*.pyc
+root/__pycache__/*.pyc
 
 __pycache__
 .DS_Store
