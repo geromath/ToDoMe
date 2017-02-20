@@ -1,6 +1,7 @@
 .idea/
 /root/db.sqlite3
 /root/root/__pychache__/**
+/root/.DS_Store
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
