@@ -1,10 +1,6 @@
-root/db.sqlite3
-/.idea/*
-.idea/workspace.xml
-*.pyc
-
 ### DATABASE FILER ###
-root/__pycache__/*
+root/__pycache__/
+*.pyc
 
 __pycache__
 .DS_Store
