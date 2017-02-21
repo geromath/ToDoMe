@@ -1,0 +1,27 @@
+body{
+    background: #F7FFF6;
+}
+
+.navbar-brand{
+    font-family: 'Satisfy', cursive;
+}
+
+.navbar-default{
+    background: none;
+    color: dimgray;
+    border-bottom: 1px solid white;
+}
+
+.navbar {
+    background: none;
+    color: dimgray;
+}
+
+
+
+
+
+
+
+
+

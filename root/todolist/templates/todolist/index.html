@@ -1,0 +1,24 @@
+{% extends 'todolist/base.html' %}
+{% block title %} My TODOs {% endblock %}
+
+{% block body %}
+    <!-- All content for sub-pages goes between these block tags -->
+
+    {% if todo_list %}
+    <ul xmlns="http://www.w3.org/1999/html">
+        {% for todo in todo_list %}
+            <li>
+                <form>
+                    <input type="checkbox"> {{ todo.todo_text }} </input>
+                </form>
+            </li>
+        {% endfor %}
+            <li><a href="#"> -- Make more tasks ! </a></li>
+        </ul>
+
+    {% else %}
+        <p> Nothing here!! :( </p>
+    {% endif %}
+
+
+{% endblock %}
