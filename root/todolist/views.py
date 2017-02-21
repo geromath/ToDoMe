@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
+
 from .forms import UserForm
 #importerer forms-klassen vi lagde
+
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("<h1>Homepage-test</h1>")
 
 class UserFormView(View):
     form_class = UserForm #blueprint til det vi skal bruke
