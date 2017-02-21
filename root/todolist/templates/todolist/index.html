@@ -6,10 +6,10 @@
 
     {% if todo_list %}
     <ul xmlns="http://www.w3.org/1999/html">
-        {% for todo in todo_list %}
+        {% for task in all_tasks %}
             <li>
                 <form>
-                    <input type="checkbox"> {{ todo.todo_text }} </input>
+                    <input type="checkbox"> {{ task.task_text }} </input>
                 </form>
             </li>
         {% endfor %}
