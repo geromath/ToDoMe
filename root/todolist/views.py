@@ -18,8 +18,8 @@ def index(request):
     }
     return render(request, 'todolist/index.html', context)
 
-# def index(request):
-#     return HttpResponse("<h1>Homepage-test</h1>")
+def index(request):
+    return HttpResponse("<h1>Homepage-test</h1>")
 
 class UserFormView(View):
     form_class = UserForm #blueprint til det vi skal bruke
