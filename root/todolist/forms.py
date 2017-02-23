@@ -6,5 +6,5 @@ class UserForm(forms.ModelForm):
 
     class Meta: #info om klassen
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password'] #feltene som brukerne skal fylle ut
+        fields = ['first_name', 'last_name', 'email', 'username', 'password'] #feltene som brukerne skal fylle ut
 
