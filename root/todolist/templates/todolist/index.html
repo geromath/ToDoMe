@@ -8,24 +8,24 @@
 
 <h1> Tasks </h1>
 
-    {% if all_tasks %}
-    <ul xmlns="http://www.w3.org/1999/html">
-        {% for task in all_tasks %}
-            <li>
-                {{ task.task_text}}
-            </li>
-        {% endfor %}
-        </ul>
-        <p><a href="{% url 'todolist:make_task' %}"> Add a task </a></p>
-    {% else %}
-        <p> Nothing here!! :( Yet ...  </p>
-        <p><a href="{% url 'todolist:make_task' %}"> Add your first task! </a></p>
-    {% endif %}
+{% if all_tasks %}
+<ul xmlns="http://www.w3.org/1999/html">
+    {% for task in all_tasks %}
+        <li>
+            {{ task.task_text}}
+        </li>
+    {% endfor %}
+    </ul>
+    <p><a href="{% url 'todolist:make_task' %}"> Add a task </a></p>
+{% else %}
+    <p> Nothing here!! :( Yet ...  </p>
+    <p><a href="{% url 'todolist:make_task' %}"> Add your first task! </a></p>
+{% endif %}
 
 {% if error_message %}
     <p> Error message </p>
 {% endif %}
 
-
+<!-- End of body -->
 {% endblock %}
 

@@ -3,6 +3,7 @@
 
 
 {% block body %}
+<!--Simple form for creating a task-->
     <form class="form-horisontal" action="" method="post">
         {% csrf_token %}
         {% include 'todolist/form-template.html' %}

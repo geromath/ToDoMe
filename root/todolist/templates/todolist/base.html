@@ -57,13 +57,14 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- New TODO -->
                 <li class="">
-                    <a href="#">
+                    <a href="{% url 'todolist:make_task' %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; New TODO
                     </a>
                 </li>
                 <!-- My Profile -->
                 <li class="">
-                    <a href="#">
+                    <!-- TEMPORARILY REDIRECT MY PROFILE TO ADMIN PAGE-->
+                    <a href="{% url 'todolist:register' %}">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; My Profile
                     </a>
                 </li>
