@@ -1,0 +1,5 @@
+<form class="form-horisontal" action="" method="post">
+    {% csrf_token %}
+    {% include 'todolist/form-template.html' %}
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>

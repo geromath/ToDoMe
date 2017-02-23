@@ -1,25 +1,30 @@
-<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
 {% extends 'todolist/base.html' %}
 {% block title %} My TODOs {% endblock %}
 
 {% block body %}
     <!-- All content for sub-pages goes between these block tags -->
 
-    {% if todo_list %}
+<h1> Tasks </h1>
+
+    {% if all_tasks %}
     <ul xmlns="http://www.w3.org/1999/html">
         {% for task in all_tasks %}
             <li>
-                <form>
-                    <input type="checkbox"> {{ task.task_text }} </input>
-                </form>
+                {{ task.task_text}}
             </li>
         {% endfor %}
-            <li><a href="#"> -- Make more tasks ! </a></li>
         </ul>
-
+        <p><a href="{% url 'todolist:make_task' %}"> Add a task </a></p>
     {% else %}
-        <p> Nothing here!! :( </p>
+        <p> Nothing here!! :( Yet ...  </p>
+        <p><a href="{% url 'todolist:make_task' %}"> Add your first task! </a></p>
     {% endif %}
+
+{% if error_message %}
+    <p> Error message </p>
+{% endif %}
 
 
 {% endblock %}

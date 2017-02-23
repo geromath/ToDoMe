@@ -1,15 +1,12 @@
-
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.views.generic import View
+from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 #importerer forms-klassen vi lagde
+from .models import Task
+from django.core.urlresolvers import reverse_lazy
 
 from django.http import HttpResponse
-
-
-# Create your views here.
 
 def index(request):
     all_tasks = Task.objects.all()
@@ -18,8 +15,17 @@ def index(request):
     }
     return render(request, 'todolist/index.html', context)
 
-def index(request):
-    return HttpResponse("<h1>Homepage-test</h1>")
+class TaskCreate(CreateView):
+    model = Task
+    fields = ['task_text', 'description']
+
+class TaskUpdate(UpdateView):
+    model = Task
+    fields = ['task_text', 'description']
+
+class TaskDelete(DeleteView):
+    model = Task
+    success_url = reverse_lazy('todolist:index')
 
 class UserFormView(View):
     form_class = UserForm #blueprint til det vi skal bruke
