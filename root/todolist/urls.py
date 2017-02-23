@@ -4,6 +4,8 @@ from . import views
 app_name = 'todolist'
 
 urlpatterns = [
+
+    # Main view
     url(r'^$', views.index, name="index"),
 
     # Registrering
@@ -15,7 +17,7 @@ urlpatterns = [
     # Update task
     url(r'^mktsk/(?P<pk>[0-9]+)/$', views.TaskUpdate.as_view(), name='update_task'),
 
-    # Update task
+    # Delete task
     url(r'^mktsk/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
 ]
 

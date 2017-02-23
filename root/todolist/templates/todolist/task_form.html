@@ -1,5 +1,12 @@
-<form class="form-horisontal" action="" method="post">
-    {% csrf_token %}
-    {% include 'todolist/form-template.html' %}
-    <button type="submit" class="btn btn-success">Submit</button>
-</form>
+{% extends 'todolist/base.html' %}
+{% block title %} Make TODO {% endblock %}
+
+
+{% block body %}
+    <form class="form-horisontal" action="" method="post">
+        {% csrf_token %}
+        {% include 'todolist/form-template.html' %}
+        <br><br><br><br>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+{% endblock %}
