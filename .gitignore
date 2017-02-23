@@ -4,7 +4,6 @@
 /root/todolist/__pycache__/
 /root/.DS_Store
 .DS_Store
-*.pyc
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
