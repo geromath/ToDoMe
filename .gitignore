@@ -1,8 +1,8 @@
 .idea/
 /root/db.sqlite3
 /root/root/__pychache__/**
-root/todolist/__pycache__/**
-root/.DS_Store
+/root/todolist/__pycache__/**
+/root/.DS_Store
 .DS_Store
 *.pyc
 
