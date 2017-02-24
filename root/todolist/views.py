@@ -4,7 +4,7 @@ from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 #importerer forms-klassen vi lagde
 from .models import Task
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 
 from django.http import HttpResponse
 

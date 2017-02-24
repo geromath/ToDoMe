@@ -12,7 +12,12 @@
 <ul xmlns="http://www.w3.org/1999/html">
     {% for task in all_tasks %}
         <li>
-            {{ task.task_text}}
+            {{ task.task_text}} -- {{ task.description }}
+            <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
+                {% csrf_token %}
+                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"/></button>
+            </form>
         </li>
     {% endfor %}
     </ul>
