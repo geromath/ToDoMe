@@ -1,5 +1,6 @@
 # ToDoMe
 
+#Konsept:
 Vi lager nettbasert task manager - en todolist - som gjør det lett å organisere gjøremålene dine.
 
 Vi ønsker funksjonaliteter som at når man lager seg en bruker kan man legge til tasks, samt få inn frister på innleveringer
