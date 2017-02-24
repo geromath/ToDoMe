@@ -9,7 +9,7 @@
 <h1> Tasks </h1>
 
 {% if all_tasks %}
-<ul xmlns="http://www.w3.org/1999/html">
+    <ul xmlns="http://www.w3.org/1999/html">
     {% for task in all_tasks %}
         <li>
             {{ task.task_text}} -- {{ task.description }}
