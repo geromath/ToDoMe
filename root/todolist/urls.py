@@ -4,7 +4,7 @@ from . import views
 app_name = 'todolist'
 
 urlpatterns = [
-
+    # All of the below are subpages of /todolist/
     # Main view
     url(r'^$', views.index, name="index"),
 
