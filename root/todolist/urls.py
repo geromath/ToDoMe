@@ -1,12 +1,17 @@
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views, login, authenticate
 from . import views
 
 app_name = 'todolist'
 
 urlpatterns = [
     # All of the below are subpages of /todolist/
+
+    # Index view (log in screen)
+    url(r'^$', auth_views.login, kwargs={'template_name': 'todolist/login.html'}, name='login'),
+
     # Main view
-    url(r'^$', views.index, name="index"),
+    url(r'^todo/$', views.todo, name="todo"),
 
     # Registrering
     url(r'^register/$', views.UserFormView.as_view(), name='register'),

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
+from django.contrib.auth.decorators import login_required
 #importerer forms-klassen vi lagde
 from .models import Task
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -9,6 +10,10 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponse
 
 def index(request):
+        return render(request, 'todolist/todo', None)
+
+@login_required
+def todo(request):
     all_tasks = Task.objects.all()
     context = {
         'all_tasks': all_tasks
@@ -61,7 +66,7 @@ class UserFormView(View):
 
                     login(request, user)
 
-                    return redirect('todolist:index') #maa ogsaa lages! Sender brukeren til startsiden etter login
+                    return redirect('todolist:todo') #maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
 
         return render(request, self.template_name, {'form': form}) #gir skjemaet paa nytt om noe gikk galt
 

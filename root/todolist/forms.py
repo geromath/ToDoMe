@@ -8,3 +8,9 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password'] #feltene som brukerne skal fylle ut (i den rekkefolgen)
 
+class LoginForm(forms.ModelForm):
+    password = forms.CharField(widget = forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
