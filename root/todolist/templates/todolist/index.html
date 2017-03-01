@@ -6,30 +6,94 @@
 {% block body %}
     <!-- All content for sub-pages goes between these block tags -->
 
-<h1> Tasks </h1>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <h1 class="header-title">TODOs</h1>
+                    </div>
+                    <div class="pull-right">
+                        <a href="{% url 'todolist:make_task' %}" class="btn btn-success">Add TODO</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
-{% if all_tasks %}
-    <ul xmlns="http://www.w3.org/1999/html">
-    {% for task in all_tasks %}
-        <li>
-            {{ task.task_text}} -- {{ task.description }}
-            <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
-                {% csrf_token %}
-                <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"/></button>
-            </form>
-        </li>
-    {% endfor %}
-    </ul>
-    <p><a href="{% url 'todolist:make_task' %}"> Add a task </a></p>
-{% else %}
-    <p> Nothing here!! :( Yet ...  </p>
-    <p><a href="{% url 'todolist:make_task' %}"> Add your first task! </a></p>
-{% endif %}
+<!-- Main container -->
 
-{% if error_message %}
-    <p> Error message </p>
-{% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <ul class="list-group">
+
+                        <!-- Each TODO shows up as a list item under here -->
+                        {% if all_tasks %}
+                            {% for task in all_tasks %}
+                                    <li class="list-group-item">
+                                        <h4 class="list-group-item-heading">{{ task.task_text}} <span class="badge">Number of tasks</span></h4>
+                                        <p class="list-group-item-text">{{ task.description }}</p>
+                                        <div class="buttons">
+
+                                            <!-- Archive TODO, on click send TODO to a page for all completed TODOs -->
+                                            <form action="#" method="post" style="display: inline">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                                <button type="submit" class="btn btn-info btn-xs"
+                                                        title="Archive">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </button>
+                                            </form>
+
+                                            <!-- Edit TODO, on click send to page where you can edit this TODO -->
+                                            <form action="{% url 'todolist:update_task' task.id %}" method="post" style="display: inline">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                                <button type="submit" class="btn btn-default btn-xs" title="Edit">
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </button>
+                                            </form>
+
+                                            <!-- Delete TODO, on click delete TODO -->
+                                            <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </form>
+
+                                        </div>
+                                    </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="list-group-item">
+                                <h4 class="list-group-item-heading">You do not have any TODOs yet</h4>
+                            </li>
+                        {% endif %}
+                        {% if error_message %}
+                            <li class="list-group-item">
+                                <h4 class="list-group-item-heading">Error message</h4>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+
+                    <!--Footer-->
+                    <div class="panel-footer">
+                        <small>{{ task_count }} TODOs</small>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
 
 <!-- End of body -->
 {% endblock %}

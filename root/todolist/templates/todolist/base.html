@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <nav class="navbar transparent navbar-default">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
 
         <!-- Header -->
@@ -26,7 +26,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'todolist:todo' %}">ToDoMe</a>
+
+            <a class="navbar-brand" href="{% url 'todolist:todo' %}"><strong>ToDoMe</strong></a>
         </div>
 
         <!-- Menu-Items -->
@@ -79,6 +80,5 @@
     <!-- Everything dynamic (changes from page to page) goes between the below 2 lines -->
 {% block body %}
 {% endblock %}
-
 </body>
 </html>
