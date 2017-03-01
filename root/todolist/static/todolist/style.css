@@ -1,27 +1,91 @@
 body{
-    background: #F7FFF6;
+    background: #F7FFF6 url('images/body-bg.png');
+    padding-top: 50px;
 }
 
 .navbar-brand{
     font-family: 'Satisfy', cursive;
+    color: #eee;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.navbar-brand strong{
+    font-weight: bold;
+    letter-spacing: -2px;
+    padding-right: 3px;
+    color: #fff;
 }
 
 .navbar-default{
-    background: none;
+    /*Change background of navbar, looks weird*/
+    /*background: #fffde2;*/
     color: dimgray;
     border-bottom: 1px solid white;
 }
 
 .navbar {
-    background: none;
     color: dimgray;
 }
 
 
 
 
+/* ALT UNDER DETTE ER KUN FOR INDEX.HTML */
+/* Should probably split into separate css file?? */
 
 
 
+/*Header*/
+
+header{
+    background: #3e4249 url('images/header-bg.png');
+    color: #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #080808;
+}
+
+h1.header-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -2px;
+}
+
+.pull-right .btn{
+    margin: 20px 0 10px;
+}
+
+/*List group*/
 
 
+.list-group-item:hover{
+    background: #dcedee;
+    cursor: pointer;
+}
+
+.list-group-item:hover .buttons{
+    display: block;
+}
+
+.list-group-item-heading{
+    font-size: 150%;
+}
+
+.list-group-item-text{
+    color: #999;
+}
+
+.buttons{
+    position: absolute;
+    height: 20px;
+    width: 80px;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+    display: none;
+}
+
+.panel-footer small{
+    color: #999;
+}

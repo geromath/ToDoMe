@@ -10,8 +10,10 @@ from django.http import HttpResponse
 
 def index(request):
     all_tasks = Task.objects.all()
+    task_count = Task.objects.count()
     context = {
-        'all_tasks': all_tasks
+        'all_tasks': all_tasks,
+        'task_count': task_count
     }
     return render(request, 'todolist/index.html', context)
 
