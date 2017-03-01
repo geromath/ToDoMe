@@ -8,7 +8,10 @@ urlpatterns = [
     # All of the below are subpages of /todolist/
 
     # Index view (log in screen)
-    url(r'^$', auth_views.login, kwargs={'template_name': 'todolist/login.html'}, name='login'),
+    url(r'^$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
+
+    # Accounts
+    url(r'^accounts/login$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
 
     # Main view
     url(r'^todo/$', views.todo, name="todo"),
