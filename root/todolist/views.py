@@ -17,9 +17,11 @@ def index(request):
 def todo(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.count()
+    # task_text = Task.objects.get(pk=task_id)
     context = {
         'all_tasks': all_tasks,
-        'task_count': task_count
+        'task_count': task_count,
+        # 'task_text': task_text
     }
     return render(request, 'todolist/index.html', context)
 
