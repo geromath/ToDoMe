@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
+
 #importerer forms-klassen vi lagde
 from .models import Task
 from django.core.urlresolvers import reverse_lazy, reverse
