@@ -16,6 +16,9 @@ urlpatterns = [
     # Main view
     url(r'^todo/$', views.todo, name="todo"),
 
+    # Archived (Completed) TODOs
+    url(r'^archive/$', views.archive, name="archive"),
+
     # Registrering
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
 
