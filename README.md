@@ -1,6 +1,6 @@
 # ToDoMe 
 
-![alt text](https://raw.github.com/geromath/ToDoMe/dev/images/todome_logo.png)
+![ToDoMe](https://raw.github.com/geromath/ToDoMe/dev/images/todome_logo.png)
 
 
 # Table of contents 
@@ -9,7 +9,6 @@
 - Prerequisites 
 - Installing 
 - Running the tests 
-- Deployment 
 - Built with 
 - Contributing 
 - Authors 
@@ -38,11 +37,12 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 
 
 # Installing  
-<A step by step series of examples that tell you have to get a development env running. 
-Say what the steps will be .
-Give the example .
-And repeat until finished. 
-End with an example of getting some data out of the system or using it for a little demo>  
+Python: https://www.python.org/downloads/
+
+To install Django:
+
+- Type "pip install django" in terminal
+
 
 # Running the tests  
 
@@ -52,8 +52,6 @@ Break down into end to end tests
  Give an example
  And coding style tests
 
-# Deployment
-  <Add additional notes about how to deploy this on a live system>  
 
 # Built With  
 
@@ -71,6 +69,8 @@ __Making changes:__
 Create a topic branch from where you want to base your work.
 This is usually the master branch.
 Please avoid working directly on the master branch.
+
+Type "git checkout -b newbranchname" to create new branch.
 
 Make commits of logical units.
 Check for unnecessary whitespace with "git diff --check" before committing.
