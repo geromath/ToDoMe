@@ -15,8 +15,6 @@
                         <h1 class="header-title">TODOs</h1>
                     </div>
                     <div class="pull-right">
-                        <!-- Currently 2 buttons to add TODOs, use only the first one when todos can be added with
-                        modal forms-->
                         <button type="button" class="btn btn-success btn-lg" data-toggle="modal"
                                 data-target="#newTodoModal">New TODO</button>
                     </div>
@@ -45,21 +43,39 @@
                       <!-- Legge til ny TODO -->
                       <div class="form-group">
 
-                              {% csrf_token %}
-                              {% include 'todolist/form-template.html' %}
+                          {% csrf_token %}
+                          {{ form.non_field_errors }}
+                          <div class="form-group">
+                              {% for field in form %}
+                              <div class="form-group">
+                                  {% if field.errors %}
+                                  <ul class="form-errors">
+                                      {% for error in field.errors %}
+                                      <li><span class="fa fa-exclamation-triangle"></span> <strong>{{ error|escape }}</strong></li>
+                                      {% endfor %}
+                                  </ul>
+                                  {% endif %}
+                                  {{ field.label_tag }} {{ field }}
+                                  {% if field.help_text %}<div class="form-helptext">{{ field.help_text }}</div>{% endif %}
+                              </div>
+                              {% endfor %}
 
-                      </div>
 
+                              <!-- Delete the below div, once implemented Due Date correctly in form -->
                           <div>
-                          <label for="inputDate">Set Due Date</label><br>
-                          <span class="glyphicon glyphicon-calendar"></span>
-                          <input type="text" size="8" id="inputDate" placeholder="dd/mm/yyyy">
+                              <label for="inputDate">Set Due Date (Optional):</label><br>
+                              <span class="glyphicon glyphicon-calendar"></span>
+                              <input type="text" size="8" id="inputDate" placeholder="dd/mm/yyyy">
 
-                          <script>
-                                $('#inputDate').datepicker({ dateFormat: 'dd/mm/yy', minDate: 0});
-                          </script>
+                              <script>
+                                    $('#inputDate').datepicker({ dateFormat: 'dd/mm/yy', minDate: 0});
+                              </script>
+
+                          </div>
 
                       </div>
+
+
 
                   </div>
                   <div class="modal-footer">
@@ -74,57 +90,53 @@
           </div>
         </div>
 
-                <!-- Modal Edit TODO -->
-        <div id="editTodoModal" class="modal fade" tabindex="-1" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Modal Content-->
-
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Edit TODO</h3>
-              </div>
-              <div class="modal-body">
-
-                  <form role="form">
-                  <div class="form-group">
-                    <label for="inputEditTask">TODO</label>
-                      <input type="text" class="form-control" id="inputEditTask"
-                             value="{{ task_id }}">
-                  </div>
-                  <div class="form-group">
-                    <label for="inputEditDesc">Description</label>
-                      <textarea class="form-control" rows="4" id="inputEditDesc" value="{{ task_description }}"></textarea>
-                  </div>
-
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-success">Add TODO</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
                  <!-- Modal Expand TODO -->
+                <!-- NEEDS TO BE REDONE COMPLETELY, AFTER WE FIX MODAL FORM -->
         <div id="expandTodoModal" class="modal fade" tabindex="-1" role="dialog">
           <div class="modal-dialog">
 
             <!-- Modal Content-->
 
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">{{ task.id.task_text}}</h3>
-              </div>
-              <div class="modal-body">
-                  <p>{{ task.id.description}}</p>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-info">Edit TODO</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <form class="form-horisontal" action="" method="post">{% csrf_token %}
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Edit TODO</h3>
+                  </div>
+                  <div class="modal-body">
+                      <!-- Legge til ny TODO -->
+
+                      <!--Title-->
+                      <div class="form-group">
+                          <label for="editTaskText">Task Title</label>
+                          <input type="text" class="form-control" id="editTaskText" placeholder="Task Title">
+                      </div>
+
+                      <!--Description-->
+                      <div class="form-group">
+                          <label for="editDescription">Description</label>
+                          <textarea class="form-control" rows="5" id="editDescription"
+                                    placeholder="Description"></textarea>
+                      </div>
+
+                      <!--Due Date-->
+                      <div class="form-group">
+                          <label for="editDate">Set Due Date (Optional):
+                          <span class="glyphicon glyphicon-calendar"></span></label>
+                          <input type="text" size="8" class="form-control" id="editDate" placeholder="dd/mm/yyyy">
+
+                          <script>
+                                $('#editDate').datepicker({ dateFormat: 'dd/mm/yy', minDate: 0});
+                          </script>
+                      </div>
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-success">Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </form>
+
               </div>
             </div>
 
@@ -145,9 +157,11 @@
                                         data-target="#expandTodoModal">
 
                                         <!--TODO: Make an "if due_date" statement, and add "task.due_date" to object -->
-                                            <h4 class="list-group-item-heading">{{ task.task_text}} <span
-                                                    class="badge">Due date
-                                            </span></h4>
+                                            <h4 class="list-group-item-heading">{{ task.task_text}}
+                                                {% if task.due_date %}
+                                                <span class="badge">Due date: {{ task.due_date }}</span>
+                                                {% endif %}
+                                            </h4>
                                         <p class="list-group-item-text">{{ task.description }}</p>
 
                                         <div class="buttons">
@@ -156,18 +170,9 @@
                                             <!--<form action="#" method="post" style="display: inline">-->
                                                 <!--{% csrf_token %}-->
                                                 <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
-                                                <button type="submit" class="btn btn-info btn-xs" title="Archive"
+                                                <button type="submit" class="btn btn-info btn-sm" title="Archive"
                                                         data-toggle="modal" data-target="#addItemModal">
                                                     <span class="glyphicon glyphicon-check"></span>
-                                                </button>
-                                            <!--</form>-->
-
-                                            <!-- Edit TODO, on click make user able to edit this TODO -->
-                                            <!--<form method="post" style="display: inline">-->
-                                                <!--{% csrf_token %}-->
-                                                <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
-                                                <button type="button" class="btn btn-default btn-xs" title="Edit" data-toggle="modal" data-target="#editTodoModal">
-                                                    <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                             <!--</form>-->
 
@@ -175,7 +180,7 @@
                                             <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
                                                 {% csrf_token %}
                                                 <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete">
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </button>
                                             </form>
@@ -212,3 +217,4 @@
 
 {% endblock %}
 
+</html>

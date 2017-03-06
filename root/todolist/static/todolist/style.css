@@ -87,16 +87,6 @@ h1.header-title {
     display: none;
 }
 
-.archive-button{
-    position: absolute;
-    height: 20px;
-    width: 80px;
-    bottom: 10px;
-    left: 10px;
-    text-align: center;
-    display: none;
-}
-
 .panel-footer small{
     color: #999;
 }
