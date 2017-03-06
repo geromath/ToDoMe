@@ -23,7 +23,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/af.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{% static 'todolist/style.css' %}" >
-    <script src="../../todolist/static/todolist/script.js"></script>
 
 </head>
 <body>
@@ -60,18 +59,18 @@
 
             </ul>
 
-            <form class="navbar-form navbar-left" role="search" method="get" action="#">
+            <form class="navbar-form navbar-left" role="search" method="get" action="">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="q" value="">
+                    <input type="text" class="form-control" name="q" placeholder="Search" value="">
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
 
             <ul class="nav navbar-nav navbar-right">
-                <!-- New TODO -->
+                <!-- Quizzes -->
                 <li class="">
-                    <a href="{% url 'todolist:make_task' %}">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; New TODO
+                    <a href="#">
+                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp; Quizzes
                     </a>
                 </li>
                 <!-- My Profile -->

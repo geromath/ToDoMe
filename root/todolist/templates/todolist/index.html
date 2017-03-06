@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% extends 'todolist/base.html' %}
-{% block title %} My TODOs {% endblock %}
+{% block title %} My TODOs {% endblock title %}
 
 {% block body %}
     <!-- All content for sub-pages goes between these block tags -->
@@ -162,12 +162,13 @@
                                                 <span class="badge">Due date: {{ task.due_date }}</span>
                                                 {% endif %}
                                             </h4>
-                                        <p class="list-group-item-text">{{ task.description }}</p>
+                                        <p class="list-group-item-text">{{ task.description|linebreaks}}</p>
 
                                         <div class="buttons">
 
                                             <!-- Archive TODO as "Completed" -->
-                                            <!--<form action="#" method="post" style="display: inline">-->
+                                            <!--<form action="{% url 'todolist:update_task' task.id %}" method="post"-->
+                                                  <!--style="display: inline">-->
                                                 <!--{% csrf_token %}-->
                                                 <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
                                                 <button type="submit" class="btn btn-info btn-sm" title="Archive"
@@ -177,7 +178,8 @@
                                             <!--</form>-->
 
                                             <!-- Delete TODO, on click delete TODO -->
-                                            <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
+                                            <form action="{% url 'todolist:delete_task' task.id %}" method="post"
+                                                  style="display: inline">
                                                 {% csrf_token %}
                                                 <input type="hidden" name="task_id" value="{{ task.id }}"/>
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete">
@@ -215,6 +217,6 @@
 
 <!-- End of body -->
 
-{% endblock %}
+{% endblock body %}
 
 </html>

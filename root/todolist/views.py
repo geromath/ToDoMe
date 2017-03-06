@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
@@ -46,13 +46,26 @@ def todo(request):
         'all_tasks': all_tasks,
         'task_count': task_count,
         'form': form,
-        'nbar': 'home'
+        'nbar': 'home',
         # 'task_text': task_text
     }
 
-
     return render(request, 'todolist/index.html', context)
 
+# Made a separate method for updating todos, seems to work, just need to implement it with modals somehow..
+def todo_update(request, id=None):
+    instance = get_object_or_404(Task, id=id)
+    form = TaskForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+
+    context = {
+        "task_text": instance.task_text,
+        "instance": instance,
+        "form": form,
+    }
+    return render(request, "todolist/task_form.html", context)
 
 class TaskCreate(CreateView):
     model = Task
@@ -62,6 +75,7 @@ class TaskUpdate(UpdateView):
     model = Task
     fields = ['task_text', 'description']
 
+# Stopped functioning again for some reason
 class TaskDelete(DeleteView):
     model = Task
     success_url = reverse_lazy('todolist:todo')
