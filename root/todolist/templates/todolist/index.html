@@ -49,12 +49,26 @@
                               {% include 'todolist/form-template.html' %}
 
                       </div>
+
+                          <div>
+                          <label for="inputDate">Set Due Date</label><br>
+                          <span class="glyphicon glyphicon-calendar"></span>
+                          <input type="text" size="8" id="inputDate" placeholder="dd/mm/yyyy">
+
+                          <script>
+                                $('#inputDate').datepicker({ dateFormat: 'dd/mm/yy', minDate: 0});
+                          </script>
+
+                      </div>
+
                   </div>
                   <div class="modal-footer">
                       <button type="submit" class="btn btn-success">Add TODO</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
                 </form>
+
+              </div>
             </div>
 
           </div>
@@ -94,6 +108,30 @@
           </div>
         </div>
 
+                 <!-- Modal Expand TODO -->
+        <div id="expandTodoModal" class="modal fade" tabindex="-1" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal Content-->
+
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">{{ task.id.task_text}}</h3>
+              </div>
+              <div class="modal-body">
+                  <p>{{ task.id.description}}</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-info">Edit TODO</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
@@ -102,7 +140,9 @@
                         <!-- Each TODO shows up as a list item under here -->
                         {% if all_tasks %}
                             {% for task in all_tasks %}
-                                    <li class="list-group-item">
+                                    <li class="list-group-item" id="{{ task.id }}" title="Expand"
+                                        data-toggle="modal"
+                                        data-target="#expandTodoModal">
 
                                         <!--TODO: Make an "if due_date" statement, and add "task.due_date" to object -->
                                             <h4 class="list-group-item-heading">{{ task.task_text}} <span
@@ -166,6 +206,7 @@
 
         </div>
     </div>
+
 
 <!-- End of body -->
 
