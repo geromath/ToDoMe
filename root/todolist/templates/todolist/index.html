@@ -42,18 +42,14 @@
                 <h3 class="modal-title">Add new TODO</h3>
               </div>
               <div class="modal-body">
-
-                  <form role="form">
+                  <!-- Legge til ny TODO -->
                   <div class="form-group">
-                    <label for="inputTask">TODO</label>
-                      <input type="text" class="form-control"
-                      id="inputTask" placeholder="Task name"/>
+                      <form class="form-horisontal" action="" method="post">
+                          {% csrf_token %}
+                          {% include 'todolist/form-template.html' %}
+                          <button type="submit" class="btn btn-success">Submit</button>
+                      </form>
                   </div>
-                  <div class="form-group">
-                    <label for="inputDesc">Description</label>
-                      <textarea class="form-control" rows="5" id="inputDesc" placeholder="Task description"></textarea>
-                  </div>
-
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-success">Add TODO</button>
