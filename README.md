@@ -59,6 +59,10 @@ Break down into end to end tests
 
 # Contributing
 Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.   
+Make sure you have a GitHub account
+Fork the repository on GitHub
+
+
 
 # Authors  
 - Mathias
