@@ -37,6 +37,8 @@ def todo(request):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('todolist:todo'))
+        else:
+            messages.error()
     else:
         form = TaskForm()
 
