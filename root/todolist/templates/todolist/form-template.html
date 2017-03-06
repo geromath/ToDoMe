@@ -5,6 +5,10 @@
             <span class="text-danger small">{{ field.errors }}</span>
         </div>
         <label class="control-label col-sm-2">{{ field.label_tag }}</label>
+        {% if field.label_tag == 'Due date' %}
+            <p> Hallo. </p>
+        {% else %}
+        {% endif %}
         <div class="col-sm-10">{{ field }}</div>
     </div>
 {% endfor %}
