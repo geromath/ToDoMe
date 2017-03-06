@@ -1,4 +1,8 @@
 # ToDoMe 
+
+![alt text](https://raw.github.com/geromath/ToDoMe/dev/images/todome_logo.png)
+
+
 # Table of contents 
 - Project description 
 - Getting started 
@@ -17,17 +21,20 @@ ToDoMe is a web-based task manager that lets you organize your tasks for the day
 You earn credits for completing tasks you set for yourself and for passing the quizzes created by your teacher. 
 ToDoMe helps the students repeat the curriculum throughout the semester and it gives the professors a better overview of their students progress.
 
-  # Getting Started  
-Clone the repo with "git clone https://github.com/geromath/ToDoMe.git"   
-<These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
- See deployment for notes on how to deploy the project on a live system.>
+# Getting Started
 
-  # Prerequisites 
+- Clone the repo with "git clone https://github.com/geromath/ToDoMe.git"   
+- Navigate into the root directory (/ToDoMe/root) and type in the following command in terminal:
+"python3 manage.py migrate"
+
+
+# Prerequisites
+
 <What things you need to install the software and how to install them> 
 <Give examples>  
 
-Python 2.7+ 
-Django 1.10+ 
+- Python 2.7+ 
+- Django 1.10+ 
 
 
 # Installing  
@@ -39,10 +46,11 @@ End with an example of getting some data out of the system or using it for a lit
 
 # Running the tests  
 
-<Explain how to run the automated tests for this system 
+Explain how to run the automated tests for this system 
 Break down into end to end tests
  Explain what these tests test and why
- Give an example And coding style tests>  
+ Give an example
+ And coding style tests
 
 # Deployment
   <Add additional notes about how to deploy this on a live system>  
@@ -55,7 +63,20 @@ Break down into end to end tests
 - React
 
 # Contributing
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.   
+- Make sure you have a GitHub account
+- Fork the repository on GitHub
+
+__Making changes:__
+
+Create a topic branch from where you want to base your work.
+This is usually the master branch.
+Please avoid working directly on the master branch.
+
+Make commits of logical units.
+Check for unnecessary whitespace with "git diff --check" before committing.
+Make sure your commit messages are in the proper format.
+- Make sure you have added the necessary tests for your changes.
+- Run _all_ the tests to assure nothing else was accidentally broken.
 
 # Authors  
 - Mathias
@@ -67,5 +88,5 @@ Please read CONTRIBUTING.md for details on our code of conduct, and the process 
 This project is licensed under the MIT License - see the LICENSE.md file for details  .
 
 # Acknowledgments  
-
+NTNU TDT4140 course staff - Spring 2017.
 
