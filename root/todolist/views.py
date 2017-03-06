@@ -3,9 +3,12 @@ from django.contrib.auth import authenticate, login
 from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 #importerer forms-klassen vi lagde
 from .models import Task
+from .forms import TaskForm
 from django.core.urlresolvers import reverse_lazy, reverse
 
 from django.http import HttpResponse
@@ -28,14 +31,28 @@ def archive(request):
 def todo(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.count()
-    # task_text = Task.objects.get(pk=task_id).getText()
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('todolist:todo'))
+        else:
+            messages.error()
+    else:
+        form = TaskForm()
+
     context = {
         'all_tasks': all_tasks,
         'task_count': task_count,
+        'form': form,
         'nbar': 'home'
         # 'task_text': task_text
     }
-    return render(request,'todolist/index.html', context)
+
+
+    return render(request, 'todolist/index.html', context)
+
 
 class TaskCreate(CreateView):
     model = Task
@@ -47,7 +64,7 @@ class TaskUpdate(UpdateView):
 
 class TaskDelete(DeleteView):
     model = Task
-    success_url = reverse_lazy('todolist:index')
+    success_url = reverse_lazy('todolist:todo')
 
 class UserFormView(View):
     form_class = UserForm #blueprint til det vi skal bruke
