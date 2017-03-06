@@ -31,13 +31,6 @@ def archive(request):
 def todo(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.count()
-    context = {
-        'all_tasks': all_tasks,
-        'task_count': task_count,
-        'nbar': 'home'
-        # 'task_text': task_text
-        'form': TaskForm()
-    }
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -46,7 +39,17 @@ def todo(request):
             return HttpResponseRedirect(reverse('todolist:todo'))
     else:
         form = TaskForm()
-    return render(request, 'todolist/index.html', {'form': form, 'all_tasks': all_tasks})
+
+    context = {
+        'all_tasks': all_tasks,
+        'task_count': task_count,
+        'form': form,
+        'nbar': 'home'
+        # 'task_text': task_text
+    }
+
+
+    return render(request, 'todolist/index.html', context)
 
 
 class TaskCreate(CreateView):
