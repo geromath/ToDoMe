@@ -1,14 +1,15 @@
 <!-- Help class for registration_form.html. Not actually a page visible to users -->
 {% for field in form %}
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+    <div>
+        <div>
             <span class="text-danger small">{{ field.errors }}</span>
         </div>
-        <label class="control-label col-sm-2">{{ field.label_tag }}</label>
+        <label>{{ field.label_tag }}</label>
         {% if field.label_tag == 'Due date' %}
             <p> Hallo. </p>
         {% else %}
+            <p> Nei </p>
         {% endif %}
-        <div class="col-sm-10">{{ field }}</div>
+        <div>{{ field }}</div>
     </div>
 {% endfor %}
