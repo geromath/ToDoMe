@@ -42,10 +42,11 @@ End with an example of getting some data out of the system or using it for a lit
 
 # Running the tests  
 
-<Explain how to run the automated tests for this system 
+Explain how to run the automated tests for this system 
 Break down into end to end tests
  Explain what these tests test and why
- Give an example And coding style tests>  
+ Give an example
+ And coding style tests
 
 # Deployment
   <Add additional notes about how to deploy this on a live system>  
@@ -58,11 +59,20 @@ Break down into end to end tests
 - React
 
 # Contributing
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.   
-Make sure you have a GitHub account
-Fork the repository on GitHub
+- Make sure you have a GitHub account
+- Fork the repository on GitHub
 
+__Making changes:__
 
+Create a topic branch from where you want to base your work.
+This is usually the master branch.
+Please avoid working directly on the master branch.
+
+Make commits of logical units.
+Check for unnecessary whitespace with "git diff --check" before committing.
+Make sure your commit messages are in the proper format.
+- Make sure you have added the necessary tests for your changes.
+- Run _all_ the tests to assure nothing else was accidentally broken.
 
 # Authors  
 - Mathias
@@ -74,5 +84,5 @@ Fork the repository on GitHub
 This project is licensed under the MIT License - see the LICENSE.md file for details  .
 
 # Acknowledgments  
-NTNU TDT4140 course staff
+NTNU TDT4140 course staff - Spring 2017.
 
