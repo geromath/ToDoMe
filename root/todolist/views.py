@@ -14,17 +14,27 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponse
 
 def index(request):
-        return render(request, 'todolist/todo', None)
+
+    context = {
+        'nbar': 'home'
+    }
+    return render(request, 'todolist/home.html', context)
+
+
+def archive(request):
+    context = {
+        'nbar': 'archive'
+    }
+    return render(request, 'todolist/archive.html', context)
 
 @login_required
 def todo(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.count()
-    # task_text = Task.objects.get(pk=task_id)
-
     context = {
         'all_tasks': all_tasks,
         'task_count': task_count,
+        'nbar': 'home'
         # 'task_text': task_text
         'form': TaskForm()
     }

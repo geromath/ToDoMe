@@ -35,15 +35,15 @@
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
                 <!-- My TODOs -->
-                <li class="active">
+                <li class="{% if nbar == 'home' %}active{% endif %}">
                     <a href="{% url 'todolist:todo' %}">
                         <span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp; TODOs
                     </a>
                 </li>
-                <!-- Completed tasks/TODOs -->
-                <li class="">
-                    <a href="#">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Completed
+                <!-- Archived (Completed) tasks/TODOs -->
+                <li class="{% if nbar == 'archive' %}active{% endif %}">
+                    <a href="{% url 'todolist:archive' %}">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Archive
                     </a>
                 </li>
 

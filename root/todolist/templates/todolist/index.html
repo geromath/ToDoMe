@@ -65,6 +65,7 @@
           <div class="modal-dialog">
 
             <!-- Modal Content-->
+
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -102,26 +103,31 @@
                         {% if all_tasks %}
                             {% for task in all_tasks %}
                                     <li class="list-group-item">
-                                        <h4 class="list-group-item-heading">{{ task.task_text}} <span class="badge">Number of tasks</span></h4>
+
+                                        <!--TODO: Make an "if due_date" statement, and add "task.due_date" to object -->
+                                            <h4 class="list-group-item-heading">{{ task.task_text}} <span
+                                                    class="badge">Due date
+                                            </span></h4>
                                         <p class="list-group-item-text">{{ task.description }}</p>
+
                                         <div class="buttons">
 
-                                            <!-- Archive TODO, on click send TODO to a page for all completed TODOs -->
-                                            <form action="#" method="post" style="display: inline">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                                                <button type="submit" class="btn btn-info btn-xs"
-                                                        title="Archive">
-                                                    <span class="glyphicon glyphicon-ok"></span>
+                                            <!-- Archive TODO as "Completed" -->
+                                            <!--<form action="#" method="post" style="display: inline">-->
+                                                <!--{% csrf_token %}-->
+                                                <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
+                                                <button type="submit" class="btn btn-info btn-xs" title="Archive"
+                                                        data-toggle="modal" data-target="#addItemModal">
+                                                    <span class="glyphicon glyphicon-check"></span>
                                                 </button>
-                                            </form>
+                                            <!--</form>-->
 
-                                            <!-- Edit TODO, on click send to page where you can edit this TODO -->
+                                            <!-- Edit TODO, on click make user able to edit this TODO -->
                                             <!--<form method="post" style="display: inline">-->
                                                 <!--{% csrf_token %}-->
                                                 <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
                                                 <button type="button" class="btn btn-default btn-xs" title="Edit" data-toggle="modal" data-target="#editTodoModal">
-                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                    <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                             <!--</form>-->
 
