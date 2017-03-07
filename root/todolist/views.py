@@ -52,6 +52,14 @@ def todo(request):
 
     return render(request, 'todolist/index.html', context)
 
+def todo_detail(request, id=None):
+    instance = get_object_or_404(Task, id=id)
+    context = {
+        "title": 'Detail',
+        "instance": instance,
+    }
+    return render(request, "todolist/todo_detail.html", context)
+
 # Made a separate method for updating todos, seems to work, just need to implement it with modals somehow..
 def todo_update(request, id=None):
     instance = get_object_or_404(Task, id=id)
@@ -59,13 +67,16 @@ def todo_update(request, id=None):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        return HttpResponseRedirect(reverse("todolist:todo"))
 
     context = {
         "task_text": instance.task_text,
+        "task_description": instance.description,
+        "due_date": instance.due_date,
         "instance": instance,
         "form": form,
     }
-    return render(request, "todolist/task_form.html", context)
+    return render(request, "todolist/edit_task.html", context)
 
 class TaskCreate(CreateView):
     model = Task
