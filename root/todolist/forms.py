@@ -19,6 +19,10 @@ class LoginForm(forms.ModelForm):
         fields = ['username', 'password']
 
 class BootstrapModelForm(ModelForm):
+    task_text = forms.CharField(label="Title", widget=forms.TextInput)
+    description = forms.CharField(label='Description', widget=forms.Textarea)
+
+
     def __init__(self, *args, **kwargs):
         super(BootstrapModelForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):

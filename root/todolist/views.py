@@ -47,7 +47,6 @@ def todo(request):
         'task_count': task_count,
         'form': form,
         'nbar': 'home',
-        # 'task_text': task_text
     }
 
     return render(request, 'todolist/index.html', context)

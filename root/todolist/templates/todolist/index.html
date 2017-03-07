@@ -69,10 +69,10 @@
                                 <div>
                                     <label for="inputDate">Set Due Date (Optional):</label><br>
                                     <span class="glyphicon glyphicon-calendar"></span>
-                                    <input type="text" size="8" id="inputDate" placeholder="dd/mm/yyyy">
+                                    <input type="text" size="8" id="inputDate" placeholder="dd/mm/YY">
 
                                     <script>
-                                        $('#inputDate').datepicker({dateFormat: 'dd/mm/yy', minDate: 0});
+                                        $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
                                     </script>
 
                                 </div>
@@ -171,8 +171,7 @@
                         <!--style="display: inline">-->
                         <!--{% csrf_token %}-->
                         <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
-                        <button type="submit" class="btn btn-info btn-sm" title="Archive"
-                                data-toggle="modal" data-target="#addItemModal">
+                        <button type="submit" class="btn btn-info btn-sm" title="Archive">
                             <span class="glyphicon glyphicon-check"></span>
                         </button>
                         <!--</form>-->
