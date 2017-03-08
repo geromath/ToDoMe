@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends 'todolist/base.html' %}
-{% block title %} Archived TODOs {% endblock %}
+
+<head>
+    {% extends 'todolist/base.html' %}
+    {% load staticfiles %}
+    <title>{% block title %} Archived TODOs {% endblock %}</title>
+</head>
 
 <body>
 
 {% block body %}
     <!-- All content for sub-pages goes between these block tags -->
 
-    <h2> COMPLETED TODOs</h2>
+    <header id="archiveHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="clearfix">
+                        <div>
+                            <h1 class="header-title">{{ title }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
+
+    {% if all_tasks %}
+        {% for task in all_tasks %}
+            {% if task.archived == True %}
+
+                <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+                    <h4 class="list-group-item-heading">{{ task.task_text }}
+                        {% if task.due_date %}
+                            <span class="badge">Due date: {{ task.due_date }}</span>
+                        {% endif %}
+                    </h4>
+                    <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
+
+                </div>
+
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}
 </body>

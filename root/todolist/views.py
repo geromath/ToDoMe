@@ -16,14 +16,19 @@ from django.http import HttpResponse
 def index(request):
 
     context = {
-        'nbar': 'home'
+        'nbar': 'startpage'
     }
-    return render(request, 'todolist/home.html', context)
+    return render(request, 'todolist/startpage.html', context)
 
 
 def archive(request):
+    all_tasks = Task.objects.all()
+    task_count = Task.objects.filter(archived=True).count()
     context = {
-        'nbar': 'archive'
+        'nbar': 'archive',
+        'all_tasks': all_tasks,
+        'task_count': task_count,
+        'title': 'Archive',
     }
     return render(request, 'todolist/archive.html', context)
 
@@ -47,6 +52,7 @@ def todo(request):
         'task_count': task_count,
         'form': form,
         'nbar': 'home',
+        'title': 'TODOs',
     }
 
     return render(request, 'todolist/index.html', context)
