@@ -1,7 +1,6 @@
 body {
     background: #F7FFF6 url('images/body-bg.png');
     padding-top: 50px;
-    overflow: hidden;
 }
 
 .navbar-brand {
@@ -26,7 +25,7 @@ body {
 }
 
 /* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
-
+/* ---------------------------------------------------------------------- */
 
 /*Headers*/
 
@@ -44,8 +43,10 @@ body {
     border-bottom: 1px solid #080808;
 }
 
-header{
+header {
     height: 75px;
+    width: 100%;
+
 }
 
 h1.header-title {
@@ -56,6 +57,10 @@ h1.header-title {
 
 .pull-right .btn {
     margin: 15px 0 10px;
+}
+
+.badge {
+    font-size: 14px;
 }
 
 /*List group*/
@@ -69,12 +74,14 @@ h1.header-title {
     cursor: pointer;
 }
 
-.list-group-item:hover .buttons, .archive-button, table.table tr:hover .row-buttons {
+.list-group-item:hover .buttons {
     display: block;
 }
 
 .list-group-item-heading {
     font-size: 150%;
+    font-weight: bold;
+    padding-bottom: 5px;
 }
 
 .list-group-item-text {
@@ -111,3 +118,4 @@ input.task-input {
 input.task-input:focus, input.task-input:active {
     outline: none;
 }
+

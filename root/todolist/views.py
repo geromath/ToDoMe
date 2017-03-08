@@ -12,7 +12,7 @@ from .forms import TaskForm
 from django.core.urlresolvers import reverse_lazy, reverse
 
 from django.http import HttpResponse
-
+# To be created....
 def index(request):
 
     context = {
@@ -97,10 +97,15 @@ class TaskDelete(DeleteView):
 
 def task_checked(request, pk):
     task = Task.objects.get(pk=pk)
-    task.archived = True
-    task.save()
-    return render(request, "todolist/index.html", None)
-
+    referer = request.META.get('HTTP_REFERER')
+    if("/archive/" in referer):
+        task.archived = False
+        task.save()
+        return HttpResponseRedirect(reverse("todolist:archive"))
+    else:
+        task.archived = True
+        task.save()
+        return HttpResponseRedirect(reverse("todolist:todo"))
 
 class UserFormView(View):
     form_class = UserForm #blueprint til det vi skal bruke
