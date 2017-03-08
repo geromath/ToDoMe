@@ -35,7 +35,7 @@ urlpatterns = [
     # url(r'^mktsk/(?P<id>\d+)/$', views.TaskUpdate.as_view(), name='update_task'),
 
     # Delete task
-    url(r'delete/(?P<id>\d+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
+    url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
 
 ]
 
