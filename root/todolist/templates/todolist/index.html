@@ -155,43 +155,52 @@
                 <!-- Each TODO shows up as a list item under here -->
                 {% if all_tasks %}
                 {% for task in all_tasks %}
-                {% if task.archived == False %}
-                <li class="list-group-item" id="todo_list_item" title="Edit"
-                    onclick="location.href='/todo/{{task.id}}/edit/'">
-                    <h4 class="list-group-item-heading">{{ task.task_text }}
-                        {%if task.due_date %}
-                        <span class="badge">Due date: {{ task.due_date }}</span>
-                        {% endif %}
-                    </h4>
-                    <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
+                    {% if task.archived == False %}
+                    <li class="list-group-item" id="todo_list_item" title="Edit"
+                        onclick="location.href='/todo/{{task.id}}/edit/'">
+                        <h4 class="list-group-item-heading">{{ task.task_text }}
+                            {%if task.due_date %}
+                            <span class="badge">Due date: {{ task.due_date }}</span>
+                            {% endif %}
+                        </h4>
+                        <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
 
-                    <div class="buttons">
+                        <div class="buttons">
 
-                        <!-- Archive TODO as "Completed" -->
-                        <form action="{% url 'todolist:task_checked' task.id %}" method="post" style="display: inline">
-                        {% csrf_token %}
-                        <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                        <button type="submit" class="btn btn-info btn-sm" title="Archive">
-                            <span class="glyphicon glyphicon-check"></span>
-                        </button>
-                        </form>
-
-                        <!-- Delete TODO, on click delete TODO -->
-                        <form action="{% url 'todolist:delete_task' task.id %}" method="post"
-                              style="display: inline">
+                            <!-- Archive TODO as "Completed" -->
+                            <form action="{% url 'todolist:task_checked' task.id %}" method="post" style="display: inline">
                             {% csrf_token %}
                             <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete">
-                                <span class="glyphicon glyphicon-trash"></span>
+                            <button type="submit" class="btn btn-info btn-sm" title="Archive">
+                                <span class="glyphicon glyphicon-check"></span>
                             </button>
-                        </form>
-                    </div>
-                </li>
+                            </form>
+
+                            <!-- Delete TODO, on click delete TODO -->
+                            <form action="{% url 'todolist:delete_task' task.id %}" method="post"
+                                  style="display: inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
                 {% endif %}
-                {% endfor %}
-                {% else %}
+
+                <!-- En quality of life improvement. Istedenfor å sjekke om all_tasks er true,
+                så skjekker den om man har laget en task tidligere eller om man ikke har gjort det-->
+
+                {% if not all_tasks %}
                 <li class="list-group-item">
                     <h4 class="list-group-item-heading">You do not have any TODOs yet</h4>
+                </li>
+                {% elif task_count == 0 %}
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Make some more TODOs! You have completed all you previously made</h4>
                 </li>
                 {% endif %}
                 {% if error_message %}
