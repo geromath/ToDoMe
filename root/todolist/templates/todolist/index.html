@@ -155,6 +155,7 @@
                 <!-- Each TODO shows up as a list item under here -->
                 {% if all_tasks %}
                 {% for task in all_tasks %}
+                {% if task.archived == False %}
                 <li class="list-group-item" id="todo_list_item" title="Edit"
                     onclick="location.href='/todo/{{task.id}}/edit/'">
                     <h4 class="list-group-item-heading">{{ task.task_text }}
@@ -167,14 +168,13 @@
                     <div class="buttons">
 
                         <!-- Archive TODO as "Completed" -->
-                        <!--<form action="{% url 'todolist:update_task' task.id %}" method="post"-->
-                        <!--style="display: inline">-->
-                        <!--{% csrf_token %}-->
-                        <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
+                        <form action="{% url 'todolist:task_checked' task.id %}" method="post" style="display: inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="task_id" value="{{ task.id }}"/>
                         <button type="submit" class="btn btn-info btn-sm" title="Archive">
                             <span class="glyphicon glyphicon-check"></span>
                         </button>
-                        <!--</form>-->
+                        </form>
 
                         <!-- Delete TODO, on click delete TODO -->
                         <form action="{% url 'todolist:delete_task' task.id %}" method="post"
@@ -185,9 +185,9 @@
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
                         </form>
-
                     </div>
                 </li>
+                {% endif %}
                 {% endfor %}
                 {% else %}
                 <li class="list-group-item">

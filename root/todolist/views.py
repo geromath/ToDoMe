@@ -30,7 +30,7 @@ def archive(request):
 @login_required
 def todo(request):
     all_tasks = Task.objects.all()
-    task_count = Task.objects.count()
+    task_count = Task.objects.filter(archived=False).count()
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -85,10 +85,16 @@ class TaskUpdate(UpdateView):
     model = Task
     fields = ['task_text', 'description']
 
-# Stopped functioning again for some reason
 class TaskDelete(DeleteView):
     model = Task
     success_url = reverse_lazy('todolist:todo')
+
+def task_checked(request, pk):
+    task = Task.objects.get(pk=pk)
+    task.archived = True
+    task.save()
+    return render(request, "todolist/index.html", None)
+
 
 class UserFormView(View):
     form_class = UserForm #blueprint til det vi skal bruke
