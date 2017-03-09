@@ -1,23 +1,21 @@
-body{
+body {
     background: #F7FFF6 url('images/body-bg.png');
     padding-top: 50px;
 }
 
-.navbar-brand{
+.navbar-brand {
     font-family: 'Satisfy', cursive;
-    color: #eee;
-    letter-spacing: -1px;
     text-transform: uppercase;
 }
 
-.navbar-brand strong{
+.navbar-brand strong {
     font-weight: bold;
     letter-spacing: -2px;
     padding-right: 3px;
-    color: #fff;
+    color: #eee;
 }
 
-.navbar-default{
+.navbar-default {
     /*Change background of navbar, looks weird*/
     /*background: #fffde2;*/
     color: dimgray;
@@ -28,20 +26,14 @@ body{
     color: dimgray;
 }
 
-
-
-
 /* ALT UNDER DETTE ER KUN FOR INDEX.HTML */
 /* Should probably split into separate css file?? */
 
-
-
 /*Header*/
 
-header{
+header {
     background: #3e4249 url('images/header-bg.png');
     color: #ccc;
-    padding: 15px;
     margin-bottom: 20px;
     border-bottom: 1px solid #080808;
 }
@@ -52,32 +44,34 @@ h1.header-title {
     letter-spacing: -2px;
 }
 
-.pull-right .btn{
+.pull-right .btn {
     margin: 20px 0 10px;
 }
 
 /*List group*/
 
+.list-group-item {
+    word-wrap: break-word;
+}
 
-.list-group-item:hover{
+.list-group-item:hover {
     background: #dcedee;
     cursor: pointer;
 }
 
-.list-group-item:hover .buttons, .archive-button, table.table tr:hover .row-buttons{
+.list-group-item:hover .buttons, .archive-button, table.table tr:hover .row-buttons {
     display: block;
 }
 
-
-.list-group-item-heading{
+.list-group-item-heading {
     font-size: 150%;
 }
 
-.list-group-item-text{
+.list-group-item-text {
     color: #999;
 }
 
-.buttons{
+.buttons {
     position: absolute;
     height: 20px;
     width: 80px;
@@ -87,24 +81,13 @@ h1.header-title {
     display: none;
 }
 
-.archive-button{
-    position: absolute;
-    height: 20px;
-    width: 80px;
-    bottom: 10px;
-    left: 10px;
-    text-align: center;
-    display: none;
-}
-
-.panel-footer small{
+.panel-footer small {
     color: #999;
 }
 
-
 /* Task modal */
 
-input.task-input{
+input.task-input {
     width: 100%;
     border: none;
     font-size: 18px;
@@ -115,6 +98,6 @@ input.task-input{
     font-style: italic;
 }
 
-input.task-input:focus, input.task-input:active{
+input.task-input:focus, input.task-input:active {
     outline: none;
 }
