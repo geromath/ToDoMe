@@ -1,10 +1,13 @@
 from django.db import models
 
+
+#https://github.com/tomwalker/django_quiz/blob/master/quiz/models.py
+#se denne for inspirasjon
+
 #dette skal vaere en samling av flere spoersmaal
 class Questionnaire(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'Questionnaire name')
     slug = models.SlugField()
-
 
     def __str__(self):
         return self.name
