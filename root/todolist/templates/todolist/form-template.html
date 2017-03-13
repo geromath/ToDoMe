@@ -6,6 +6,11 @@
         </div>
         <!--HVOR ER DISSE LABEL_TAG'ENE???-->
         <label>{{ field.label_tag }}</label>
+        {% if field.label == 'duedate' %}
+            <p> Hallo. </p>
+        {% else %}
+            <p> Nei </p>
+        {% endif %}
         <div>{{ field }}</div>
     </div>
 {% endfor %}

@@ -2,6 +2,7 @@
 /root/db.sqlite3
 *.pyc
 /root/.DS_Store
+/root/todolist/migrations/
 .DS_Store
 
 ### Intellij ###

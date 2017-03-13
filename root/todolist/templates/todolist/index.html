@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:todolist="http://www.w3.org/1999/xhtml">
-{% extends 'todolist/base.html' %}
-{% block title %} My TODOs {% endblock title %}
+
+<head>
+    {% extends 'todolist/base.html' %}
+    {% load staticfiles %}
+    <title>{% block title %} My TODOs {% endblock title %}</title>
+</head>
 
 {% block body %}
 <!-- All content for sub-pages goes between these block tags -->
 
-<header>
+<header id="indexHeader">
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="clearfix">
                     <div class="pull-left">
-                        <h1 class="header-title">TODOs</h1>
+                        <h1 class="header-title">{{ title }}</h1>
                     </div>
                     <div class="pull-right">
-                        <button type="button" class="btn btn-success btn-lg" data-toggle="modal"
+                        <button type="button" id="newTodo" class="btn btn-success btn-lg" data-toggle="modal"
                                 data-target="#newTodoModal">New TODO
                         </button>
                     </div>
@@ -26,7 +30,6 @@
 </header>
 
 <!-- Main container -->
-
 <div class="container">
 
     <!-- Modal Add New TODO-->
@@ -52,8 +55,10 @@
                                     {% if field.errors %}
                                     <ul class="form-errors">
                                         {% for error in field.errors %}
-                                        <li><span class="fa fa-exclamation-triangle"></span> <strong>{{ error|escape
-                                            }}</strong></li>
+                                        <li><span class="fa fa-exclamation-triangle"></span> <strong>
+                                            {{ error|escape
+                                            }}</strong>
+                                        </li>
                                         {% endfor %}
                                     </ul>
                                     {% endif %}
@@ -64,19 +69,9 @@
                                 </div>
                                 {% endfor %}
 
-
-                                <!-- Delete the below div, once implemented Due Date correctly in form -->
-                                <div>
-                                    <label for="inputDate">Set Due Date (Optional):</label><br>
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                    <input type="text" size="8" id="inputDate" placeholder="dd/mm/YY">
-
                                     <script>
                                         $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
                                     </script>
-
-                                </div>
-
                             </div>
 
 
@@ -98,8 +93,7 @@
 <div id="expandTodoModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
 
-        <!-- Modal Content-->
-
+        <!-- Modal Content -->
         <div class="modal-content">
             <form class="form-horisontal" action="" method="post">{% csrf_token %}
                 <div class="modal-header">
@@ -109,28 +103,25 @@
                 <div class="modal-body">
                     <!-- Legge til ny TODO -->
 
-                    <!--Title-->
+                    <!--Title -->
                     <div class="form-group">
                         <label for="editTaskText">Task Title</label>
                         <input type="text" class="form-control" id="editTaskText" placeholder="Task Title">
                     </div>
 
-                    <!--Description-->
+                    <!--Description -->
                     <div class="form-group">
                         <label for="editDescription">Description</label>
                         <textarea class="form-control" rows="5" id="editDescription"
                                   placeholder="Description"></textarea>
                     </div>
 
-                    <!--Due Date-->
+                    <!--Due Date -->
                     <div class="form-group">
                         <label for="editDate">Set Due Date (Optional):
                             <span class="glyphicon glyphicon-calendar"></span></label>
                         <input type="text" size="8" class="form-control" id="editDate" placeholder="dd/mm/yyyy">
 
-                        <script>
-                            $('#editDate').datepicker({dateFormat: 'dd/mm/yy', minDate: 0});
-                        </script>
                     </div>
 
                 </div>
@@ -144,7 +135,6 @@
     </div>
 
 </div>
-</div>
 
 
 <div class="row">
@@ -155,6 +145,7 @@
                 <!-- Each TODO shows up as a list item under here -->
                 {% if all_tasks %}
                 {% for task in all_tasks %}
+                {% if task.archived == False %}
                 <li class="list-group-item" id="todo_list_item" title="Edit"
                     onclick="location.href='/todo/{{task.id}}/edit/'">
                     <h4 class="list-group-item-heading">{{ task.task_text }}
@@ -167,31 +158,39 @@
                     <div class="buttons">
 
                         <!-- Archive TODO as "Completed" -->
-                        <!--<form action="{% url 'todolist:update_task' task.id %}" method="post"-->
-                        <!--style="display: inline">-->
-                        <!--{% csrf_token %}-->
-                        <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
-                        <button type="submit" class="btn btn-info btn-sm" title="Archive">
-                            <span class="glyphicon glyphicon-check"></span>
-                        </button>
-                        <!--</form>-->
+                        <form action="{% url 'todolist:task_checked' task.id %}" method="post" style="display: inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                            <button type="submit" class="btn btn-info btn-sm" title="Archive">
+                                <span class="glyphicon glyphicon-check"></span>
+                            </button>
+                        </form>
 
                         <!-- Delete TODO, on click delete TODO -->
-                        <form action="{% url 'todolist:delete_task' task.id %}" method="post"
-                              style="display: inline">
+                        <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
                             {% csrf_token %}
                             <input type="hidden" name="task_id" value="{{ task.id }}"/>
                             <button type="submit" class="btn btn-danger btn-sm" title="Delete">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
                         </form>
-
                     </div>
                 </li>
+                {% endif %}
                 {% endfor %}
-                {% else %}
+                {% endif %}
+
+                <!-- En quality of life improvement. Istedenfor å sjekke om all_tasks er true,
+                så skjekker den om man har laget en task tidligere eller om man ikke har gjort det-->
+
+                {% if not all_tasks %}
                 <li class="list-group-item">
                     <h4 class="list-group-item-heading">You do not have any TODOs yet</h4>
+                </li>
+                {% elif task_count == 0 %}
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Make some more TODOs! You have completed all you previously
+                        made</h4>
                 </li>
                 {% endif %}
                 {% if error_message %}
@@ -206,16 +205,8 @@
             <div class="panel-footer">
                 <small>{{ task_count }} TODOs</small>
             </div>
-
         </div>
     </div>
-
 </div>
-</div>
-
-
-<!-- End of body -->
-
 {% endblock body %}
-
 </html>
