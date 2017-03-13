@@ -52,6 +52,10 @@ Break down into end to end tests
  Give an example
  And coding style tests
 
+Navigate to the folder where the manage.py file is and
+- type "python3 manage.py test" in the Terminal
+
+
 
 # Built With  
 
