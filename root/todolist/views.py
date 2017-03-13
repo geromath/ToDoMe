@@ -27,6 +27,9 @@ def archive(request):
     }
     return render(request, 'todolist/archive.html', context)
 
+def avatar_screen(request):
+    return render(request, 'todolist/avatar_screen.html', None)
+
 @login_required
 def todo(request):
     all_tasks = Task.objects.all()

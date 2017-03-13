@@ -6,9 +6,11 @@ app_name = 'todolist'
 
 urlpatterns = [
     # All of the below are subpages of /todolist/
-
     # Index view (log in screen)
-    url(r'^$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
+    url(r'^$', views.avatar_screen, name='avatar_screen'),
+
+    # Login screen
+    url(r'^login$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
 
     # Accounts
     url(r'^accounts/login$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),

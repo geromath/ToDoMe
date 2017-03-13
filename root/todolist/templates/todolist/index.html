@@ -156,8 +156,7 @@
                 {% if all_tasks %}
                 {% for task in all_tasks %}
                 {% if task.archived == False %}
-                <li class="list-group-item" id="todo_list_item" title="Edit"
-                    onclick="location.href='/todo/{{task.id}}/edit/'">
+                <li class="list-group-item" id="todo_list_item" title="Edit" onclick="location.href='/todo/{{task.id}}/edit/'">
                     <h4 class="list-group-item-heading">{{ task.task_text }}
                         {%if task.due_date %}
                         <span class="badge">Due date: {{ task.due_date }}</span>
@@ -177,8 +176,7 @@
                         </form>
 
                         <!-- Delete TODO, on click delete TODO -->
-                        <form action="{% url 'todolist:delete_task' task.id %}" method="post"
-                              style="display: inline">
+                        <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
                             {% csrf_token %}
                             <input type="hidden" name="task_id" value="{{ task.id }}"/>
                             <button type="submit" class="btn btn-danger btn-sm" title="Delete">
