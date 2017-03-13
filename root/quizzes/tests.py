@@ -1,7 +1,5 @@
 from django.test import TestCase
-from .models import Category, SubCategory, Quiz, Question
-
-from root.multiplechoice.models import MCQuestion, Answer
+from .models import Category, SubCategory, Quiz, Question, MCQuestion, Answer
 
 class TestCategory(TestCase):
 
