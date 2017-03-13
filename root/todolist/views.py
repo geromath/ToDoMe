@@ -1,22 +1,30 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login
 from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect
-
-#importerer forms-klassen vi lagde
+from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.template import RequestContext
 from .models import Task
-from .forms import TaskForm
+from .forms import TaskForm, LoginForm
 from django.core.urlresolvers import reverse_lazy, reverse
-
-from django.http import HttpResponse
 # To be created....
 
-@login_required
-def index(request):
+def login(request):
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
 
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('todolist/archive.html')
+    return render(request, 'todolist/archive.html', None)
+
+@login_required()
+def index(request):
     context = {
         'nbar': 'startpage'
     }
@@ -34,10 +42,11 @@ def archive(request):
     }
     return render(request, 'todolist/archive.html', context)
 
+@login_required()
 def avatar_screen(request):
     return render(request, 'todolist/avatar_screen.html', None)
 
-@login_required
+@login_required()
 def todo(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.filter(archived=False).count()
