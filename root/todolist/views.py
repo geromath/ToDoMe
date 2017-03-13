@@ -13,6 +13,8 @@ from django.core.urlresolvers import reverse_lazy, reverse
 
 from django.http import HttpResponse
 # To be created....
+
+@login_required
 def index(request):
 
     context = {

@@ -10,10 +10,8 @@ urlpatterns = [
     url(r'^$', views.avatar_screen, name='avatar_screen'),
 
     # Login screen
-    url(r'^login$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
-
-    # Accounts
-    url(r'^accounts/login$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
+    url(r'^login$', auth_views.login, name='login'),
+    url(r'^logout', auth_views.logout, name='logout'),
 
     # Main view
     url(r'^todo/$', views.todo, name="todo"),
