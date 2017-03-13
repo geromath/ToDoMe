@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'multiplechoice.apps.MultiplechoiceConfig',
     'todolist.apps.TodolistConfig',
     'quizzes.apps.QuizzesConfig',
     'django.contrib.admin',
