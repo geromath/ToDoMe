@@ -16,8 +16,6 @@ body {
 }
 
 .navbar-default {
-    /*Change background of navbar, looks weird*/
-    /*background: #fffde2;*/
     color: dimgray;
     border-bottom: 1px solid white;
 }
@@ -26,16 +24,29 @@ body {
     color: dimgray;
 }
 
-/* ALT UNDER DETTE ER KUN FOR INDEX.HTML */
-/* Should probably split into separate css file?? */
+/* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
+/* ---------------------------------------------------------------------- */
 
-/*Header*/
+/*Headers*/
 
-header {
-    background: #3e4249 url('images/header-bg.png');
+#indexHeader {
+    background: #3e4249 url('images/headerIndex.png');
     color: #ccc;
     margin-bottom: 20px;
     border-bottom: 1px solid #080808;
+}
+
+#archiveHeader {
+    background: #3e4249 url('images/headerArchive.png');
+    color: #ccc;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #080808;
+}
+
+header {
+    height: 75px;
+    width: 100%;
+
 }
 
 h1.header-title {
@@ -45,7 +56,11 @@ h1.header-title {
 }
 
 .pull-right .btn {
-    margin: 20px 0 10px;
+    margin: 15px 0 10px;
+}
+
+.badge {
+    font-size: 14px;
 }
 
 /*List group*/
@@ -59,12 +74,14 @@ h1.header-title {
     cursor: pointer;
 }
 
-.list-group-item:hover .buttons, .archive-button, table.table tr:hover .row-buttons {
+.list-group-item:hover .buttons {
     display: block;
 }
 
 .list-group-item-heading {
     font-size: 150%;
+    font-weight: bold;
+    padding-bottom: 5px;
 }
 
 .list-group-item-text {
@@ -101,3 +118,4 @@ input.task-input {
 input.task-input:focus, input.task-input:active {
     outline: none;
 }
+

@@ -12,18 +12,23 @@ from .forms import TaskForm
 from django.core.urlresolvers import reverse_lazy, reverse
 
 from django.http import HttpResponse
-
+# To be created....
 def index(request):
 
     context = {
-        'nbar': 'home'
+        'nbar': 'startpage'
     }
-    return render(request, 'todolist/home.html', context)
+    return render(request, 'todolist/startpage.html', context)
 
 
 def archive(request):
+    all_tasks = Task.objects.all()
+    task_count = Task.objects.filter(archived=True).count()
     context = {
-        'nbar': 'archive'
+        'nbar': 'archive',
+        'all_tasks': all_tasks,
+        'task_count': task_count,
+        'title': 'Archive',
     }
     return render(request, 'todolist/archive.html', context)
 
@@ -50,6 +55,7 @@ def todo(request):
         'task_count': task_count,
         'form': form,
         'nbar': 'home',
+        'title': 'TODOs',
     }
 
     return render(request, 'todolist/index.html', context)
@@ -94,10 +100,15 @@ class TaskDelete(DeleteView):
 
 def task_checked(request, pk):
     task = Task.objects.get(pk=pk)
-    task.archived = True
-    task.save()
-    return render(request, "todolist/index.html", None)
-
+    referer = request.META.get('HTTP_REFERER')
+    if("/archive/" in referer):
+        task.archived = False
+        task.save()
+        return HttpResponseRedirect(reverse("todolist:archive"))
+    else:
+        task.archived = True
+        task.save()
+        return HttpResponseRedirect(reverse("todolist:todo"))
 
 class UserFormView(View):
     form_class = UserForm #blueprint til det vi skal bruke

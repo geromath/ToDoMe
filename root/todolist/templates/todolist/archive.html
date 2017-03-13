@@ -1,15 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends 'todolist/base.html' %}
-{% block title %} Archived TODOs {% endblock %}
+
+<head>
+    {% extends 'todolist/base.html' %}
+    {% load staticfiles %}
+    <title>{% block title %} Archived TODOs {% endblock %}</title>
+</head>
 
 <body>
 
 {% block body %}
     <!-- All content for sub-pages goes between these block tags -->
 
-    <h2> COMPLETED TODOs</h2>
+    <header id="archiveHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="clearfix">
+                        <div>
+                            <h1 class="header-title">{{ title }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
+    <div class="row">
+        <div class="panel panel-default">
+
+            {% if all_tasks %}
+                {% for task in all_tasks %}
+                    {% if task.archived == True %}
+                        <ul class="list-group" id="todo_list">
+                            <div class="col-sm-4">
+                                <div class="list-group-item">
+                                    <div class="post-slide">
+                                        <div class="post-content">
+                                            <h4 class="list-group-item-heading">{{ task.task_text }}
+                                                {% if task.due_date %}
+                                                    <span class="badge">Due date: {{ task.due_date }}</span>
+                                                {% endif %}
+                                            </h4>
+                                            <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
+
+                                            <div class="buttons">
+
+                                                <!-- Unarchive TODO -->
+                                                <form action="{% url 'todolist:task_checked' task.id %}" method="post"
+                                                      style="display: inline">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                                    <button type="submit" class="btn btn-info btn-sm" title="Unarchive">
+                                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                                    </button>
+                                                </form>
+
+                                                <form action="{% url 'todolist:delete_task' task.id %}" method="post"
+                                                      style="display: inline">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}
 </body>
