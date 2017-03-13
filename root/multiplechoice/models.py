@@ -1,10 +1,10 @@
-from django.db import models
 from __future__ import unicode_literals
+from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext as _
 from django.db import models
-from quiz.models import Question
 
+from root.quizzes.models import Question
 
 ANSWER_ORDER_OPTIONS = (
     ('content', _('Content')),

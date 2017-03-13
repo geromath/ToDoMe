@@ -1,6 +1,7 @@
 from django.test import TestCase
-from .models import Category, SubCategory
+from .models import Category, SubCategory, Quiz, Question
 
+from root.multiplechoice.models import MCQuestion, Answer
 
 class TestCategory(TestCase):
 
@@ -13,5 +14,37 @@ class TestCategory(TestCase):
 
     def test_sub_categories(self):
         self.assertEquals(self.sub1.category, self.c1)
+
+class TestQuiz(TestCase):
+
+    def setUp(self):
+        self.c1 = Category.objects.new_category(category='drinks')
+        self.quiz1 = Quiz.objects.create(id=1,
+                                         title='test quiz 1',
+                                         description='d1',
+                                         url='url1')
+        self.quiz2 = Quiz.objects.create(id=2,
+                                        title='test quiz 2',
+                                        description='d2',
+                                        url='url 2')
+        self.quiz3 = Quiz.objects.create(id=3,
+                                         title='test quiz 3',
+                                         description='d3',
+                                         url='test url  3')
+        self.quiz4 = Quiz.objects.create(id=4,
+                                         title='test quiz 4',
+                                         description='d4',
+                                         url='T-!£$%^&*Q4')
+        self.question1 = MCQuestion.objects.create(id=1,
+                                                   content='beste finske vodkaen')
+        self.question1.quiz.add(self.quiz1)
+
+    def test_quiz_url(self):
+        self.assertEqual(self.quiz1.url, 'url1')
+        self.assertEqual(self.quiz2.url, 'url-2')
+        self.assertEqual(self.quiz3.url, 'test-url-3')
+        self.assertEqual(self.quiz4.url, 't-q4')
+
+
 
 
