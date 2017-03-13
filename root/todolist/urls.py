@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^$', views.avatar_screen, name='avatar_screen'),
 
     # Login screen
-    url(r'^accounts/login$', auth_views.login, name='login'),
+    url(r'^login$', auth_views.login, name='login'),
     url(r'^logout$', auth_views.logout, name='logout'),
 
     # Main view
