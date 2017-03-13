@@ -26,6 +26,7 @@ class LoginForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
+        fields = "__all__"
 
     def clean_avatar(self):
         avatar = self.cleaned_data['avatar']
@@ -57,6 +58,7 @@ class UserProfileForm(forms.ModelForm):
             pass
 
         return avatar
+
 
 class BootstrapModelForm(ModelForm):
     task_text = forms.CharField(label="Title", widget=forms.TextInput)
