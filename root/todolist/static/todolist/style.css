@@ -1,25 +1,21 @@
-body{
+body {
     background: #F7FFF6 url('images/body-bg.png');
     padding-top: 50px;
 }
 
-.navbar-brand{
+.navbar-brand {
     font-family: 'Satisfy', cursive;
-    color: #eee;
-    letter-spacing: -1px;
     text-transform: uppercase;
 }
 
-.navbar-brand strong{
+.navbar-brand strong {
     font-weight: bold;
     letter-spacing: -2px;
     padding-right: 3px;
-    color: #fff;
+    color: #eee;
 }
 
-.navbar-default{
-    /*Change background of navbar, looks weird*/
-    /*background: #fffde2;*/
+.navbar-default {
     color: dimgray;
     border-bottom: 1px solid white;
 }
@@ -28,22 +24,29 @@ body{
     color: dimgray;
 }
 
+/* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
+/* ---------------------------------------------------------------------- */
 
+/*Headers*/
 
-
-/* ALT UNDER DETTE ER KUN FOR INDEX.HTML */
-/* Should probably split into separate css file?? */
-
-
-
-/*Header*/
-
-header{
-    background: #3e4249 url('images/header-bg.png');
+#indexHeader {
+    background: #3e4249 url('images/headerIndex.png');
     color: #ccc;
-    padding: 15px;
     margin-bottom: 20px;
     border-bottom: 1px solid #080808;
+}
+
+#archiveHeader {
+    background: #3e4249 url('images/headerArchive.png');
+    color: #ccc;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #080808;
+}
+
+header {
+    height: 75px;
+    width: 100%;
+
 }
 
 h1.header-title {
@@ -52,32 +55,40 @@ h1.header-title {
     letter-spacing: -2px;
 }
 
-.pull-right .btn{
-    margin: 20px 0 10px;
+.pull-right .btn {
+    margin: 15px 0 10px;
+}
+
+.badge {
+    font-size: 14px;
 }
 
 /*List group*/
 
+.list-group-item {
+    word-wrap: break-word;
+}
 
-.list-group-item:hover{
+.list-group-item:hover {
     background: #dcedee;
     cursor: pointer;
 }
 
-.list-group-item:hover .buttons, .archive-button, table.table tr:hover .row-buttons{
+.list-group-item:hover .buttons {
     display: block;
 }
 
-
-.list-group-item-heading{
+.list-group-item-heading {
     font-size: 150%;
+    font-weight: bold;
+    padding-bottom: 5px;
 }
 
-.list-group-item-text{
+.list-group-item-text {
     color: #999;
 }
 
-.buttons{
+.buttons {
     position: absolute;
     height: 20px;
     width: 80px;
@@ -87,24 +98,13 @@ h1.header-title {
     display: none;
 }
 
-.archive-button{
-    position: absolute;
-    height: 20px;
-    width: 80px;
-    bottom: 10px;
-    left: 10px;
-    text-align: center;
-    display: none;
-}
-
-.panel-footer small{
+.panel-footer small {
     color: #999;
 }
 
-
 /* Task modal */
 
-input.task-input{
+input.task-input {
     width: 100%;
     border: none;
     font-size: 18px;
@@ -115,6 +115,7 @@ input.task-input{
     font-style: italic;
 }
 
-input.task-input:focus, input.task-input:active{
+input.task-input:focus, input.task-input:active {
     outline: none;
 }
+

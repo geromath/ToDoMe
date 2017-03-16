@@ -1,0 +1,32 @@
+{% extends 'todolist/base.html' %}
+{% block title %} Edit TODO {% endblock %}
+
+
+{% block body %}
+<!--Simple form for editing a TODO-->
+<form class="form-group" action="" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+
+    <div>
+        <div>
+            <span class="text-danger small">{{ field.errors }}</span>
+        </div>
+        <!--HVOR ER DISSE LABEL_TAG'ENE???-->
+        <label>{{ field.label_tag }}</label>
+        <div>{{ field }}</div>
+    </div>
+
+
+    {% endfor %}
+    <div class="pull-right">
+        <button type="submit" class="btn btn-success ">Save Changes</button>
+        <a href="{% url 'todolist:todo' %}" class="btn btn-default">Dismiss</a>
+    </div>
+</form>
+
+<script>
+    $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+</script>
+
+{% endblock body %}
