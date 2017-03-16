@@ -4,7 +4,6 @@ from django.forms import ModelForm
 
 from .models import Task
 
-
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput) #teksten som tastes inn kommer som ***
 
