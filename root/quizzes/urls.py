@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-
+from . import views
 from .views import QuizListView, CategoriesListView,\
     ViewQuizListByCategory, QuizUserProgressView, QuizMarkingList,\
     QuizMarkingDetail, QuizDetailView, QuizTake
@@ -9,7 +9,10 @@ from .views import QuizListView, CategoriesListView,\
 urlpatterns = [
     #url(r'^$', views.index, name='index'),
 
-    # All of the below are subpages of /quizzes/ ?
+
+
+#https://docs.djangoproject.com/en/1.10/topics/class-based-views/generic-display/
+# All of the below are subpages of /quizzes/
 
     url(regex=r'^$',
         view=QuizListView.as_view(),

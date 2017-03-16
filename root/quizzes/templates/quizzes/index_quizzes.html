@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "quizzes/base.html" %}
+
+<h1>QUIZZES!!</h1>
+
+
+{% block content %}
+    <h2>Quizzes</h2>
+    <ul>
+        {% for quiz in object_list %}
+            <li>{{ quiz.title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
