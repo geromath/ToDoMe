@@ -1,16 +1,14 @@
-__author__ = 'caroline1'
 
-from urllib.error import URLError
 from django import template
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from root.gravatars.gravatar_tags import GRAVATAR_DEFAULT_SIZE, get_gravatar_url, get_gravatar_profile_url
+from .gravatar_tags import get_gravatar_url, get_gravatar_profile_url, GRAVATAR_DEFAULT_SIZE
 
 # Get template.Library instance
 register = template.Library()
 
 
-def gravatar_url(user_or_email, size=GRAVATAR_DEFAULT_SIZE):
+def gravatar_url(user_or_email, size= GRAVATAR_DEFAULT_SIZE):
     """ Builds a gravatar url from an user or email """
     if hasattr(user_or_email, 'email'):
         email = user_or_email.email
@@ -19,7 +17,7 @@ def gravatar_url(user_or_email, size=GRAVATAR_DEFAULT_SIZE):
 
     try:
         return escape(get_gravatar_url(email=email, size=size))
-    except URLError:
+    except:
         return 'Error: does not exist'
 
 
@@ -33,7 +31,7 @@ def gravatar(user_or_email, size=GRAVATAR_DEFAULT_SIZE, alt_text='', css_class='
     try:
         url = escape(get_gravatar_url(email=email, size=size))
 
-    except URLError:
+    except:
         return ''
 
     return mark_safe(
@@ -52,7 +50,7 @@ def gravatar_profile_url(user_or_email):
 
     try:
         return get_gravatar_profile_url(email)
-    except URLError:
+    except :
         return ''
 
 

@@ -1,8 +1,6 @@
 from django.test import TestCase
-
 from urllib.parse import urlparse, parse_qs, quote_plus
 from django.template import Context, Template
-from django.test import TestCase
 from django.utils.html import escape
 from root.gravatars.gravatar_tags import calculate_gravatar_hash, get_gravatar_url, GRAVATAR_DEFAULT_SIZE, \
     GRAVATAR_DEFAULT_IMAGE, GRAVATAR_DEFAULT_SECURE, GRAVATAR_URL, GRAVATAR_SECURE_URL, GRAVATAR_DEFAULT_RATING, \
@@ -164,7 +162,7 @@ class TestGravatarTemplateTags(TestCase):
         """
         # class with email attribute
         class user:
-            email = 'bouke@webatoom.nl'
+            email = 'username@stud.ntnu.no'
 
         context = Context({'user': user})
 

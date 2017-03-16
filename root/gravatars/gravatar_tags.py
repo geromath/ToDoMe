@@ -1,4 +1,6 @@
-__author__ = 'caroline1'
+
+from django.utils.safestring import mark_safe
+from root.gravatars.gravatar import register
 from urllib.error import URLError, HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -19,15 +21,35 @@ GRAVATAR_RATING_PG = 'pg'
 GRAVATAR_RATING_R = 'r'
 GRAVATAR_RATING_X = 'x'
 
-# Get Gravatar base url from settings.py
-GRAVATAR_URL = getattr(settings, 'GRAVATAR_URL', 'http://www.gravatar.com/')
-GRAVATAR_SECURE_URL = getattr(settings, 'GRAVATAR_SECURE_URL', 'https://secure.gravatar.com/')
 
 # Get user defaults from settings.py
-GRAVATAR_DEFAULT_SIZE = getattr(settings, 'GRAVATAR_DEFAULT_SIZE', 80)
+GRAVATAR_DEFAULT_SIZE = getattr(settings, 'GRAVATAR_DEFAULT_SIZE', 40)
 GRAVATAR_DEFAULT_IMAGE = getattr(settings, 'GRAVATAR_DEFAULT_IMAGE', GRAVATAR_DEFAULT_IMAGE_MYSTERY_MAN)
 GRAVATAR_DEFAULT_RATING = getattr(settings, 'GRAVATAR_DEFAULT_RATING', GRAVATAR_RATING_G)
 GRAVATAR_DEFAULT_SECURE = getattr(settings, 'GRAVATAR_DEFAULT_SECURE', True)
+
+
+# return only the URL of the gravatar
+# TEMPLATE USE:  {{ email|gravatar_url:150 }}
+@register.filter
+def gravatar_url(email, size=40):
+    default = "https://example.com/static/images/defaultavatar.jpg"
+    return "https://www.gravatar.com/avatar/%s?%s" % (hashlib.md5(email.lower()).hexdigest(), urllib.urlencode({'d': default, 's': str(size)}))
+
+
+# return an image tag with the gravatar
+# TEMPLATE USE:  {{ email|gravatar:150 }}
+@register.filter
+def gravatar(email, size=40):
+    url = gravatar_url(email, size)
+    return mark_safe('<img src="%s" height="%d" width="%d">' % (url, size, size))
+
+
+# Get Gravatar base url from settings.py
+GRAVATAR_URL = gravatar_url(email='username@stud.ntnu.no', size=40)
+# \getattr(settings, 'GRAVATAR_URL', 'http://www.gravatar.com/')
+GRAVATAR_SECURE_URL = gravatar(email='username@stud.ntnu.no', size=40)
+# getattr(settings, 'GRAVATAR_SECURE_URL', 'https://secure.gravatar.com/')
 
 
 def calculate_gravatar_hash(email):
@@ -103,5 +125,3 @@ def get_gravatar_profile_url(email, secure=GRAVATAR_DEFAULT_SECURE):
     url = '{base}{hash}'.format(base=url_base, hash=email_hash)
 
     return url
-
-
