@@ -34,7 +34,7 @@ class SittingFilterTitleMixin(object):
 
 class QuizListView(ListView):
     model = Quiz
-    template_name = 'quizzes/index_quizzes.html' #lagt til selv
+    template_name = 'quizzes/index_quizzes.html' #lagt til selv. Dette er forsiden man kommer til.
 
     def get_queryset(self):
         queryset = super(QuizListView, self).get_queryset()
