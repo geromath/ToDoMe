@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Login{% endblock %}</title>
+    <title>{% block title %}Login{% endblock title%}</title>
 
     <!-- Loads the path to our static files -->
     {% load staticfiles %}
@@ -24,17 +24,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/af.js"></script>
 
     <script src="{% static 'todolist/script.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'registration/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'todolist/style.css' %}">
+
+
 </head>
 
-<div class="container-fluid">
-    <div class="col-sm-6 col-sm-offset-3 text-center">
-        <h1> Welcome to ToDoMe </h1>
-        <div class="panel panel-default">
-            <div class="form-group">
-                {% block content %}
+{% block body %}
+
+<!-- Sign In form starts below -->
+<div class="container">
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Sign In</div>
+                <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a>
+                </div>
+            </div>
+
+            <div style="padding-top:30px" class="panel-body">
+
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
                 {% if form.errors %}
-                <p>Your username and password didn't match. Please try again.</p>
+                <p>Your username and password did not match. Please try again.</p>
                 {% endif %}
 
                 {% if next %}
@@ -46,24 +58,60 @@
                 {% endif %}
                 {% endif %}
 
-                <form method="post" action="{% url 'todolist:login' %}">
+                <form id="loginform" class="form-horizontal" action="" method="POST" role="form">
                     {% csrf_token %}
-                    <table>
-                        <tr>
-                            <td>{{ form.username.label_tag }}</td>
-                            <td>{{ form.username }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ form.password.label_tag }}</td>
-                            <td>{{ form.password }}</td>
-                        </tr>
-                    </table>
 
-                    <input type="submit" value="login"/>
-                    <input type="hidden" name="next" value="{{ next }}"/>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="login-username" type="text" class="form-control" name="username" value=""
+                               placeholder="Username or Email">
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="login-password" type="password" class="form-control" name="password"
+                               placeholder="Password">
+                    </div>
+
+
+                    <div class="input-group">
+                        <div class="checkbox">
+                            <label>
+                                <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div style="margin-top:10px" class="form-group">
+
+                        <!-- Login buttons -->
+                        <div class="col-sm-12 controls">
+                            <input type="submit" class="btn btn-success" id="btn-login" value="Login">
+                            <input type="hidden" name="next" value="{{ next }}"/>
+
+                            <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-12 control">
+                            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                                Don't have an account?
+                                <a href="{% url 'todolist:register' %}">
+                                    Sign Up Here
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </form>
+
+
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock body %}

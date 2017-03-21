@@ -78,12 +78,18 @@
                     </a>
                 </li>
                 <!-- My Profile -->
-                <li class="">
+                <li class="dropdown">
                     <!-- TEMPORARILY REDIRECT MY PROFILE TO ADMIN PAGE-->
                     <!-- Make it display Sign up/Log in if not signed in, and Log out if signed in -->
-                    <a href="{% url 'todolist:register' %}">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; My Profile
-                    </a>
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'todolist:register' %}">View Profile</a></li>
+                        <li><a href="{% url 'todolist:logout' %}?next={% url 'todolist:login' %}" type="submit">Sign
+                            Out</a></li>
+
+                    </ul>
                 </li>
             </ul>
 

@@ -3,6 +3,11 @@ body {
     padding-top: 50px;
 }
 
+.dropdown:hover .dropdown-menu{
+    display: block;
+    margin-top: 0;
+}
+
 .navbar-brand {
     font-family: 'Satisfy', cursive;
     text-transform: uppercase;
@@ -23,6 +28,8 @@ body {
 .navbar {
     color: dimgray;
 }
+
+
 
 /* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
 /* ---------------------------------------------------------------------- */
