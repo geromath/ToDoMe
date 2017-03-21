@@ -1,0 +1,103 @@
+body {
+    background: #F7FFF6 url('images/body-bg.png');
+    padding-top: 50px;
+}
+
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+    text-transform: uppercase;
+}
+
+.navbar-brand strong {
+    font-weight: bold;
+    letter-spacing: -2px;
+    padding-right: 3px;
+    color: #eee;
+}
+
+.navbar-default {
+    color: dimgray;
+    border-bottom: 1px solid white;
+}
+
+.navbar {
+    color: dimgray;
+}
+
+/* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
+/* ---------------------------------------------------------------------- */
+
+/*Headers*/
+
+#indexHeader {
+    background: #3e4249 url('images/headerIndex.png');
+    color: #ccc;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #080808;
+}
+
+#archiveHeader {
+    background: #3e4249 url('images/headerArchive.png');
+    color: #ccc;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #080808;
+}
+
+header {
+    height: 75px;
+    width: 100%;
+
+}
+
+h1.header-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -2px;
+}
+
+.pull-right .btn {
+    margin: 15px 0 10px;
+}
+
+.badge {
+    font-size: 14px;
+}
+
+/*List group*/
+
+.list-group-item {
+    word-wrap: break-word;
+}
+
+.list-group-item:hover {
+    background: #dcedee;
+    cursor: pointer;
+}
+
+.list-group-item:hover .buttons {
+    display: block;
+}
+
+.list-group-item-heading {
+    font-size: 150%;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.list-group-item-text {
+    color: #999;
+}
+
+.buttons {
+    position: absolute;
+    height: 20px;
+    width: 80px;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+    display: none;
+}
+
+.panel-footer small {
+    color: #999;
+}
