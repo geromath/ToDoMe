@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 # Use nose to run all tests
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
-# Tell nose to measure coverage on the 'quizzes' app. Add more apps behind quizzes.
+# Tell nose to measure coverage on the 'quizzes' app. Add more apps behind quizzes, separating with comma.
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=quizzes',

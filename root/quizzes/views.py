@@ -42,8 +42,10 @@ class QuizListView(ListView):
 
 
 class QuizDetailView(DetailView):
+
     model = Quiz
     slug_field = 'url'
+    template_name = ''
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -133,6 +135,7 @@ class QuizMarkingDetail(QuizMarkerMixin, DetailView):
         return context
 
 class QuizTake(FormView):
+    #denne man skal komme til når man trykker på en quiz i index_quizzes (forsiden)
     form_class = QuestionForm
     template_name = 'question.html'
 
