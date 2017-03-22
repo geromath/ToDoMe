@@ -45,7 +45,7 @@ class QuizDetailView(DetailView):
 
     model = Quiz
     slug_field = 'url'
-    template_name = '' #ingen template for denne enda
+    template_name = 'quizzes/detail.html'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -164,9 +164,6 @@ class QuizTake(FormView):
         else:
             self.question = self.anon_next_question()
             self.progress = self.anon_sitting_progress()
-
-        if self.question.__class__ is Essay_Question:
-            form_class = EssayForm
 
         return form_class(**self.get_form_kwargs())
 

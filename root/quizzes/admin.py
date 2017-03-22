@@ -81,23 +81,6 @@ class ProgressAdmin(admin.ModelAdmin):
     search_fields = ('user', 'score', )
 
 
-class TFQuestionAdmin(admin.ModelAdmin):
-    list_display = ('content', 'category', )
-    list_filter = ('category',)
-    fields = ('content', 'category', 'sub_category',
-              'figure', 'quiz', 'explanation', 'correct',)
-
-    search_fields = ('content', 'explanation')
-    filter_horizontal = ('quiz',)
-
-
-class EssayQuestionAdmin(admin.ModelAdmin):
-    list_display = ('content', 'category', )
-    list_filter = ('category',)
-    fields = ('content', 'category', 'sub_category', 'quiz', 'explanation', )
-    search_fields = ('content', 'explanation')
-    filter_horizontal = ('quiz',)
-
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)

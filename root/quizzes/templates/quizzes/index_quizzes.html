@@ -2,14 +2,16 @@
 <html lang="en">
 {% extends "quizzes/base.html" %}
 
+{% block title %}
 <h1>QUIZZES!!</h1>
-
+{% endblock %}
 
 {% block content %}
     <h2>Quizzes</h2>
     <ul>
         {% for quiz in object_list %}
-            <li><a href="{% url 'quizzes:quiz_question' quiz.id %}"> {{ quiz.title }} </a></li>
+            <li class="list-group-item">
+                <a href="{% url 'quizzes:quiz_start_page' quiz.pk %}"> {{ quiz.title }} </a></li>
         {% endfor %}
     </ul>
 {% endblock %}

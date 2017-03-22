@@ -18,6 +18,21 @@ urlpatterns = [
         view=QuizListView.as_view(),
         name='quiz_index'),
 
+    url(regex=r'^(?P<slug>[\w-]+)/$',  # r'^(?P<slug>[\w-]+)/$' ELLER teste: r'^(?P<pk>[\d.]+)/$'
+        view=QuizDetailView.as_view(),
+        name='quiz_start_page'),
+
+    #  passes variable 'quiz_name' to quiz_take view
+    url(regex=r'^(?P<quiz_name>[\w-]+)/take/$',
+        # r'^(?P<quiz_name>[\w-]+)/take/$' ELLER teste: r'^(?P<quiz_id>[0-9]+)/$'
+        view=QuizTake.as_view(),
+        name='quiz_take'),
+
+
+
+
+
+
     url(regex=r'^category/$',
         view=CategoriesListView.as_view(),
         name='quiz_category_list_all'),
@@ -38,13 +53,7 @@ urlpatterns = [
         view=QuizMarkingDetail.as_view(),
         name='quiz_marking_detail'),
 
-    #  passes variable 'quiz_name' to quiz_take view
-    url(regex=r'^(?P<slug>[\w-]+)/$',
-        view=QuizDetailView.as_view(),
-        name='quiz_start_page'),
 
-    url(regex=r'^(?P<quiz_name>[\w-]+)/take/$',
-        view=QuizTake.as_view(),
-        name='quiz_question'),
+
 ]
 
