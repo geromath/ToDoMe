@@ -45,7 +45,7 @@ class QuizDetailView(DetailView):
 
     model = Quiz
     slug_field = 'url'
-    template_name = ''
+    template_name = '' #ingen template for denne enda
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -137,7 +137,7 @@ class QuizMarkingDetail(QuizMarkerMixin, DetailView):
 class QuizTake(FormView):
     #denne man skal komme til når man trykker på en quiz i index_quizzes (forsiden)
     form_class = QuestionForm
-    template_name = 'question.html'
+    template_name = 'quizzes/question.html'
 
     def dispatch(self, request, *args, **kwargs):
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['quiz_name'])

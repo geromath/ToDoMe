@@ -6,10 +6,10 @@ from .views import QuizListView, CategoriesListView,\
     QuizMarkingDetail, QuizDetailView, QuizTake
 
 
+app_name = 'quizzes'
+
 urlpatterns = [
     #url(r'^$', views.index, name='index'),
-
-
 
 #https://docs.djangoproject.com/en/1.10/topics/class-based-views/generic-display/
 # All of the below are subpages of /quizzes/
