@@ -1,3 +1,4 @@
+from django.contrib.postgres.search import SearchVector
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.views.generic import View, CreateView, UpdateView, DeleteView
@@ -9,6 +10,7 @@ from django.template import RequestContext
 from .models import Task
 from .forms import TaskForm, LoginForm
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.db.models import Q
 
 
 def custom_login(request):
@@ -48,6 +50,21 @@ def todo(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.filter(archived=False).count()
 
+    queryset_list = Task.objects.active()
+
+    # The below 2 lines do not function properly.
+    # Need to add a way to check if user is in /archive/, to search the archived TODOs
+    if '/archive/' in request.GET:
+        queryset_list = Task.objects.archived()
+
+
+    query = request.GET.get("q")
+    if query:
+        all_tasks = queryset_list.filter(
+            Q(task_text__icontains=query) |
+            Q(description__icontains=query)
+        ).distinct()
+
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -64,6 +81,7 @@ def todo(request):
         'form': form,
         'nbar': 'home',
         'title': 'TODOs',
+        'queryset_list': queryset_list
     }
 
     return render(request, 'todolist/index.html', context)
