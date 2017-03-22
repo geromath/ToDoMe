@@ -1,5 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/geromath/ToDoMe/badge.svg?branch=master)](https://coveralls.io/github/geromath/ToDoMe?branch=master)
-# ToDoMe 
+# ToDoMe  [![Coverage Status](https://coveralls.io/repos/github/geromath/ToDoMe/badge.svg?branch=master)](https://coveralls.io/github/geromath/ToDoMe?branch=master)
 
 ![ToDoMe](https://raw.github.com/geromath/ToDoMe/dev/images/todome_logo.png)
 
