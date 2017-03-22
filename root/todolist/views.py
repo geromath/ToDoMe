@@ -1,4 +1,3 @@
-from django.contrib.postgres.search import SearchVector
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.views.generic import View, CreateView, UpdateView, DeleteView
@@ -60,6 +59,7 @@ def todo(request):
 
     query = request.GET.get("q")
     if query:
+        if 'archive'
         all_tasks = queryset_list.filter(
             Q(task_text__icontains=query) |
             Q(description__icontains=query)

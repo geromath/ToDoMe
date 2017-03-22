@@ -41,8 +41,3 @@ urlpatterns = [
     url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
 
 ]
-
-
-
-
-
