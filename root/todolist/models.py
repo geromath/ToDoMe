@@ -1,5 +1,9 @@
 from django.db import models
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib.auth.models import User
+from oauth2client.contrib.django_orm import FlowField
+from oauth2client.contrib.django_orm import CredentialsField
+from oauth2client.contrib.django_orm import Storage
 
 class Task(models.Model):
     task_text = models.CharField(max_length = 150)
@@ -16,3 +20,13 @@ class Task(models.Model):
 
     class Meta:
         ordering = ["-time_created"]
+
+
+class FlowModel(models.Model):
+    id = models.ForeignKey(User, primary_key=True)
+    flow = FlowField()
+
+class CredentialsModel(models.Model):
+    id = models.ForeignKey(User, primary_key=True)
+    credential = CredentialsField()
+

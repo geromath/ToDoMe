@@ -40,6 +40,10 @@ urlpatterns = [
     # Delete task
     url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
 
+    # Google Cal
+    url(r'^gcal/', views.gcal, name='gcal'),
+    url(r'^oauth2callback/', views.auth_return, name='gcal_callback'),
+
 ]
 
 
