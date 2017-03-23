@@ -1,4 +1,7 @@
 from django.test import TestCase
+from django.urls import resolve
+from django.urls import reverse
+
 from root.todolist.models import Task
 
 # Create your tests here.
@@ -17,3 +20,17 @@ class TaskTestCase(TestCase):
         self.assertEqual("Homework", homework.task_text)
         self.assertIs(homework.archived, False)
         self.assertEqual("03/22/2017", quiz.due_date)
+
+class UrlTestCase(TestCase):
+    def testReverseResolve(self):
+        url = reverse('todo_detail', args=[53])
+        self.assertEqual(url, '/archive/53')
+
+        register_resolver = resolve('/register/')
+        self.assertEqual(register_resolver.view_name, 'register')
+
+        login_resolver = resolve('/login/')
+        self.assertEqual(login_resolver.view_name, 'login')
+
+        logout_resolver = resolve('/logout/')
+        self.assertEqual(logout_resolver.view_name, 'logout')
