@@ -12,12 +12,6 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
 
 
-def custom_login(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('todolist:todo')
-    else:
-        return login(request)
-
 @login_required()
 def index(request):
     context = {
@@ -26,7 +20,7 @@ def index(request):
     return render(request, 'todolist/startpage.html', context)
 
 
-@login_required()
+@login_required(login_url='todolist:login')
 def archive(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.filter(archived=True).count()
@@ -39,12 +33,12 @@ def archive(request):
     return render(request, 'todolist/archive.html', context)
 
 
-@login_required()
+@login_required(login_url='todolist:login')
 def avatar_screen(request):
     return render(request, 'todolist/avatar_screen.html', None)
 
 
-@login_required()
+@login_required(login_url='todolist:login')
 def todo(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.filter(archived=False).count()
@@ -59,7 +53,6 @@ def todo(request):
 
     query = request.GET.get("q")
     if query:
-        if 'archive'
         all_tasks = queryset_list.filter(
             Q(task_text__icontains=query) |
             Q(description__icontains=query)
@@ -87,7 +80,7 @@ def todo(request):
     return render(request, 'todolist/index.html', context)
 
 
-@login_required()
+@login_required(login_url='todolist:login')
 def todo_detail(request, id=None):
     instance = get_object_or_404(Task, id=id)
     context = {
@@ -98,7 +91,7 @@ def todo_detail(request, id=None):
 
 
 # Made a separate method for updating todos, seems to work, just need to implement it with modals somehow..
-@login_required()
+@login_required(login_url='todolist:login')
 def todo_update(request, id=None):
     instance = get_object_or_404(Task, id=id)
     form = TaskForm(request.POST or None, instance=instance)
@@ -130,6 +123,12 @@ class TaskUpdate(UpdateView):
 class TaskDelete(DeleteView):
     model = Task
     success_url = reverse_lazy('todolist:todo')
+
+class AuthRequiredMiddleware(object):
+    def process_request(self, request):
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect(reverse('todolist:login')) # or http response
+        return None
 
 
 def task_checked(request, pk):

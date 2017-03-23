@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
+
 from . import views
 
 app_name = 'todolist'
@@ -10,7 +12,7 @@ urlpatterns = [
     url(r'^$', views.avatar_screen, name='avatar_screen'),
 
     # Login screen
-    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^login/$', auth_views.login, name='login', kwargs={'redirect_authenticated_user': True}),
     url(r'^logout/$', auth_views.logout, name='logout'),
 
     # Main view
@@ -39,5 +41,8 @@ urlpatterns = [
 
     # Delete task
     url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
+
+    # Redirects from any page we have not specified a url for
+    url(r'^.*$', RedirectView.as_view(url='/login/', permanent=False), name='index')
 
 ]
