@@ -32,6 +32,7 @@ def archive(request):
     }
     return render(request, 'todolist/archive.html', context)
 
+@login_required
 def avatar_screen(request):
     return render(request, 'todolist/avatar_screen.html', None)
 
