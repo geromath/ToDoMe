@@ -1,3 +1,4 @@
+import datetime
 from django.test import TestCase
 from django.urls import resolve
 from django.urls import reverse
@@ -9,17 +10,20 @@ from root.todolist.models import Task
 class TaskTestCase(TestCase):
     def setUp(self):
         Task.objects.create(task_text="Homework", description="Do my homework", due_date="", archived=False)
+        current_date = datetime.date()
         Task.objects.create(task_text="Take a quiz", description="Complete quiz regarding TDT4145",
-                            due_date="03/22/2017")
+                            due_date=current_date)
         Task.objects.create(task_text=13, description="")
 
     def testTaskInfo(self):
         homework = Task.objects.get(task_text="Homework")
         quiz = Task.objects.get(description="Complete quiz regarding TDT4145")
+        today = datetime.date()
+
 
         self.assertEqual("Homework", homework.task_text)
         self.assertIs(homework.archived, False)
-        self.assertEqual("03/22/2017", quiz.due_date)
+        self.assertEqual(today, quiz.due_date)
 
 class UrlTestCase(TestCase):
     def testReverseResolve(self):
