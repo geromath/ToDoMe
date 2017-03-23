@@ -18,13 +18,13 @@ urlpatterns = [
         view=QuizListView.as_view(),
         name='quiz_index'),
 
-    url(regex=r'^(?P<slug>[\w-]+)/$',  # r'^(?P<slug>[\w-]+)/$' ELLER teste: r'^(?P<pk>[\d.]+)/$'
+    url(regex=r'^(?P<slug>[\w-]+)/$',  #OBS! se paa '-'i denne r'^(?P<slug>[\w-]+)/$' ELLER teste: r'^(?P<pk>[\d.]+)/$'
         view=QuizDetailView.as_view(),
         name='quiz_start_page'),
 
     #  passes variable 'quiz_name' to quiz_take view
-    url(regex=r'^(?P<quiz_name>[\w-]+)/take/$',
-        # r'^(?P<quiz_name>[\w-]+)/take/$' ELLER teste: r'^(?P<quiz_id>[0-9]+)/$'
+    url(regex=r'^(?P<quiz_id>[0-9]+)/take/$',
+        # r'^(?P<quiz_name>[\w-]+)/take/$' ELLER teste: r'^(?P<quiz_id>[0-9]+)/take/$'
         view=QuizTake.as_view(),
         name='quiz_take'),
 

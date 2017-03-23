@@ -47,14 +47,18 @@ class QuizDetailView(DetailView):
     slug_field = 'url'
     template_name = 'quizzes/detail.html'
 
-    def get(self, request, *args, **kwargs):
+
+
+    def get(self, request, *args, **kwargs): #lagt til id selv: id=None,
+         #lagt til selv: self.instance = get_object_or_404(Quiz, id=id)
         self.object = self.get_object()
 
         if self.object.draft and not request.user.has_perm('quiz.change_quiz'):
             raise PermissionDenied
 
-        context = self.get_context_data(object=self.object)
-        return self.render_to_response(context)
+        context = self.get_context_data(object=self.object) #lagt til instance selv: instance = self.instance,
+        #return self.render_to_response(context)
+        return render(context, template_name='quizzes/detail.html')
 
 class CategoriesListView(ListView):
     model = Category
@@ -140,7 +144,7 @@ class QuizTake(FormView):
     template_name = 'quizzes/question.html'
 
     def dispatch(self, request, *args, **kwargs):
-        self.quiz = get_object_or_404(Quiz, url=self.kwargs['quiz_name'])
+        self.quiz = get_object_or_404(Quiz, url=self.kwargs['quiz_id']) #NB: Endret fra 'quiz_name'
         if self.quiz.draft and not request.user.has_perm('quiz.change_quiz'):
             raise PermissionDenied
 
