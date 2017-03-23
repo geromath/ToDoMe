@@ -3,10 +3,28 @@
 {% extends 'todolist/base.html' %}
 {% block title %} Home {% endblock title %}
 {% block body %}
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
 
+<!-- This page needs some styling before we show it to the public .. :P
+Also in need of a footer and maybe a different navbar?-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Change out row class for something more fitting and that can be styled differently.
+            See scetch on drive for how this should look -->
+            <div class="row">
+                This is a link to the todolist
+            </div>
+            <div class="row">
+                This is a link to the quizzes (?)
+            </div>
+            <div class="row">
+                This is a link to the highscore list (?)
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img src="" alt="This should be an image of the avatar, I suppose .. "/>
+            <p> This is where the notifications go. Underneath the avatar picture </p>
         </div>
     </div>
 </div>
