@@ -4,21 +4,29 @@
 
 {% block body %}
 <!--Simple form for editing a TODO-->
-<form class="form-group" action="" method="post">
+<form class="form-group" action="" method="post" style="width: 50%; margin: auto; padding: 10px;">
     {% csrf_token %}
+
     {% for field in form %}
 
-    <div>
-        <div>
-            <span class="text-danger small">{{ field.errors }}</span>
-        </div>
-        <!--HVOR ER DISSE LABEL_TAG'ENE???-->
-        <label>{{ field.label_tag }}</label>
-        <div>{{ field }}</div>
+    <div class="form-group">
+        {% if field.errors %}
+        <ul class="form-errors">
+            {% for error in field.errors %}
+            <li><span class="fa fa-exclamation-triangle"></span> <strong>
+                {{ error|escape
+                }}</strong>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {{ field.label_tag }} {{ field }}
+        {% if field.help_text %}
+        <div class="form-helptext">{{ field.help_text }}</div>
+        {% endif %}
     </div>
-
-
     {% endfor %}
+
     <div class="pull-right">
         <button type="submit" class="btn btn-success ">Save Changes</button>
         <a href="{% url 'todolist:todo' %}" class="btn btn-default">Dismiss</a>
