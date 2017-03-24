@@ -44,13 +44,15 @@ def avatar_screen(request):
 
 @login_required()
 def todo(request):
-    all_tasks = Task.objects.all()
+    all_tasks = Task.objects.filter(user=request.user)
     task_count = Task.objects.filter(archived=False).count()
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
             return HttpResponseRedirect(reverse('todolist:todo'))
         else:
             messages.error()
