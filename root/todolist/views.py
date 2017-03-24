@@ -1,3 +1,4 @@
+from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.views.generic import View, CreateView, UpdateView, DeleteView
@@ -9,13 +10,8 @@ from django.template import RequestContext
 from .models import Task
 from .forms import TaskForm, LoginForm
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.db.models import Q
 
-
-def custom_login(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('todolist:todo')
-    else:
-        return login(request)
 
 @login_required()
 def index(request):
@@ -25,10 +21,21 @@ def index(request):
     return render(request, 'todolist/startpage.html', context)
 
 
-@login_required()
+@login_required(login_url='todolist:login')
 def archive(request):
     all_tasks = Task.objects.filter(user = request.user)
     task_count = Task.objects.filter(archived=True).filter(user = request.user).count()
+
+    # Search function for archive
+    queryset_list = Task.objects.archived()
+    query = request.GET.get("q")
+    if query:
+        print("ASJDHJKASHD")
+        all_tasks = queryset_list.filter(
+            Q(task_text__icontains=query) |
+            Q(description__icontains=query)
+        ).distinct()
+
     context = {
         'nbar': 'archive',
         'all_tasks': all_tasks,
@@ -37,15 +44,24 @@ def archive(request):
     }
     return render(request, 'todolist/archive.html', context)
 
-@login_required()
+@login_required(login_url='todolist:login')
 def avatar_screen(request):
     return render(request, 'todolist/avatar_screen.html', None)
 
 
-@login_required()
+@login_required(login_url='todolist:login')
 def todo(request):
     all_tasks = Task.objects.filter(user=request.user)
     task_count = Task.objects.filter(archived=False).filter(user = request.user).count()
+
+    # Search function for active TODOs
+    queryset_list = Task.objects.active()
+    query = request.GET.get("q")
+    if query:
+        all_tasks = queryset_list.filter(
+            Q(task_text__icontains=query) |
+            Q(description__icontains=query)
+        ).distinct()
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -65,12 +81,13 @@ def todo(request):
         'form': form,
         'nbar': 'home',
         'title': 'TODOs',
+        'queryset_list': queryset_list
     }
 
     return render(request, 'todolist/index.html', context)
 
 
-@login_required()
+@login_required(login_url='todolist:login')
 def todo_detail(request, id=None):
     instance = get_object_or_404(Task, id=id)
     context = {
@@ -81,7 +98,7 @@ def todo_detail(request, id=None):
 
 
 # Made a separate method for updating todos, seems to work, just need to implement it with modals somehow..
-@login_required()
+@login_required(login_url='todolist:login')
 def todo_update(request, id=None):
     instance = get_object_or_404(Task, id=id)
     form = TaskForm(request.POST or None, instance=instance)
@@ -126,6 +143,7 @@ def task_checked(request, pk):
         task.archived = True
         task.save()
         return HttpResponseRedirect(reverse("todolist:todo"))
+
 
 class UserFormView(View):
     form_class = UserForm  # blueprint til det vi skal bruke

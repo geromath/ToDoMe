@@ -4,6 +4,14 @@ from django.contrib.auth.models import User
 from django.contrib import admin
 
 
+class TaskManager(models.Manager):
+
+    def active(self, *args, **kwargs):
+        # Task.objects.all() = super(TaskManager, self).all()
+        return super(TaskManager, self).filter(archived=False)
+    def archived(self, *args, **kwargs):
+        return super(TaskManager, self).filter(archived=True)
+
 class Task(models.Model):
     task_text = models.CharField(max_length = 150)
     description = models.TextField(max_length = 500)
@@ -11,6 +19,8 @@ class Task(models.Model):
     archived = models.BooleanField(default=False)
     time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True)
+
+    objects = TaskManager()
 
     def get_absolute_url(self):
         return reverse('todolist:index', kwargs={"id": self.id})

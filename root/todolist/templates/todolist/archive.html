@@ -5,79 +5,96 @@
     {% extends 'todolist/base.html' %}
     {% load staticfiles %}
     <title>{% block title %} Archived TODOs {% endblock %}</title>
+
 </head>
 
 <body>
 
 {% block body %}
-    <!-- All content for sub-pages goes between these block tags -->
+<!-- All content for sub-pages goes between these block tags -->
 
-    <header id="archiveHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="clearfix">
-                        <div>
-                            <h1 class="header-title">{{ title }}</h1>
-                        </div>
+<header id="archiveHeader">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="clearfix">
+                    <div>
+                        <h1 class="header-title">{{ title }}</h1>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <div class="row">
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
+            <ul class="list-group" id="todo_list">
 
-            {% if all_tasks %}
+                <!-- Each TODO shows up as a list item under here -->
+                {% if all_tasks %}
                 {% for task in all_tasks %}
-                    {% if task.archived == True %}
-                        <ul class="list-group" id="todo_list">
-                            <div class="col-sm-4">
-                                <div class="list-group-item">
-                                    <div class="post-slide">
-                                        <div class="post-content">
-                                            <h4 class="list-group-item-heading">{{ task.task_text }}
-                                                {% if task.due_date %}
-                                                    <span class="badge">Due date: {{ task.due_date }}</span>
-                                                {% endif %}
-                                            </h4>
-                                            <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
+                {% if task.archived == True %}
 
-                                            <div class="buttons">
+                <li class="list-group-item" id="todo_list_item_archived">
+                    <h4 class="list-group-item-heading">{{ task.task_text }}
+                        {%if task.due_date %}
+                        <span class="badge">Due date: {{ task.due_date }}</span>
+                        {% endif %}
+                    </h4>
+                    <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
 
-                                                <!-- Unarchive TODO -->
-                                                <form action="{% url 'todolist:task_checked' task.id %}" method="post"
-                                                      style="display: inline">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                                                    <button type="submit" class="btn btn-info btn-sm" title="Unarchive">
-                                                        <span class="glyphicon glyphicon-remove-circle"></span>
-                                                    </button>
-                                                </form>
+                    <div class="buttons">
 
-                                                <form action="{% url 'todolist:delete_task' task.id %}" method="post"
-                                                      style="display: inline">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete">
-                                                        <span class="glyphicon glyphicon-trash"></span>
-                                                    </button>
-                                                </form>
+                        <!-- Unarchive TODO -->
+                        <form action="{% url 'todolist:task_checked' task.id %}" method="post"
+                              style="display: inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                            <button type="submit" class="btn btn-info btn-sm" title="Unarchive">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </form>
 
-                                            </div>
+                        <form action="{% url 'todolist:delete_task' task.id %}" method="post"
+                              style="display: inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                            <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </form>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ul>
-
-                    {% endif %}
+                    </div>
+                </li>
+                {% endif %}
                 {% endfor %}
-            {% endif %}
+                {% endif %}
+
+                <!-- En quality of life improvement. Istedenfor å sjekke om all_tasks er true,
+                så sjekker den om man har laget en task tidligere eller om man ikke har gjort det-->
+
+                {% if not all_tasks %}
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">No archived TODOs found</h4>
+                </li>
+                {% endif %}
+                {% if error_message %}
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Error message</h4>
+                </li>
+                {% endif %}
+
+            </ul>
+
+            <!--Footer-->
+            <div class="panel-footer">
+                <small>{{ task_count }} archived TODOs</small>
+            </div>
         </div>
     </div>
+</div>
 
 {% endblock %}
 </body>

@@ -89,7 +89,10 @@ class BootstrapModelForm(ModelForm):
 class BootstrapModelForm(ModelForm):
     task_text = forms.CharField(label='Title', widget=forms.TextInput(attrs={'placeholder': 'Title'}))
     description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'placeholder': 'Description'}))
-    due_date = forms.DateTimeField(label='Due Date', widget= forms.DateInput(attrs={'id': 'inputDate', 'placeholder':
+    due_date = forms.DateTimeField(label='Due Date', required=False, widget= forms.DateInput(attrs={'id':
+
+                                                                                                           'inputDate',
+                                                                                                'placeholder':
     'Due Date'}))
 
     def __init__(self, *args, **kwargs):

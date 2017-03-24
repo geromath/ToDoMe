@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+
 ]
 
 ROOT_URLCONF = 'root.urls'
@@ -66,6 +67,14 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'foo' and 'bar' apps
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=todolist, highscorelist'
 ]
 
 WSGI_APPLICATION = 'root.wsgi.application'

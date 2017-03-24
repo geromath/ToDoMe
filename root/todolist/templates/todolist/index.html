@@ -16,7 +16,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="clearfix">
                     <div class="pull-left">
-                        <h1 class="header-title">{{ title }}</h1>
+                        <h1 class="header-title">{{ user.username }}'s {{ title }} </h1>
                     </div>
                     <div class="pull-right">
                         <button type="button" id="newTodo" class="btn btn-success btn-lg" data-toggle="modal"
@@ -181,11 +181,11 @@
                 {% endif %}
 
                 <!-- En quality of life improvement. Istedenfor å sjekke om all_tasks er true,
-                så skjekker den om man har laget en task tidligere eller om man ikke har gjort det-->
+                så sjekker den om man har laget en task tidligere eller om man ikke har gjort det-->
 
                 {% if not all_tasks %}
                 <li class="list-group-item">
-                    <h4 class="list-group-item-heading">You do not have any TODOs yet</h4>
+                    <h4 class="list-group-item-heading">No TODOs found</h4>
                 </li>
                 {% elif task_count == 0 %}
                 <li class="list-group-item">
@@ -203,7 +203,7 @@
 
             <!--Footer-->
             <div class="panel-footer">
-                <small>{{ task_count }} TODOs</small>
+                <small>{{ task_count }} active TODOs</small>
             </div>
         </div>
     </div>
