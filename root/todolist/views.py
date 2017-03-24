@@ -27,8 +27,8 @@ def index(request):
 
 @login_required()
 def archive(request):
-    all_tasks = Task.objects.all()
-    task_count = Task.objects.filter(archived=True).count()
+    all_tasks = Task.objects.filter(user = request.user)
+    task_count = Task.objects.filter(archived=True).filter(user = request.user).count()
     context = {
         'nbar': 'archive',
         'all_tasks': all_tasks,
@@ -45,7 +45,7 @@ def avatar_screen(request):
 @login_required()
 def todo(request):
     all_tasks = Task.objects.filter(user=request.user)
-    task_count = Task.objects.filter(archived=False).count()
+    task_count = Task.objects.filter(archived=False).filter(user = request.user).count()
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
