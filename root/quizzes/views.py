@@ -9,8 +9,6 @@ from django.views.generic import DetailView, ListView, TemplateView, FormView
 from .forms import QuestionForm
 from .models import Quiz, Category, Progress, Sitting, Question
 
-
-
 from django.http import HttpResponse
 
 def index(request):
@@ -56,9 +54,11 @@ class QuizDetailView(DetailView):
         if self.object.draft and not request.user.has_perm('quiz.change_quiz'):
             raise PermissionDenied
 
-        context = self.get_context_data(object=self.object) #lagt til instance selv: instance = self.instance,
+        context = self.get_context_data(object=self.object)
+        print(context)
+        #lagt til instance selv: instance = self.instance,
         #return self.render_to_response(context)
-        return render(context, template_name='quizzes/detail.html')
+        return render(request, 'quizzes/detail.html', context)
 
 class CategoriesListView(ListView):
     model = Category

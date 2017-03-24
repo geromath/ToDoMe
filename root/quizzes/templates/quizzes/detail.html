@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends "quizzes/base.html" %}
 
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Quiz{% endblock %}</title>
 </head>
 <body>
+
+
 <h1>DIIGGGGG!!</h1>
-    {{context.title}}
-    {{object.title}}
-
-
-
-    {{instance.title}}
-
-
-
-
-
-
-
+    {{quiz.title}}
+<br/><br/>
+{% for question in quiz.get_questions %}
+    {% include 'quizzes/question.html' %}
+{% endfor %}
 
 </body>
 </html>
