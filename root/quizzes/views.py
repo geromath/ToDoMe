@@ -45,8 +45,6 @@ class QuizDetailView(DetailView):
     slug_field = 'url'
     template_name = 'quizzes/detail.html'
 
-
-
     def get(self, request, *args, **kwargs): #lagt til id selv: id=None,
          #lagt til selv: self.instance = get_object_or_404(Quiz, id=id)
         self.object = self.get_object()
@@ -59,6 +57,7 @@ class QuizDetailView(DetailView):
         #lagt til instance selv: instance = self.instance,
         #return self.render_to_response(context)
         return render(request, 'quizzes/detail.html', context)
+
 
 class CategoriesListView(ListView):
     model = Category

@@ -157,6 +157,7 @@ class Quiz(models.Model):
         verbose_name = _("Quiz")
         verbose_name_plural = _("Quizzes")
 
+
     def __str__(self):
         return self.title
 
