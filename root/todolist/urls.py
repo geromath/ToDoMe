@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
-
 from . import views
 
 app_name = 'todolist'
@@ -43,6 +42,7 @@ urlpatterns = [
     url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
 
     # Redirects from any page we have not specified a url for
-    url(r'^.*$', RedirectView.as_view(url='/login/', permanent=False), name='index')
+    # url(r'^.*$', RedirectView.as_view(url='/login/', permanent=False), name='index')
+
 
 ]

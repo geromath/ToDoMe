@@ -1,3 +1,4 @@
+from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.views.generic import View, CreateView, UpdateView, DeleteView
@@ -24,6 +25,17 @@ def index(request):
 def archive(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.filter(archived=True).count()
+
+    # Search function for archive
+    queryset_list = Task.objects.archived()
+    query = request.GET.get("q")
+    if query:
+        print("ASJDHJKASHD")
+        all_tasks = queryset_list.filter(
+            Q(task_text__icontains=query) |
+            Q(description__icontains=query)
+        ).distinct()
+
     context = {
         'nbar': 'archive',
         'all_tasks': all_tasks,
@@ -43,14 +55,8 @@ def todo(request):
     all_tasks = Task.objects.all()
     task_count = Task.objects.filter(archived=False).count()
 
+    # Search function for active TODOs
     queryset_list = Task.objects.active()
-
-    # The below 2 lines do not function properly.
-    # Need to add a way to check if user is in /archive/, to search the archived TODOs
-    if '/archive/' in request.GET:
-        queryset_list = Task.objects.archived()
-
-
     query = request.GET.get("q")
     if query:
         all_tasks = queryset_list.filter(
@@ -124,12 +130,6 @@ class TaskDelete(DeleteView):
     model = Task
     success_url = reverse_lazy('todolist:todo')
 
-class AuthRequiredMiddleware(object):
-    def process_request(self, request):
-        if not request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('todolist:login')) # or http response
-        return None
-
 
 def task_checked(request, pk):
     task = Task.objects.get(pk=pk)
@@ -142,6 +142,7 @@ def task_checked(request, pk):
         task.archived = True
         task.save()
         return HttpResponseRedirect(reverse("todolist:todo"))
+
 
 class UserFormView(View):
     form_class = UserForm  # blueprint til det vi skal bruke
