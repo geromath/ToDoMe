@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends "quizzes/base.html" %}
+
 
 {% block title %}
 <h1>QUIZZES!!</h1>
@@ -24,6 +24,10 @@
                 onclick="location.href='/quizzes/{{quiz.url}}/'">{{quiz.title}}</li>
         -->
             {% endfor %}
+        {% else %}
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">You do not have any quizzes to take yet</h4>
+            </li>
         {% endif %}
     </ul>
 {% endblock %}
