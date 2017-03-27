@@ -27,6 +27,6 @@ install:
   - pip install coveralls
 # command to run tests
 script:
-  - python manage.py test
-  - coverage run --source=root manage.py test
+  - python root/manage.py test
+  - coverage run --source=root root/manage.py test
   
