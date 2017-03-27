@@ -29,6 +29,6 @@ install:
 script:
   - python root/manage.py test
   - coverage run --source=root/ root/manage.py test todolist
-  - sbt clean coverage test
   
-after_success: "sbt coveralls"
+after_success: 
+  - coveralls
