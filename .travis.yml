@@ -25,6 +25,7 @@ notifications:
 install: 
   - pip install -r requirements.txt
   - pip install coveralls
+  - pip install django
 # command to run tests
 script:
   - python root/manage.py test
