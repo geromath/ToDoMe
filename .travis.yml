@@ -31,4 +31,4 @@ script:
   - coverage run --source=root/ root/manage.py test todolist
   - sbt clean coverage test
   
-after_success: sbt coveralls
+after_success: "sbt coveralls"
