@@ -95,12 +95,14 @@ class TestCalls(TestCase):
     def test_call_view_fails_invalid(self):
         self.client.login(username='testuser', password='Pekka123')
         response = self.client.post('/todo/', {'task_text': 'Some title THAT IS FAR TOOO '
-                                                            'LONGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', 'description': 'Some '
-                                                                                                            'text'})  # invalid data dictionary
-        self.assertFormError(response, 'form', 'task_text', 'error')
-
+                                                            'LONGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+                                               'description': 'Some '
+                                                              'text'})  # invalid data dictionary
+        self.assertFormError(response, 'form', 'task_text',
+                             'Ensure this value has at most 150 characters (it has 283).')
 
     def test_call_view_fails_valid(self):
         self.client.login(username='testuser', password='Pekka123')
-        response = self.client.post('/todo/', {'task_text': 'Some title', 'description': 'Some text'})  # valid data dictionary
+        response = self.client.post('/todo/',
+                                    {'task_text': 'Some title', 'description': 'Some text'})  # valid data dictionary
         self.assertRedirects(response, '/todo/')
