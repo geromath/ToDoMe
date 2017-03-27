@@ -91,7 +91,7 @@
                             <input type="submit" class="btn btn-success" id="btn-login" value="Sign In">
                             <input type="hidden" name="next" value="{{ next }}"/>
 
-                            <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+                            <a id="btn-fblogin" href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">Login with Facebook</a>
 
                         </div>
                     </div>

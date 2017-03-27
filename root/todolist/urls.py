@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 from . import views
@@ -41,8 +41,10 @@ urlpatterns = [
     # Delete task
     url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
 
-    # Redirects from any page we have not specified a url for
-    # url(r'^.*$', RedirectView.as_view(url='/login/', permanent=False), name='index')
+    # For Facebook login etc.
+    url(r'^settings/$', views.settings, name='settings'),
+    url(r'^settings/password/$', views.password, name='password'),
 
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 
 ]
