@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'todolist/base.html' %}
 {% load i18n%}
 
 {% load quiz_tags %}
@@ -6,9 +6,11 @@
 {% block title %} {{ quiz.title }} {% endblock %}
 {% block description %} {{ quiz.title }} - {{ quiz.description }} {% endblock %}
 
-{% block content %}
+{% block body %}
+
 
 {% if previous.answers %}
+
 
   <p class="muted"><small>{% trans "The previous question" %}:</small></p>
   <p>{{ previous.previous_question }}</p>
@@ -43,21 +45,25 @@
 
 {% if question %}
 
-{% if progress %}
-<div style="float: right;">
-{% trans "Question" %} {{ progress.0|add:1 }} {% trans "of" %} {{ progress.1 }}
-</div>
-{% endif %}
 
-<p>
-  <small class="muted">{% trans "Question category" %}:</small>
-  <strong>{{ question.category }}</strong>
-</p>
+    {% if progress %}
 
-<p class="lead">{{ question.content }}</p>
+        <div style="float: right;">
+            {% trans "Question" %} {{ progress.0|add:1 }} {% trans "of" %} {{ progress.1 }}
+        </div>
+    {% endif %}
 
-{% if question.figure %}
-    <img src="{{ question.figure.url }}" alt="{{ question.content }}" />
+    <p>
+        <small class="muted">{% trans "Question category" %}:</small>
+        <strong>{{ question.category }}</strong>
+    </p>
+
+    <p class="lead">{{ question.content }}</p>
+
+
+
+    {% if question.figure %}
+        <img src="{{ question.figure.url }}" alt="{{ question.content }}" />
 {% endif %}
 
 <form action="" method="POST">{% csrf_token %}
@@ -66,6 +72,9 @@
   <ul class="list-group">
 
 	{% for answer in form.answers %}
+
+      <h4>TEST</h4>
+
 	  <li class="list-group-item">
 	    {{ answer }}
 	  </li>

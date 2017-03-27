@@ -1,17 +1,25 @@
+{% extends 'todolist/base.html' %}
 
-<head>
+<!-- DENNE BRUKES IKKE FORELØPIG!  -->
 
-    <title>{% block title %}Quiz{% endblock %}</title>
-</head>
-<body>
 
-<h1>DIIGGGGG!!</h1>
-    {{quiz.title}}
-<br/><br/>
-{% for question in quiz.get_questions %}
-    {% include 'quizzes/question.html' %}
-{% endfor %}
+{% block title %}{{quiz.title}}{% endblock %}
 
-</body>
-</html>
+
+
+{% block body %}
+
+    <h1>{{quiz.title}}</h1>
+
+    <br/><br/>
+    {% for question in quiz.get_questions %}
+        <h1>Dette skal ikke printes</h1>
+
+        {% include 'quizzes/question.html' %}
+        {% lorem %}
+    {% endfor %}
+
+
+{% endblock %}
+
 

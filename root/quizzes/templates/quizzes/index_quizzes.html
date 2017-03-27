@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
+{% extends 'todolist/base.html' %}
 
 {% block title %}
 <h1>QUIZZES!!</h1>
 {% endblock %}
 
-{% block content %}
+{% block body %}
     <h2>Quizzes</h2>
     <ul>
         {% if object_list %}
             {% for quiz in object_list %}
 
                 <li class="list-group-item" id="quiz_list_item" title="Details">
-                    <a href="{% url 'quizzes:quiz_start_page' quiz.url %}"> {{ quiz.title }} </a></li>
+                    <a href="{% url 'quizzes:quiz_take' quiz.url %}"> {{ quiz.title }} </a></li>
 
 
 

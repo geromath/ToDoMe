@@ -138,12 +138,12 @@ class QuizMarkingDetail(QuizMarkerMixin, DetailView):
         return context
 
 class QuizTake(FormView):
-    #denne man skal komme til når man trykker på en quiz i index_quizzes (forsiden)
+
     form_class = QuestionForm
-    template_name = 'quizzes/question.html'
+    template_name = 'quizzes/question.html' #riktig?
 
     def dispatch(self, request, *args, **kwargs):
-        self.quiz = get_object_or_404(Quiz, url=self.kwargs['quiz_id']) #NB: Endret fra 'quiz_name'
+        self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug']) #NB: Endret fra 'quiz_name'
         if self.quiz.draft and not request.user.has_perm('quiz.change_quiz'):
             raise PermissionDenied
 
@@ -160,7 +160,7 @@ class QuizTake(FormView):
 
         return super(QuizTake, self).dispatch(request, *args, **kwargs)
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None): #ENDRET fra form_class til form_class=None
         if self.logged_in_user:
             self.question = self.sitting.get_first_question()
             self.progress = self.sitting.progress()
@@ -168,7 +168,7 @@ class QuizTake(FormView):
             self.question = self.anon_next_question()
             self.progress = self.anon_sitting_progress()
 
-        return form_class(**self.get_form_kwargs())
+        return self.get_form_kwargs() #form_class(**self.get_form_kwargs())
 
     def get_form_kwargs(self):
         kwargs = super(QuizTake, self).get_form_kwargs()
