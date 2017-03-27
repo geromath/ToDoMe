@@ -1,5 +1,6 @@
-from django.conf.urls import url
-from django.contrib.auth import views as auth_views, login, authenticate
+from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 from . import views
 
 app_name = 'todolist'
@@ -10,10 +11,8 @@ urlpatterns = [
     url(r'^$', views.avatar_screen, name='avatar_screen'),
 
     # Login screen
-    url(r'^login$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
-
-    # Accounts
-    url(r'^accounts/login$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
+    url(r'^login/$', auth_views.login, name='login', kwargs={'redirect_authenticated_user': True}),
+    url(r'^logout/$', auth_views.logout, name='logout'),
 
     # Main view
     url(r'^todo/$', views.todo, name="todo"),
@@ -42,9 +41,10 @@ urlpatterns = [
     # Delete task
     url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
 
+    # For Facebook login etc.
+    url(r'^settings/$', views.settings, name='settings'),
+    url(r'^settings/password/$', views.password, name='password'),
+
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+
 ]
-
-
-
-
-

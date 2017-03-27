@@ -1,30 +1,84 @@
-{% extends 'todolist/base.html' %}
-{% block title %} Register {% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Register{% endblock title%}</title>
+
+    <!-- Loads the path to our static files -->
+    {% load staticfiles %}
+    <!--JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+
+    <!--Bootstrap-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" type="text/css">
+
+    <!--Date Picker-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
+    <!--Moment.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/af.js"></script>
+
+    <script src="{% static 'todolist/script.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'todolist/style.css' %}">
+
+
+</head>
 
 {% block body %}
+<!-- Sign up form starts below. Only shows if you click Sign Up-->
+<div id="signupbox" style="margin-top:25px"
+     class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">Sign Up</div>
+            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink"
+                                                                                       href="{% url 'todolist:login' %}">Sign
+                In</a></div>
+        </div>
+        <div class="panel-body">
+            <form id="signupform" class="form-horizontal" action="" method="POST" role="form"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12 col-md-7">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3>Create a new Account</h3>
-
-                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% include 'todolist/form-template.html' %}
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-                        </div>
-
-                    </form>
-
-
+                {% for field in form %}
+                <div class="form-group">
+                    <div style="display: none" class="alert alert-danger">
+                        <span class="text-danger small">{{ field.errors }}</span>
+                    </div>
+                    <label class="col-md-3 control-label">{{ field.label_tag }}</label>
+                    <div class="col-md-9">
+                        {{field}}
+                    </div>
                 </div>
-            </div>
+                {% endfor %}
+
+                <div class="form-group">
+                    <!-- Button -->
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn btn-info">Sign Up</button>
+                    </div>
+                </div>
+
+
+
+
+            </form>
         </div>
     </div>
+
+
 </div>
+
+
 {% endblock %}
+
+</html>

@@ -3,11 +3,6 @@ body {
     padding-top: 50px;
 }
 
-.dropdown:hover .dropdown-menu{
-    display: block;
-    margin-top: 0;
-}
-
 .navbar-brand {
     font-family: 'Satisfy', cursive;
     text-transform: uppercase;
@@ -28,8 +23,6 @@ body {
 .navbar {
     color: dimgray;
 }
-
-
 
 /* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
 /* ---------------------------------------------------------------------- */
@@ -108,21 +101,3 @@ h1.header-title {
 .panel-footer small {
     color: #999;
 }
-
-/* Task modal */
-
-input.task-input {
-    width: 100%;
-    border: none;
-    font-size: 18px;
-    height: 46px;
-    line-height: 1.33333;
-    color: #555;
-    display: block;
-    font-style: italic;
-}
-
-input.task-input:focus, input.task-input:active {
-    outline: none;
-}
-

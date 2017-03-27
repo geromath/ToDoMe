@@ -29,3 +29,7 @@ install:
 script:
   - python manage.py test
   - coverage run --source=root manage.py test
+# command to install dependencies
+install: "pip install -r requirements.txt"
+# command to run tests
+script: pytest
