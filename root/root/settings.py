@@ -123,6 +123,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Code for retrieving Facebook profile pictures etc.
+
+SOCIAL_AUTH_PIPELINE = (
+
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'apps.users.pipeline.get_avatar',  # This is a path of your pipeline.py
+    # and get_avatar is the function.
+)
+
+SOCIAL_AUTH_PIPELINE += (
+    'todolist.pipelines.save_profile_picture',
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 

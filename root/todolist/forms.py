@@ -7,7 +7,6 @@ from django.forms import ModelForm
 from .models import Task, UserProfile
 
 
-
 class UserForm(forms.ModelForm):
     username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Username'}))
     email = forms.CharField(label='Email', widget=forms.TextInput(attrs={'placeholder': 'Email'}))
@@ -22,12 +21,11 @@ class UserForm(forms.ModelForm):
                 'class': 'form-control'
             })
 
-    class Meta: # info om klassen
+    class Meta:  # info om klassen
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password']  # feltene som brukerne skal
         # fylle ut (i
         #  den rekkefolgen)
-
 
 
 class LoginForm(forms.ModelForm):
@@ -45,6 +43,7 @@ class LoginForm(forms.ModelForm):
         model = User
         fields = ['username', 'password']
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -55,20 +54,20 @@ class UserProfileForm(forms.ModelForm):
         # avatar = models.ImageField(upload_to='/images/)
         try:
             w, h = get_image_dimensions(avatar)
-            #validate dimensions
+            # validate dimensions
             max_width = max_height = 100
             if w > max_width or h > max_height:
                 raise forms.ValidationError(
                     u'Please use an image that is '
-                     '%s x %s pixels or smaller.' % (max_width, max_height))
+                    '%s x %s pixels or smaller.' % (max_width, max_height))
 
-            #validate content type
+            # validate content type
             main, sub = avatar.content_type.split('/')
             if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
                 raise forms.ValidationError(u'Please use a JPEG, '
-                    'GIF or PNG image.')
+                                            'GIF or PNG image.')
 
-            #validate file size
+            # validate file size
             if len(avatar) > (20 * 1024):
                 raise forms.ValidationError(u'Avatar file size may not exceed 20k.')
 
@@ -83,17 +82,13 @@ class UserProfileForm(forms.ModelForm):
 
 
 class BootstrapModelForm(ModelForm):
-    task_text = forms.CharField(label="Title", widget=forms.TextInput)
-    description = forms.CharField(label='Description', widget=forms.Textarea)
-
-class BootstrapModelForm(ModelForm):
     task_text = forms.CharField(label='Title', widget=forms.TextInput(attrs={'placeholder': 'Title'}))
     description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'placeholder': 'Description'}))
-    due_date = forms.DateTimeField(label='Due Date', required=False, widget= forms.DateInput(attrs={'id':
+    due_date = forms.DateTimeField(label='Due Date', required=False, widget=forms.DateInput(attrs={'id':
 
-                                                                                                           'inputDate',
-                                                                                                'placeholder':
-    'Due Date'}))
+                                                                                                       'inputDate',
+                                                                                                   'placeholder':
+                                                                                                       'Due Date'}))
 
     def __init__(self, *args, **kwargs):
         super(BootstrapModelForm, self).__init__(*args, **kwargs)
@@ -110,4 +105,3 @@ class TaskForm(BootstrapModelForm):
     class Meta:
         model = Task
         fields = ['task_text', 'description', 'due_date']
-
