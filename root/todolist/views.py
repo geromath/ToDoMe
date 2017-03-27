@@ -1,7 +1,10 @@
+from django.contrib.auth.forms import PasswordChangeForm, AdminPasswordChangeForm
 from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
-from django.contrib.auth import authenticate, login, get_user_model, logout
+from django.contrib.auth import authenticate, login, get_user_model, logout, update_session_auth_hash
 from django.views.generic import View, CreateView, UpdateView, DeleteView
+from social_django.models import UserSocialAuth
+
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -197,7 +200,7 @@ def settings(request):
 
     can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
 
-    return render(request, 'core/settings.html', {
+    return render(request, 'registration/settings.html', {
         'facebook_login': facebook_login,
         'can_disconnect': can_disconnect
     })
@@ -220,4 +223,4 @@ def password(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordForm(request.user)
-    return render(request, 'core/password.html', {'form': form})
+    return render(request, 'registration/password.html', {'form': form})
