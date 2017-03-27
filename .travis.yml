@@ -24,6 +24,11 @@ install:
   - pip install django-bootstrap-form
   - pip install social-auth-app-django
   - pip install social-auth-core
+  - pip install coverage
+  - pip install django-model-utils
+  - pip install django-nose
+  - pip install nose
+  - pip install Pillow
 # command to run tests
 script:
   - python root/manage.py test
