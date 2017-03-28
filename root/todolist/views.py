@@ -120,6 +120,20 @@ def todo_update(request, id=None):
     return render(request, "todolist/edit_task.html", context)
 
 
+@login_required(login_url='todolist:login')
+def profile(request):
+    user = request.user
+
+    context = {
+        'nbar': 'profile',
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+        'username': user.username,
+    }
+    return render(request, 'todolist/profile.html', context)
+
+
 class TaskCreate(CreateView):
     model = Task
     fields = ['task_text', 'description']

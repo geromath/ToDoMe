@@ -74,19 +74,18 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Quizzes -->
                 <li class="">
+                    <!--TODO: ADD  {% if nbar == 'quizzes' %}active{% endif %}  to href-->
                     <a href="#">
                         <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp; Quizzes
                     </a>
                 </li>
                 <!-- My Profile -->
-                <li class="dropdown">
-                    <!-- TEMPORARILY REDIRECT MY PROFILE TO ADMIN PAGE-->
-                    <!-- Make it display Sign up/Log in if not signed in, and Log out if signed in -->
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                <li class="dropdown {% if nbar == 'profile' %}active{% endif %}">
+                    <a href="{% url 'todolist:profile' %}" data-toggle="dropdown" class="dropdown-toggle disabled">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; My Profile
                         <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'todolist:register' %}">View Profile</a></li>
+                        <li><a href="{% url 'todolist:profile' %}">View Profile</a></li>
                         <li><a href="{% url 'todolist:logout' %}?next={% url 'todolist:login' %}" type="submit">Sign
                             Out</a></li>
 

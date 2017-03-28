@@ -47,4 +47,7 @@ urlpatterns = [
 
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
+    # My Profile
+    url(r'^profile/$', views.profile, name="profile"),
+
 ]

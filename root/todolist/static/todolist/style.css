@@ -1,9 +1,11 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+
 body {
     background: #F7FFF6 url('images/body-bg.png');
     padding-top: 50px;
 }
 
-.dropdown:hover .dropdown-menu{
+.dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
 }
@@ -28,8 +30,6 @@ body {
 .navbar {
     color: dimgray;
 }
-
-
 
 /* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
 /* ---------------------------------------------------------------------- */
@@ -126,3 +126,25 @@ input.task-input:focus, input.task-input:active {
     outline: none;
 }
 
+/*EVERYTHING BELOW THIS LINE IS FOR PROFILE.HTML*/
+
+.profile {
+    min-height: 355px;
+    display: inline-block;
+}
+
+.divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.emphasis {
+    border-top: 4px solid transparent;
+}
+
+.emphasis:hover {
+    border-top: 4px solid #1abc9c;
+}
+
+.emphasis h2 {
+    margin-bottom: 0;
+}
