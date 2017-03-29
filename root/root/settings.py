@@ -150,6 +150,6 @@ redirect_uri = 'http://localhost:8000/_oauth/facebook?close'
 SOCIAL_AUTH_FACEBOOK_KEY = '1141126915996317'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '8ad62ee87dafea546a57c92a7aad157a'  # App Secret
 
-SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/profile/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
