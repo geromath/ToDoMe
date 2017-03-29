@@ -26,8 +26,8 @@ def index(request):
 
 @login_required(login_url='todolist:login')
 def archive(request):
-    all_tasks = Task.objects.filter(user = request.user)
-    task_count = Task.objects.filter(archived=True).filter(user = request.user).count()
+    all_tasks = Task.objects.filter(user=request.user)
+    task_count = Task.objects.filter(archived=True).filter(user=request.user).count()
 
     # Search function for archive
     queryset_list = Task.objects.archived()
@@ -47,6 +47,7 @@ def archive(request):
     }
     return render(request, 'todolist/archive.html', context)
 
+
 @login_required(login_url='todolist:login')
 def avatar_screen(request):
     return render(request, 'todolist/avatar_screen.html', None)
@@ -55,7 +56,7 @@ def avatar_screen(request):
 @login_required(login_url='todolist:login')
 def todo(request):
     all_tasks = Task.objects.filter(user=request.user)
-    task_count = Task.objects.filter(archived=False).filter(user = request.user).count()
+    task_count = Task.objects.filter(archived=False).filter(user=request.user).count()
 
     # Search function for active TODOs
     queryset_list = Task.objects.active()
@@ -118,6 +119,20 @@ def todo_update(request, id=None):
         "form": form,
     }
     return render(request, "todolist/edit_task.html", context)
+
+
+@login_required(login_url='todolist:login')
+def profile(request):
+    user = request.user
+
+    context = {
+        'nbar': 'profile',
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+        'username': user.username,
+    }
+    return render(request, 'todolist/profile.html', context)
 
 
 class TaskCreate(CreateView):
@@ -204,6 +219,7 @@ def settings(request):
         'facebook_login': facebook_login,
         'can_disconnect': can_disconnect
     })
+
 
 @login_required
 def password(request):
