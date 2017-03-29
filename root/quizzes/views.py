@@ -140,7 +140,7 @@ class QuizMarkingDetail(QuizMarkerMixin, DetailView):
 class QuizTake(FormView):
 
     form_class = QuestionForm
-    template_name = 'quizzes/question.html' #riktig?
+    template_name = 'quizzes/question.html'
 
     def dispatch(self, request, *args, **kwargs):
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug']) #NB: Endret fra 'quiz_name'

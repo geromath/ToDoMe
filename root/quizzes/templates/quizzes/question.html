@@ -30,7 +30,7 @@
 	</div>
 		</div>
 
-	{% include 'correct_answer.html' %}
+	{% include 'quizzes/correct_answer.html' %}
 
 	<p><strong>{% trans "Explanation" %}:</strong></p>
 	<div class="well " style="background-color: #fcf8e3;">
@@ -59,12 +59,17 @@
     </p>
 
     <p class="lead">{{ question.content }}</p>
+    <h1>{{question.content}}</h1>
+    <strong>{{question.explanation}}</strong>
+
+
 
 
 
     {% if question.figure %}
         <img src="{{ question.figure.url }}" alt="{{ question.content }}" />
-{% endif %}
+    {% endif %}
+
 
 <form action="" method="POST">{% csrf_token %}
   <input type=hidden name="question_id" value="{{ question.id }}">
@@ -81,8 +86,9 @@
 	{% endfor %}
 
   </ul>
-  <input type="submit" value={% trans "Check" %} class="btn btn-large btn-block btn-warning" >
-</form>
+
+    <input type="submit" value={% trans "Check" %} class="btn btn-large btn-block btn-warning" >
+    </form>
 
 {% endif %}
 
