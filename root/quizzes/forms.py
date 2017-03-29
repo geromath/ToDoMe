@@ -9,3 +9,4 @@ class QuestionForm(forms.Form):
         self.fields["answers"] = forms.ChoiceField(choices=choice_list,
                                                    widget=RadioSelect)
 
+

@@ -137,6 +137,7 @@ class QuizMarkingDetail(QuizMarkerMixin, DetailView):
             context['sitting'].get_questions(with_answers=True)
         return context
 
+
 class QuizTake(FormView):
 
     form_class = QuestionForm
@@ -156,7 +157,7 @@ class QuizTake(FormView):
             self.sitting = self.anon_load_sitting()
 
         if self.sitting is False:
-            return render(request, 'single_complete.html')
+            return render(request, 'quizzes/single_complete.html')
 
         return super(QuizTake, self).dispatch(request, *args, **kwargs)
 

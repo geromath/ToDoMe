@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "todolist/base.html" %}
 {% load i18n %}
 
 {% load quiz_tags %}
@@ -6,7 +6,7 @@
 {% block title %} {{ quiz.title }} {% endblock %}
 {% block description %} {{ quiz.title }} - {{ quiz.description }} {% endblock %}
 
-{% block content %}
+{% block body %}
 
 
 {% if user.is_authenticated %}
