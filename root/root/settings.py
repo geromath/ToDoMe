@@ -136,7 +136,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
-    'apps.users.pipeline.get_avatar',  # This is a path of your pipeline.py
+    'apps.users.pipeline.get_avatar',  # This is a path of our pipeline.py
     # and get_avatar is the function.
 )
 
