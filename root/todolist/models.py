@@ -1,8 +1,7 @@
 from django.db import models
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib import admin
-
 
 class TaskManager(models.Manager):
 
@@ -38,9 +37,6 @@ class TaskAdmin(admin.ModelAdmin):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    avatar = models.ImageField(upload_to='/images/')
-    model_pic = models.ImageField(upload_to='/static/todolist/images/', default='/static/todolist/images/todome_logo.png')
 
     def __str__(self):
         return self.user
-

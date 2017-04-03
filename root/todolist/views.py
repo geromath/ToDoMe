@@ -1,18 +1,13 @@
-from django.contrib.auth.forms import PasswordChangeForm, AdminPasswordChangeForm
-from django.http import HttpRequest
-from django.http import HttpResponseForbidden
-from django.shortcuts import render, redirect, get_object_or_404, render_to_response
-from django.contrib.auth import authenticate, login, get_user_model, logout, update_session_auth_hash
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login
 from django.views.generic import View, CreateView, UpdateView, DeleteView
-from social_django.models import UserSocialAuth
 
-from .forms import UserForm, ImageUploadForm
+from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.template import RequestContext
-from .models import Task, UserProfile
-from .forms import TaskForm, LoginForm
+from django.http import HttpResponseRedirect
+from .models import Task
+from .forms import TaskForm
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
 
@@ -21,7 +16,7 @@ def archive(request):
     all_tasks = Task.objects.filter(user=request.user)
     task_count = Task.objects.filter(archived=True).filter(user=request.user).count()
 
-    # Search function for archive
+    # Search function for archived TODOs
     queryset_list = Task.objects.archived()
     query = request.GET.get("q")
     if query:
@@ -125,19 +120,6 @@ def profile(request):
     return render(request, 'todolist/profile.html', context)
 
 
-@login_required(login_url='todolist:login')
-def upload_pic(request):
-    if request.method == 'POST':
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            m = request.user
-            m.model_pic = form.cleaned_data['image']
-            m.save()
-            return HttpResponseRedirect(reverse("todolist:profile"))
-            # return HttpResponse('image upload success')
-    return HttpResponseForbidden('Only allowed via POST')
-
-
 class TaskCreate(CreateView):
     model = Task
     fields = ['task_text', 'description']
@@ -205,41 +187,3 @@ class UserFormView(View):
                         'todolist:todo')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
 
         return render(request, self.template_name, {'form': form})  # gir skjemaet paa nytt om noe gikk galt
-
-
-@login_required
-def settings(request):
-    user = request.user
-
-    try:
-        facebook_login = user.social_auth.get(provider='facebook')
-    except UserSocialAuth.DoesNotExist:
-        facebook_login = None
-
-    can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
-
-    return render(request, 'registration/settings.html', {
-        'facebook_login': facebook_login,
-        'can_disconnect': can_disconnect
-    })
-
-
-@login_required
-def password(request):
-    if request.user.has_usable_password():
-        PasswordForm = PasswordChangeForm
-    else:
-        PasswordForm = AdminPasswordChangeForm
-
-    if request.method == 'POST':
-        form = PasswordForm(request.user, request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('password')
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordForm(request.user)
-    return render(request, 'registration/password.html', {'form': form})

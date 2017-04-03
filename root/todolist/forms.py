@@ -1,10 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
-
 from django.forms import ModelForm
-
 from .models import Task, UserProfile
-
 
 
 class UserForm(forms.ModelForm):
@@ -73,8 +70,4 @@ class TaskForm(BootstrapModelForm):
     class Meta:
         model = Task
         fields = ['task_text', 'description', 'due_date']
-
-class ImageUploadForm(forms.Form):
-    # Image upload form.
-    image = forms.ImageField()
 

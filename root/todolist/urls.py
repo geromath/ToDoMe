@@ -26,11 +26,8 @@ urlpatterns = [
     # Make new task
     url(r'^mktsk/$', views.TaskCreate.as_view(), name='make_task'),
 
-    # Update task v2
-    url(r'^todo/(?P<id>\d+)/edit/$', views.todo_update, name='update_task'),
-
     # Update task
-    # url(r'^mktsk/(?P<id>\d+)/$', views.TaskUpdate.as_view(), name='update_task'),
+    url(r'^todo/(?P<id>\d+)/edit/$', views.todo_update, name='update_task'),
 
     # Archive task
     url(r'archive/(?P<pk>[0-9]+)/archive/$', views.task_checked, name='task_checked'),
@@ -38,16 +35,10 @@ urlpatterns = [
     # Delete task
     url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
 
-    # For Facebook login etc.
-    url(r'^settings/$', views.settings, name='settings'),
-    url(r'^settings/password/$', views.password, name='password'),
-
+    # For Facebook login
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
     # My Profile
     url(r'^profile/$', views.profile, name="profile"),
-
-    # Upload image
-    url(r'^profile/upload/$', views.upload_pic, name="upload_pic"),
 
 ]
