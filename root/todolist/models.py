@@ -7,7 +7,6 @@ from django.contrib import admin
 class TaskManager(models.Manager):
 
     def active(self, *args, **kwargs):
-        # Task.objects.all() = super(TaskManager, self).all()
         return super(TaskManager, self).filter(archived=False)
     def archived(self, *args, **kwargs):
         return super(TaskManager, self).filter(archived=True)

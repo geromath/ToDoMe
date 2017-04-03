@@ -16,15 +16,6 @@ from .forms import TaskForm, LoginForm
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
 
-
-@login_required()
-def index(request):
-    context = {
-        'nbar': 'startpage'
-    }
-    return render(request, 'todolist/startpage.html', context)
-
-
 @login_required(login_url='todolist:login')
 def archive(request):
     all_tasks = Task.objects.filter(user=request.user)
@@ -47,11 +38,6 @@ def archive(request):
         'title': 'Archive',
     }
     return render(request, 'todolist/archive.html', context)
-
-
-@login_required(login_url='todolist:login')
-def avatar_screen(request):
-    return render(request, 'todolist/avatar_screen.html', None)
 
 
 @login_required(login_url='todolist:login')

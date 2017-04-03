@@ -1,14 +1,11 @@
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
-from django.views.generic import RedirectView
 from . import views
 
 app_name = 'todolist'
 
 urlpatterns = [
     # All of the below are subpages of /todolist/
-    # Index view (log in screen)
-    url(r'^$', views.avatar_screen, name='avatar_screen'),
 
     # Login screen
     url(r'^login/$', auth_views.login, name='login', kwargs={'redirect_authenticated_user': True}),
