@@ -50,4 +50,7 @@ urlpatterns = [
     # My Profile
     url(r'^profile/$', views.profile, name="profile"),
 
+    # Upload image
+    url(r'^profile/upload/$', views.upload_pic, name="upload_pic"),
+
 ]

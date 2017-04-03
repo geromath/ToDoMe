@@ -52,11 +52,11 @@ class UserProfileForm(forms.ModelForm):
 
     def clean_avatar(self):
         avatar = self.cleaned_data['avatar']
-        # avatar = models.ImageField(upload_to='/images/)
+        # avatar = models.ImageField(upload_to='/images/')
         try:
             w, h = get_image_dimensions(avatar)
             #validate dimensions
-            max_width = max_height = 100
+            max_width = max_height = 128
             if w > max_width or h > max_height:
                 raise forms.ValidationError(
                     u'Please use an image that is '
@@ -73,10 +73,8 @@ class UserProfileForm(forms.ModelForm):
                 raise forms.ValidationError(u'Avatar file size may not exceed 20k.')
 
         except AttributeError:
-            """
-            Handles case when we are updating the user profile
-            and do not supply a new avatar
-            """
+            # Handles case when we are updating the user profile
+            # and do not supply a new avatar
             pass
 
         return avatar
@@ -106,4 +104,8 @@ class TaskForm(BootstrapModelForm):
     class Meta:
         model = Task
         fields = ['task_text', 'description', 'due_date']
+
+class ImageUploadForm(forms.Form):
+    # Image upload form.
+    image = forms.ImageField()
 

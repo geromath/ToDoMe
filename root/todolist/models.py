@@ -39,4 +39,9 @@ class TaskAdmin(admin.ModelAdmin):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    avatar = models.ImageField()
+    avatar = models.ImageField(upload_to='/images/')
+    model_pic = models.ImageField(upload_to='/static/todolist/images/', default='/static/todolist/images/todome_logo.png')
+
+    def __str__(self):
+        return self.user
+

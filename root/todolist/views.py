@@ -1,16 +1,17 @@
 from django.contrib.auth.forms import PasswordChangeForm, AdminPasswordChangeForm
 from django.http import HttpRequest
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login, get_user_model, logout, update_session_auth_hash
 from django.views.generic import View, CreateView, UpdateView, DeleteView
 from social_django.models import UserSocialAuth
 
-from .forms import UserForm
+from .forms import UserForm, ImageUploadForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template import RequestContext
-from .models import Task
+from .models import Task, UserProfile
 from .forms import TaskForm, LoginForm
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
@@ -75,7 +76,7 @@ def todo(request):
             obj.save()
             return HttpResponseRedirect(reverse('todolist:todo'))
         else:
-            messages.error()
+            messages.error(request, message="error")
     else:
         form = TaskForm()
 
@@ -131,8 +132,24 @@ def profile(request):
         'last_name': user.last_name,
         'email': user.email,
         'username': user.username,
+        # 'birthday': user.user_birthday,
+        # 'location': user.user_location,
+        # 'about_me': user.user_about_me,
     }
     return render(request, 'todolist/profile.html', context)
+
+
+@login_required(login_url='todolist:login')
+def upload_pic(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            m = request.user
+            m.model_pic = form.cleaned_data['image']
+            m.save()
+            return HttpResponseRedirect(reverse("todolist:profile"))
+            # return HttpResponse('image upload success')
+    return HttpResponseForbidden('Only allowed via POST')
 
 
 class TaskCreate(CreateView):

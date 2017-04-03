@@ -21,14 +21,28 @@
                     <p><span class="fa fa-map-marker"></span> <strong>Country: </strong> Norway </p>
                     <p><span class="fa fa-info"></span> <strong>About: </strong> Attends NTNU, enrolled in
                         Computer Technology, year 2015-2020. Partakes in PU group 27. Enjoys string beans and
-                        long walks on the beach. Wants a cat. Lorem Ipsum and so on..
+                        long walks on the beach. Wants a cat. Lorem Ipsum and so on..{{about_me}}
+                        {{user.user_about_me}}
                     </p>
                 </div>
                 <div class="col-xs-12 col-sm-4 text-center">
                     <figure>
-                        <img src="{{ user.profile_pic }}"
+                        <img src="{{ user.get_profile.profile_photo }}"
                              class="img-circle img-responsive" onerror="this.src =
-                             '../../static/todolist/images/profile.svg';" style="width: 128px; height: 128px;">
+                             '../../static/todolist/images/profile.svg';" style="width: 128px; height: 128px;"><br>
+
+                        <img src="{{user.model_pic}}">
+                        <img src="">
+
+                        <!--Upload new picture-->
+                        <form action="{% url 'todolist:upload_pic' %}" method="post" enctype="multipart/form-data">
+                            {%csrf_token %}
+                            <p>
+                                <input id="id_image" type="file" class="" name="image">
+                            </p>
+                            <input type="submit" value="Submit"/>
+                        </form>
+
                     </figure>
                 </div>
             </div>
@@ -55,5 +69,6 @@
     </div>
 </div>
 {% endif %}
+
 
 {% endblock %}
