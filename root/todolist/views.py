@@ -75,7 +75,7 @@ def todo(request):
             obj.save()
             return HttpResponseRedirect(reverse('todolist:todo'))
         else:
-            messages.error()
+            messages.error(request, error="error")
     else:
         form = TaskForm()
 
