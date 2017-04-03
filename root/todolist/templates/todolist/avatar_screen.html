@@ -13,18 +13,21 @@ Also in need of a footer and maybe a different navbar?-->
             <!-- Change out row class for something more fitting and that can be styled differently.
             See scetch on drive for how this should look -->
             <div class="row">
-                This is a link to the todolist
+                <a href="{% url 'todolist:todo' %}"><div class="quizzes-link"> This is a link to the todolist </div></a>
             </div>
             <div class="row">
-                This is a link to the quizzes (?)
-            </div>
-            <div class="row">
-                This is a link to the highscore list (?)
+                <a href="{% url 'todolist:todo' %}"><div class="quizzes-link"> This is a link to the quizzes (?) </div></a>
             </div>
         </div>
         <div class="col-md-6">
-            <img src="" alt="This should be an image of the avatar, I suppose .. "/>
-            <p> This is where the notifications go. Underneath the avatar picture </p>
+            <div class="user-profile-picture">
+                Profilbilde
+            </div>
+            <ul>
+                <li> Notification </li>
+                <li> Notification </li>
+                <li> Notification </li>
+            </ul>
         </div>
     </div>
 </div>
