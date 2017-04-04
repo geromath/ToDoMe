@@ -6,8 +6,8 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, TemplateView, FormView
 
-from .forms import QuestionForm
-from .models import Quiz, Category, Progress, Sitting, Question
+from .forms import QuestionForm, QuestionForm2
+from .models import Quiz, Category, Progress, Sitting, Question, Answer
 
 from django.http import HttpResponse
 
@@ -142,6 +142,8 @@ class QuizTake(FormView):
 
     form_class = QuestionForm
     template_name = 'quizzes/question.html'
+    model = Answer #lagt til denne linjen selv for å teste
+    fields = ['answer'] #lagt til denne linjen selv for å teste
 
     def dispatch(self, request, *args, **kwargs):
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug']) #NB: Endret fra 'quiz_name'
