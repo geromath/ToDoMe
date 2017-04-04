@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.test import Client
 from django.test import TestCase
 from django.urls import resolve
+from django.contrib import auth
 
 from .models import Task
 
@@ -12,6 +13,7 @@ class TaskTestCase(TestCase):
         user = User.objects.create(username='testuser')
         user.set_password('Pekka123')
         user.save()
+
 
         Task.objects.create(task_text="Homework", description="Do my homework", due_date=None, archived=False)
         current_date = datetime.date(2017, 3, 27)
@@ -31,6 +33,8 @@ class TaskTestCase(TestCase):
         self.assertContains(response, 'Some title')
         self.assertContains(response, 'Some text')
 
+
+
     def testTaskInfo(self):
         homework = Task.objects.get(task_text="Homework")
         quiz = Task.objects.get(description="Complete quiz regarding TDT4145")
@@ -49,11 +53,12 @@ class TaskTestCase(TestCase):
         resp = self.client.get('/todo_detail/485438528345/')
         self.assertEqual(resp.status_code, 404)
 
+
     def create_task(self, title="only a test", body="yes, this is only a test"):
         return Task.objects.create(task_text=title, description=body)
 
     def test_whatever_creation(self):
-        t = self.create_task()
+        t = self.create_task(body="Jau")
         self.assertTrue(isinstance(t, Task))
         self.assertEqual(t.__str__(), t.task_text)
         self.assertEqual(str(t), t.task_text)
@@ -70,6 +75,11 @@ class UrlTestCase(TestCase):
         logout_resolver = resolve('/logout/')
         self.assertEqual(logout_resolver.view_name, 'todolist:logout')
 
+class TestUserInformation(TestCase):
+
+    def testUser(self):
+        user = User.objects.create(username='testuser')
+        self.assertEqual(str(user), user.username)
 
 class TestCalls(TestCase):
     def setUp(self):

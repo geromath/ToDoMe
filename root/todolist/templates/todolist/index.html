@@ -68,9 +68,9 @@
                                 </div>
                                 {% endfor %}
 
-                                    <script>
-                                        $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
-                                    </script>
+                                <script>
+                                    $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+                                </script>
                             </div>
 
 
@@ -87,54 +87,6 @@
     </div>
 </div>
 
-<!-- Modal Expand TODO -->
-<!-- NEEDS TO BE REDONE COMPLETELY, AFTER WE FIX MODAL FORM -->
-<div id="expandTodoModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal Content -->
-        <div class="modal-content">
-            <form class="form-horisontal" action="" method="post">{% csrf_token %}
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title">Edit TODO</h3>
-                </div>
-                <div class="modal-body">
-                    <!-- Legge til ny TODO -->
-
-                    <!--Title -->
-                    <div class="form-group">
-                        <label for="editTaskText">Task Title</label>
-                        <input type="text" class="form-control" id="editTaskText" placeholder="Task Title">
-                    </div>
-
-                    <!--Description -->
-                    <div class="form-group">
-                        <label for="editDescription">Description</label>
-                        <textarea class="form-control" rows="5" id="editDescription"
-                                  placeholder="Description"></textarea>
-                    </div>
-
-                    <!--Due Date -->
-                    <div class="form-group">
-                        <label for="editDate">Set Due Date (Optional):
-                            <span class="glyphicon glyphicon-calendar"></span></label>
-                        <input type="text" size="8" class="form-control" id="editDate" placeholder="dd/mm/yyyy">
-
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Save Changes</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-
-</div>
-
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -145,11 +97,14 @@
                 {% if all_tasks %}
                 {% for task in all_tasks %}
                 {% if task.archived == False %}
+
+
                 <li class="list-group-item" id="todo_list_item" title="Edit"
                     onclick="location.href='/todo/{{task.id}}/edit/'">
-                    <h4 class="list-group-item-heading">{{ task.task_text }}
+                    <h4 class="list-group-item-heading"><span class="badge" id="badge{{task.get_color}}">TODO</span>
+                        {{ task.task_text }}
                         {%if task.due_date %}
-                        <span class="badge">Due date: {{ task.due_date }}</span>
+                        <span class="badge" id="badge{{task.due_date}}">Due date: {{ task.due_date }}</span>
                         {% endif %}
                     </h4>
                     <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
@@ -174,6 +129,33 @@
                             </button>
                         </form>
                     </div>
+
+                    <!--Allows list item to change color according to user choice-->
+                    <script>
+                        var e = document.getElementById("badge{{task.get_color}}");
+                        e.style.background = "{{task.get_color}}";
+
+                        var dateBadge = document.getElementById("badge{{task.due_date}}");
+
+//                      Endrer Due Date badge til Overdue, og farge rød
+                        var date = new Date("{{task.due_date}}");
+                        var now = new Date();
+                        now.setHours(0, 0, 0, 0);
+
+                        var week = new Date();
+                        week.setDate(date.getDate() + 7);
+
+//                        If upcoming
+                        if (date <= week) {
+                            dateBadge.innerHTML = "Due date:: {{task.due_date}}";
+                            dateBadge.style.background = "#ffa500";
+                        }
+//                        If overdue
+                        if (date < now) {
+                            dateBadge.innerHTML = "Overdue: {{task.due_date}}";
+                            dateBadge.style.background = "#ff0000";
+                        }
+                    </script>
                 </li>
                 {% endif %}
                 {% endfor %}
@@ -207,5 +189,6 @@
         </div>
     </div>
 </div>
+
 {% endblock body %}
 </html>

@@ -17,8 +17,14 @@ class Task(models.Model):
     archived = models.BooleanField(default=False)
     time_created = models.DateTimeField(auto_now=False, auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True)
+    color = models.CharField(max_length=7, default='#808080')
 
     objects = TaskManager()
+
+    def get_color(self):
+        return '#808080' if not self.color else self.color
+
+
 
     def get_absolute_url(self):
         return reverse('todolist:index', kwargs={"id": self.id})
@@ -27,7 +33,7 @@ class Task(models.Model):
         return self.task_text
 
     class Meta:
-        ordering = ["-time_created"]
+        ordering = ["due_date", "-time_created"]
 
 class TaskAdmin(admin.ModelAdmin):
     fields = ['task_text', 'description', 'due_date']

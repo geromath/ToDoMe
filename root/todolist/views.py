@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.views.generic import View, CreateView, UpdateView, DeleteView
-
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -113,9 +112,6 @@ def profile(request):
         'last_name': user.last_name,
         'email': user.email,
         'username': user.username,
-        # 'birthday': user.user_birthday,
-        # 'location': user.user_location,
-        # 'about_me': user.user_about_me,
     }
     return render(request, 'todolist/profile.html', context)
 

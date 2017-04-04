@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, TextInput
 from .models import Task, UserProfile
 
 
@@ -18,7 +18,7 @@ class UserForm(forms.ModelForm):
                 'class': 'form-control'
             })
 
-    class Meta: # info om klassen
+    class Meta:  # info om klassen
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password']  # feltene som brukerne skal
         # fylle ut (i
@@ -40,6 +40,7 @@ class LoginForm(forms.ModelForm):
         model = User
         fields = ['username', 'password']
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -49,11 +50,12 @@ class UserProfileForm(forms.ModelForm):
 class BootstrapModelForm(ModelForm):
     task_text = forms.CharField(label='Title', widget=forms.TextInput(attrs={'placeholder': 'Title'}))
     description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'placeholder': 'Description'}))
-    due_date = forms.DateTimeField(label='Due Date', required=False, widget= forms.DateInput(attrs={'id':
+    due_date = forms.DateTimeField(label='Due Date', required=False, widget=forms.DateInput(attrs={'id':
+                                                                                                       'inputDate',
+                                                                                                   'placeholder':
+                                                                                                       'Due Date'}))
+    color = forms.CharField(label="Color", widget=forms.TextInput(attrs={'type': 'color', 'value': '#808080'}))
 
-                                                                                                           'inputDate',
-                                                                                                'placeholder':
-    'Due Date'}))
 
     def __init__(self, *args, **kwargs):
         super(BootstrapModelForm, self).__init__(*args, **kwargs)
@@ -69,5 +71,4 @@ class TaskForm(BootstrapModelForm):
 
     class Meta:
         model = Task
-        fields = ['task_text', 'description', 'due_date']
-
+        fields = ['task_text', 'description', 'due_date', 'color']

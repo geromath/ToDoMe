@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrapform',
     'social_django',
+    'django_nose',
 
 ]
 
@@ -90,7 +91,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 # Tell nose to measure coverage on the 'foo' and 'bar' apps
 NOSE_ARGS = [
     '--with-coverage',
-    '--cover-package=todolist, highscorelist'
+    '--cover-package=todolist, quizzes'
 ]
 
 WSGI_APPLICATION = 'root.wsgi.application'
