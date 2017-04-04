@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login, get_user_model, logout, update_session_auth_hash
 from django.views.generic import View, CreateView, UpdateView, DeleteView
-from social_django.models import UserSocialAuth
+# from social_django.models import UserSocialAuth
 
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
@@ -14,6 +14,8 @@ from .models import Task
 from .forms import TaskForm, LoginForm
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
+
+import datetime
 
 
 @login_required()
@@ -49,7 +51,23 @@ def archive(request):
 
 @login_required(login_url='todolist:login')
 def avatar_screen(request):
-    return render(request, 'todolist/avatar_screen.html', None)
+    today = datetime.date.today()
+    overdue_tasks = Task.objects.filter(user=request.user).filter(due_date__lte=today)
+    close_tasks_all = Task.objects.filter(user=request.user).exclude(due_date__lte=today).order_by('-due_date')
+
+    close_tasks = []
+    i = 0
+    for task in close_tasks_all:
+        if i < 3:
+            close_tasks.append(task)
+        i += 1
+
+
+    context = {
+        'overdue_tasks': overdue_tasks,
+        'close_tasks': close_tasks,
+    }
+    return render(request, 'todolist/avatar_screen.html', context)
 
 
 @login_required(login_url='todolist:login')
