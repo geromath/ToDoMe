@@ -142,12 +142,12 @@
                         var now = new Date();
                         now.setHours(0, 0, 0, 0);
 
-                        var week = new Date();
-                        week.setDate(date.getDate() + 7);
+                        var sameMonth = new Date();
+                        sameMonth.setDate(date.getDate() + 7);
 
-//                        If upcoming
-                        if (date <= week) {
-                            dateBadge.innerHTML = "Due date:: {{task.due_date}}";
+//                        If upcoming (currently set to TODOs within same month)
+                        if (date <= sameMonth) {
+                            dateBadge.innerHTML = "Due date: {{task.due_date}}";
                             dateBadge.style.background = "#ffa500";
                         }
 //                        If overdue
