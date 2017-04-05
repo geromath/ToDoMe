@@ -1,10 +1,7 @@
 import datetime
-from django.contrib.auth.models import User
 from django.test import Client
 from django.test import TestCase
 from django.urls import resolve
-from django.contrib import auth
-
 from .models import Task
 
 
@@ -13,7 +10,6 @@ class TaskTestCase(TestCase):
         user = User.objects.create(username='testuser')
         user.set_password('Pekka123')
         user.save()
-
 
         Task.objects.create(task_text="Homework", description="Do my homework", due_date=None, archived=False)
         current_date = datetime.date(2017, 3, 27)
@@ -32,8 +28,6 @@ class TaskTestCase(TestCase):
         self.assertEqual(response.redirect_chain, [('/todo/', 302)])
         self.assertContains(response, 'Some title')
         self.assertContains(response, 'Some text')
-
-
 
     def testTaskInfo(self):
         homework = Task.objects.get(task_text="Homework")

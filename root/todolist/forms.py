@@ -56,7 +56,6 @@ class BootstrapModelForm(ModelForm):
                                                                                                        'Due Date'}))
     color = forms.CharField(label="Color", widget=forms.TextInput(attrs={'type': 'color', 'value': '#808080'}))
 
-
     def __init__(self, *args, **kwargs):
         super(BootstrapModelForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
