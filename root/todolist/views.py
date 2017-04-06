@@ -53,7 +53,7 @@ def archive(request):
 def avatar_screen(request):
     today = datetime.date.today()
     overdue_tasks = Task.objects.filter(user=request.user).filter(due_date__lte=today)
-    close_tasks_all = Task.objects.filter(user=request.user).exclude(due_date__lte=today).order_by('-due_date')
+    close_tasks_all = Task.objects.filter(user=request.user).exclude(due_date__lte=today).order_by('due_date')
 
     close_tasks = []
     i = 0
@@ -61,7 +61,6 @@ def avatar_screen(request):
         if i < 3:
             close_tasks.append(task)
         i += 1
-
 
     context = {
         'overdue_tasks': overdue_tasks,
