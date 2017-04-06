@@ -142,8 +142,11 @@ class QuizTake(FormView):
 
     form_class = QuestionForm
     template_name = 'quizzes/question.html'
-    model = Answer #lagt til denne linjen selv for å teste
-    fields = ['answer'] #lagt til denne linjen selv for å teste
+
+    #lagt til context for å teste det ut!
+    context = {
+        'form': form_class
+    }
 
     def dispatch(self, request, *args, **kwargs):
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug']) #NB: Endret fra 'quiz_name'

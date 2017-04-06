@@ -82,13 +82,19 @@
         {% endif %}
 
 
-        <form action="#" method="POST">
+        <form action="" method="POST">
             {% csrf_token %}
+
+
+
+
             <input type=hidden name="answer_id" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
 
             <ul class="list-group">
 
-                {% for answer in form %}
+
+
+                {% for answer in form.question.get_answers %}
                   <li class="list-group-item">
 
                       {{ answer }}<input type='radio' name='guess'>
@@ -100,6 +106,7 @@
 
 
         <input type="submit" value={% trans "Check" %} class="btn btn-large btn-block btn-warning" >
+
         </form>
 
     {% endif %}
