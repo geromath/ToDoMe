@@ -27,6 +27,8 @@ install:
   - pip install Pillow
 # command to run tests
 script:
+  - python root/manage.py makemigrations
+  - python root/manage.py migrate
   - python root/manage.py runserver &
   - coverage run --source=root/todolist root/manage.py test todolist
   
