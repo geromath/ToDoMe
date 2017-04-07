@@ -10,7 +10,7 @@
 {% block body %}
 <!-- All content for sub-pages goes between these block tags -->
 
-<header id="indexHeader">
+<header id="indexHeader" class="headerLine">
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -137,7 +137,7 @@
 
                         var dateBadge = document.getElementById("badge{{task.due_date}}");
 
-//                      Endrer Due Date badge til Overdue, og farge rød
+                        //                      Endrer Due Date badge til Overdue, og farge rød
                         var date = new Date("{{task.due_date}}");
                         var now = new Date();
                         now.setHours(0, 0, 0, 0);
@@ -145,13 +145,13 @@
                         var sameMonth = new Date();
                         sameMonth.setDate(date.getDate() + 7);
 
-//                        If upcoming (currently set to TODOs within same month)
+                        //                        If upcoming (currently set to TODOs within same month)
                         if (date <= sameMonth) {
                             dateBadge.innerHTML = "Due date: {{task.due_date}}";
                             dateBadge.style.background = "#ffa500";
                         }
-//                        If overdue
-                        if (date < now) {
+                        //                        If overdue
+                        if (date <= now) {
                             dateBadge.innerHTML = "Overdue: {{task.due_date}}";
                             dateBadge.style.background = "#ff0000";
                         }

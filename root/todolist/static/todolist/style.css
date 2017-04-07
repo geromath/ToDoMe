@@ -3,7 +3,7 @@ body {
     padding-top: 50px;
 }
 
-.dropdown:hover .dropdown-menu{
+.dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
 }
@@ -29,25 +29,26 @@ body {
     color: dimgray;
 }
 
-
-
 /* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
 /* ---------------------------------------------------------------------- */
 
 /*Headers*/
 
-#indexHeader {
-    background: #3e4249 url('images/headerIndex.png');
+.header-title {
     color: #ccc;
     margin-bottom: 20px;
-    border-bottom: 1px solid #080808;
+}
+
+#avatarScreenHeader {
+    background: #3e4249 url('images/headerAvatarScreen.png');
+}
+
+#indexHeader {
+    background: #3e4249 url('images/headerIndex.png');
 }
 
 #archiveHeader {
     background: #3e4249 url('images/headerArchive.png');
-    color: #ccc;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #080808;
 }
 
 header {

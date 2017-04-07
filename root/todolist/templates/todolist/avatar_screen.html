@@ -1,20 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends 'todolist/base.html' %}
-{% block title %} Home {% endblock title %}
+
+<head>
+    {% extends 'todolist/base.html' %}
+    {% load staticfiles %}
+    <title>{% block title %} Home {% endblock title %}</title>
+</head>
+
 {% block body %}
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <!-- This page needs some styling before we show it to the public .. :P
 Also in need of a footer and maybe a different navbar?-->
 
+<header id="avatarScreenHeader">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <h1 class="header-title">{{ title }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
 <div class="container">
     <!-- Change out row class for something more fitting and that can be styled differently.
-    See scetch on drive for how this should look -->
+    See sketch on drive for how this should look -->
 
     <!-- This is the overdue tasks -->
     <div class="row">
         <div class="col-md-6">
-            <h1> Overdue tasks </h1>
+            <h1> Overdue Tasks </h1>
 
             <div class="panel panel-default">
                 <ul class="list-group" id="todo_list">
@@ -23,7 +44,7 @@ Also in need of a footer and maybe a different navbar?-->
                         onclick="location.href='/todo/{{task.id}}/edit/'">
                         <h4 class="list-group-item-heading">{{ task.task_text }}
                             {%if task.due_date %}
-                            <span class="badge">Due date: {{ task.due_date }}</span>
+                            <span class="badge" style="background-color: #ff0000;">Due date: {{ task.due_date }}</span>
                             {% endif %}
                         </h4>
                         <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
@@ -56,8 +77,9 @@ Also in need of a footer and maybe a different navbar?-->
             </div>
         </div>
         <div class="col-md-6">
-            <h1> Profil something ... </h1>
+            <h1> Profile </h1>
             <div class="panel panel-default">
+                <h2><span class="fa fa-user"></span> {{user.username}} </h2>
                 <div class="profile-picture">
                     Profilbilde
                 </div>
@@ -66,15 +88,16 @@ Also in need of a footer and maybe a different navbar?-->
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h1> The next tasks </h1>
+            <h1> Upcoming Tasks </h1>
             <div class="panel panel-default">
                 <ul class="list-group" id="close_todo_list">
                     {% for task in close_tasks %}
+
                     <li class="list-group-item" id="close_todo_list_item" title="Edit"
                         onclick="location.href='/todo/{{task.id}}/edit/'">
                         <h4 class="list-group-item-heading">{{ task.task_text }}
                             {%if task.due_date %}
-                            <span class="badge">Due date: {{ task.due_date }}</span>
+                            <span class="badge" style="background-color: #ffa500;">Due date: {{ task.due_date }}</span>
                             {% endif %}
                         </h4>
                         <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
@@ -107,7 +130,7 @@ Also in need of a footer and maybe a different navbar?-->
             </div>
         </div>
         <div class="col-md-6">
-            <h1> Quiz notifications </h1>
+            <h1> Quiz Notifications </h1>
             <div class="panel panel-default">
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -128,17 +151,17 @@ Also in need of a footer and maybe a different navbar?-->
     </div>
 </div>
 
-    <div class="row">
-        <a href="{% url 'todolist:todo' %}">
-            <div class="quizzes-link"> This is a link to the todolist</div>
-        </a>
-    </div>
-    <div class="row">
-        <a href="{% url 'todolist:todo' %}">
-            <div class="quizzes-link"> This is a link to the quizzes (?)</div>
-        </a>
-    </div>
+<div class="row">
+    <a href="{% url 'todolist:todo' %}">
+        <div class="quizzes-link"> This is a link to the todolist</div>
+    </a>
 </div>
+
+<div class="row">
+    <a href="{% url 'todolist:todo' %}">
+        <div class="quizzes-link"> This is a link to the quizzes (?)</div>
+    </a>
 </div>
+
 {% endblock body %}
 </html>
