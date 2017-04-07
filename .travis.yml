@@ -1,17 +1,34 @@
 language: python
 python:
-  - "2.6"
-  - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
   - "3.5"
   - "3.5-dev" # 3.5 development branch
   - "3.6"
   - "3.6-dev" # 3.6 development branch
   - "3.7-dev" # 3.7 development branch
   - "nightly" # currently points to 3.7-dev
+
+notifications:
+  email:
+    on_success: never
+    on_failure: never
+    
 # command to install dependencies
-install: "pip install -r requirements.txt"
+install: 
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install django
+  - pip install django-bootstrap-form
+  - pip install social-auth-app-django
+  - pip install social-auth-core
+  - pip install coverage
+  - pip install django-model-utils
+  - pip install django-nose
+  - pip install nose
+  - pip install Pillow
 # command to run tests
-script: pytest
+script:
+  - python root/manage.py test
+  - coverage run --source=root/ root/manage.py test todolist
+  
+after_success: 
+  - coveralls

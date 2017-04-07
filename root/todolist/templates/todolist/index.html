@@ -57,8 +57,7 @@
                                     <ul class="form-errors">
                                         {% for error in field.errors %}
                                         <li><span class="fa fa-exclamation-triangle"></span> <strong>
-                                            {{ error|escape
-                                            }}</strong>
+                                            {{ error|escape }}</strong>
                                         </li>
                                         {% endfor %}
                                     </ul>
@@ -87,8 +86,6 @@
 
             </div>
         </div>
-
-
     </div>
 </div>
 
@@ -102,11 +99,14 @@
                 {% if all_tasks %}
                 {% for task in all_tasks %}
                 {% if task.archived == False %}
+
+
                 <li class="list-group-item" id="todo_list_item" title="Edit"
                     onclick="location.href='/todo/{{task.id}}/edit/'">
-                    <h4 class="list-group-item-heading">{{ task.task_text }}
+                    <h4 class="list-group-item-heading"><span class="badge" id="badge{{task.get_color}}">TODO</span>
+                        {{ task.task_text }}
                         {%if task.due_date %}
-                        <span class="badge">Due date: {{ task.due_date }}</span>
+                        <span class="badge" id="badge{{task.due_date}}">Due date: {{ task.due_date }}</span>
                         {% endif %}
                     </h4>
                     <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
@@ -131,6 +131,34 @@
                             </button>
                         </form>
                     </div>
+
+                    <!--Allows list item to change color according to user choice-->
+                    <script>
+                        var e = document.getElementById("badge{{task.get_color}}");
+                        e.style.background = "{{task.get_color}}";
+
+                        var dateBadge = document.getElementById("badge{{task.due_date}}");
+
+//                      Endrer Due Date badge til Overdue, og farge rød
+                        var date = new Date("{{task.due_date}}");
+                        var now = new Date();
+                        now.setHours(0, 0, 0, 0);
+
+                        var sameMonth = new Date();
+                        sameMonth.setDate(date.getDate() + 7);
+
+//                        If upcoming (currently set to TODOs within same month)
+                        if (date <= sameMonth) {
+                            dateBadge.innerHTML = "Due date: {{task.due_date}}";
+                            dateBadge.style.background = "#ffa500";
+                        }
+//                        If overdue
+                        if (date < now) {
+                            dateBadge.innerHTML = "Overdue: {{task.due_date}}";
+                            dateBadge.style.background = "#ff0000";
+                        }
+
+                    </script>
                 </li>
                 {% endif %}
                 {% endfor %}
@@ -164,5 +192,6 @@
         </div>
     </div>
 </div>
+
 {% endblock body %}
 </html>

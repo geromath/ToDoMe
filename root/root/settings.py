@@ -49,6 +49,7 @@ NOSE_ARGS = [
     '--cover-package=quizzes, todolist',
     'bootstrapform',
     'social_django',
+    'django_nose',
 
 
 ]
@@ -96,7 +97,6 @@ AUTHENTICATION_BACKENDS = (
 
     'django.contrib.auth.backends.ModelBackend',
 )
-
 
 
 WSGI_APPLICATION = 'root.wsgi.application'
@@ -156,6 +156,22 @@ redirect_uri = 'http://localhost:8000/_oauth/facebook?close'
 SOCIAL_AUTH_FACEBOOK_KEY = '1141126915996317'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '8ad62ee87dafea546a57c92a7aad157a'  # App Secret
 
-SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = [
+    'email',
+    'user_friends',
+    'public_profile',
+    'user_birthday',
+    'user_location',
+    'user_about_me',
+
+]
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email',
+}
+
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/profile/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False

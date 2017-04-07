@@ -8,42 +8,137 @@
 Also in need of a footer and maybe a different navbar?-->
 
 <div class="container">
-    <div class="col-md-6">
-        <!-- Change out row class for something more fitting and that can be styled differently.
-        See scetch on drive for how this should look -->
+    <!-- Change out row class for something more fitting and that can be styled differently.
+    See scetch on drive for how this should look -->
 
-        <!-- This is the overdue tasks -->
-        <div class="task-notification">
-            <p> Overdue task(s): </p>
-            {% for overdue_task in overdue_tasks %}
-                {{ overdue_task }}
-            {% endfor %}
+    <!-- This is the overdue tasks -->
+    <div class="row">
+        <div class="col-md-6">
+            <h1> Overdue tasks </h1>
 
-            <!-- This is the close todos -->
-            <p> Close to overdue task(s): </p>
-            {% for close_task in close_tasks %}
-                {{ close_task }}
-                {{ close_task.due_date }}
-            {% endfor %}
+            <div class="panel panel-default">
+                <ul class="list-group" id="todo_list">
+                    {% for task in overdue_tasks %}
+                    <li class="list-group-item" id="todo_list_item" title="Edit"
+                        onclick="location.href='/todo/{{task.id}}/edit/'">
+                        <h4 class="list-group-item-heading">{{ task.task_text }}
+                            {%if task.due_date %}
+                            <span class="badge">Due date: {{ task.due_date }}</span>
+                            {% endif %}
+                        </h4>
+                        <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
+
+                        <div class="buttons">
+
+                            <!-- Archive TODO as "Completed" -->
+                            <form action="{% url 'todolist:task_checked' task.id %}" method="post"
+                                  style="display: inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                <button type="submit" class="btn btn-info btn-sm" title="Archive">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                </button>
+                            </form>
+
+                            <!-- Delete TODO, on click delete TODO -->
+                            <form action="{% url 'todolist:delete_task' task.id %}" method="post"
+                                  style="display: inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-
-        <div class="row">
-            <a href="{% url 'todolist:todo' %}"><div class="quizzes-link"> This is a link to the todolist </div></a>
-        </div>
-        <div class="row">
-            <a href="{% url 'todolist:todo' %}"><div class="quizzes-link"> This is a link to the quizzes (?) </div></a>
+        <div class="col-md-6">
+            <h1> Profil something ... </h1>
+            <div class="panel panel-default">
+                <div class="profile-picture">
+                    Profilbilde
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="user-profile-picture">
-            Profilbilde
+    <div class="row">
+        <div class="col-md-6">
+            <h1> The next tasks </h1>
+            <div class="panel panel-default">
+                <ul class="list-group" id="close_todo_list">
+                    {% for task in close_tasks %}
+                    <li class="list-group-item" id="close_todo_list_item" title="Edit"
+                        onclick="location.href='/todo/{{task.id}}/edit/'">
+                        <h4 class="list-group-item-heading">{{ task.task_text }}
+                            {%if task.due_date %}
+                            <span class="badge">Due date: {{ task.due_date }}</span>
+                            {% endif %}
+                        </h4>
+                        <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
+
+                        <div class="buttons">
+
+                            <!-- Archive TODO as "Completed" -->
+                            <form action="{% url 'todolist:task_checked' task.id %}" method="post"
+                                  style="display: inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                <button type="submit" class="btn btn-info btn-sm" title="Archive">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                </button>
+                            </form>
+
+                            <!-- Delete TODO, on click delete TODO -->
+                            <form action="{% url 'todolist:delete_task' task.id %}" method="post"
+                                  style="display: inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-        <ul>
-            <li> Notification </li>
-            <li> Notification </li>
-            <li> Notification </li>
-        </ul>
+        <div class="col-md-6">
+            <h1> Quiz notifications </h1>
+            <div class="panel panel-default">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading"> Quiz notifications go here </h4>
+                        <p class="list-group-item-text"> Description </p>
+                    </li>
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading"> Heading </h4>
+                        <p class="list-group-item-text"> Description </p>
+                    </li>
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading"> Heading </h4>
+                        <p class="list-group-item-text"> Description </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+</div>
+
+    <div class="row">
+        <a href="{% url 'todolist:todo' %}">
+            <div class="quizzes-link"> This is a link to the todolist</div>
+        </a>
+    </div>
+    <div class="row">
+        <a href="{% url 'todolist:todo' %}">
+            <div class="quizzes-link"> This is a link to the quizzes (?)</div>
+        </a>
+    </div>
+</div>
 </div>
 {% endblock body %}
 </html>

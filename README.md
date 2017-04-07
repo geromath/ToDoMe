@@ -1,6 +1,7 @@
-# ToDoMe 
+﻿# ToDoMe  [![Build Status](https://travis-ci.org/geromath/ToDoMe.svg?branch=master)](https://travis-ci.org/geromath/ToDoMe)  [![Coverage Status](https://coveralls.io/repos/github/geromath/ToDoMe/badge.svg?branch=master)](https://coveralls.io/github/geromath/ToDoMe?branch=master)
 
 ![ToDoMe](https://raw.github.com/geromath/ToDoMe/dev/images/todome_logo.png)
+
 
 
 # Table of contents 
@@ -52,6 +53,10 @@ Break down into end to end tests
  Give an example
  And coding style tests
 
+Navigate to the folder where the manage.py file is and
+- type "python3 manage.py test" in the Terminal
+
+
 
 # Built With  
 
@@ -89,4 +94,9 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 # Acknowledgments  
 NTNU TDT4140 course staff - Spring 2017.
+
+
+
+
+
 
