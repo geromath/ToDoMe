@@ -1,90 +1,92 @@
-# ToDoMe
+# ToDoMe 
 
-Project Title
+![ToDoMe](https://raw.github.com/geromath/ToDoMe/dev/images/todome_logo.png)
 
-One Paragraph of project description goes here
 
-Getting Started
+# Table of contents 
+- Project description 
+- Getting started 
+- Prerequisites 
+- Installing 
+- Running the tests 
+- Built with 
+- Contributing 
+- Authors 
+- License 
+- Acknowledgments  
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+# Project description 
+ToDoMe is a web-based task manager that lets you organize your tasks for the day and week in an easy manner. 
+You earn credits for completing tasks you set for yourself and for passing the quizzes created by your teacher. 
+ToDoMe helps the students repeat the curriculum throughout the semester and it gives the professors a better overview of their students progress.
 
-Prerequisites
+# Getting Started
 
-What things you need to install the software and how to install them
+- Clone the repo with "git clone https://github.com/geromath/ToDoMe.git"   
+- Navigate into the root directory (/ToDoMe/root) and type in the following command in terminal:
+"python3 manage.py migrate"
 
-Give examples
-Installing
 
-A step by step series of examples that tell you have to get a development env running
+# Prerequisites
 
-Say what the step will be
+<What things you need to install the software and how to install them> 
+<Give examples>  
 
-Give the example
-And repeat
+- Python 2.7+ 
+- Django 1.10+ 
 
-until finished
-End with an example of getting some data out of the system or using it for a little demo
 
-Running the tests
+# Installing  
+Python: https://www.python.org/downloads/
 
-Explain how to run the automated tests for this system
+To install Django:
 
+- Type "pip install django" in terminal
+
+
+# Running the tests  
+
+Explain how to run the automated tests for this system 
 Break down into end to end tests
-
-Explain what these tests test and why
-
-Give an example
-And coding style tests
-
-Explain what these tests test and why
-
-Give an example
-Deployment
-
-Add additional notes about how to deploy this on a live system
-
-Built With
-
-Dropwizard - The web framework used
-Maven - Dependency Management
-ROME - Used to generate RSS Feeds
-Contributing
-
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
-
-Versioning
-
-We use SemVer for versioning. For the versions available, see the tags on this repository.
-
-Authors
-
-Billie Thompson - Initial work - PurpleBooth
-See also the list of contributors who participated in this project.
-
-License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details
-
-Acknowledgments
-
-Hat tip to anyone who's code was used
-Inspiration
-etc
+ Explain what these tests test and why
+ Give an example
+ And coding style tests
 
 
-#Konsept:
-Vi lager nettbasert task manager - en todolist - som gjør det lett å organisere gjøremålene dine.
+# Built With  
 
-Vi ønsker funksjonaliteter som at når man lager seg en bruker kan man legge til tasks, samt få inn frister på innleveringer
-fra BlackBoard og ItsLearning automatisk.
+- Django - The web framework used 
+- Python
+-  Bootstrap 
+- React
 
-Man skal kunne lage seg tasks som også kan legge seg inn på google kalenderen din.
+# Contributing
+- Make sure you have a GitHub account
+- Fork the repository on GitHub
 
-Når man fullfører tasks så får man poeng. Alle brukere skal ha en avatar som utvikler seg etter hvert som man får mer
-poeng.
+__Making changes:__
 
-Vi ønsker også et fokus på læring, og vi skal gjøre det mulig for forelesere å lage quizzer etter forelesninger, og
-dersom man tar disse har man mulighet til å få enda mer poeng.
+Create a topic branch from where you want to base your work.
+This is usually the master branch.
+Please avoid working directly on the master branch.
 
-Vi vil også ha en highscorelist hvor man kan se hvor mange poeng andre brukere har.
+Type "git checkout -b newbranchname" to create new branch.
+
+Make commits of logical units.
+Check for unnecessary whitespace with "git diff --check" before committing.
+Make sure your commit messages are in the proper format.
+- Make sure you have added the necessary tests for your changes.
+- Run _all_ the tests to assure nothing else was accidentally broken.
+
+# Authors  
+- Mathias
+- Erik
+- Caroline
+- Marius
+
+# License
+This project is licensed under the MIT License - see the LICENSE.md file for details  .
+
+# Acknowledgments  
+NTNU TDT4140 course staff - Spring 2017.
 

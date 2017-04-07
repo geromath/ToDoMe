@@ -1,0 +1,40 @@
+{% extends 'todolist/base.html' %}
+{% block title %} Edit TODO {% endblock %}
+
+
+{% block body %}
+<!--Simple form for editing a TODO-->
+<form class="form-group" action="" method="post" style="width: 50%; margin: auto; padding: 10px;">
+    {% csrf_token %}
+
+    {% for field in form %}
+
+    <div class="form-group">
+        {% if field.errors %}
+        <ul class="form-errors">
+            {% for error in field.errors %}
+            <li><span class="fa fa-exclamation-triangle"></span> <strong>
+                {{ error|escape
+                }}</strong>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {{ field.label_tag }} {{ field }}
+        {% if field.help_text %}
+        <div class="form-helptext">{{ field.help_text }}</div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="pull-right">
+        <button type="submit" class="btn btn-success ">Save Changes</button>
+        <a href="{% url 'todolist:todo' %}" class="btn btn-default">Dismiss</a>
+    </div>
+</form>
+
+<script>
+    $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+</script>
+
+{% endblock body %}

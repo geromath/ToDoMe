@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'todolist/base.html' %}
+{% block title %} Home {% endblock title %}
+{% block body %}
+
+<!-- This page needs some styling before we show it to the public .. :P
+Also in need of a footer and maybe a different navbar?-->
+
+<div class="container">
+    <div class="col-md-6">
+        <!-- Change out row class for something more fitting and that can be styled differently.
+        See scetch on drive for how this should look -->
+
+        <!-- This is the overdue tasks -->
+        <div class="task-notification">
+            <p> Overdue task(s): </p>
+            {% for overdue_task in overdue_tasks %}
+                {{ overdue_task }}
+            {% endfor %}
+
+            <!-- This is the close todos -->
+            <p> Close to overdue task(s): </p>
+            {% for close_task in close_tasks %}
+                {{ close_task }}
+                {{ close_task.due_date }}
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <a href="{% url 'todolist:todo' %}"><div class="quizzes-link"> This is a link to the todolist </div></a>
+        </div>
+        <div class="row">
+            <a href="{% url 'todolist:todo' %}"><div class="quizzes-link"> This is a link to the quizzes (?) </div></a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="user-profile-picture">
+            Profilbilde
+        </div>
+        <ul>
+            <li> Notification </li>
+            <li> Notification </li>
+            <li> Notification </li>
+        </ul>
+    </div>
+</div>
+{% endblock body %}
+</html>

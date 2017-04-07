@@ -1,20 +1,27 @@
-from django.conf.urls import url
-from django.contrib.auth import views as auth_views, login, authenticate
+from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 from . import views
 
 app_name = 'todolist'
 
 urlpatterns = [
     # All of the below are subpages of /todolist/
-
     # Index view (log in screen)
-    url(r'^$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
+    url(r'^$', views.avatar_screen, name='avatar_screen'),
 
-    # Accounts
-    url(r'^accounts/login$', auth_views.login, kwargs={'template_name': 'accounts/login.html'}, name='login'),
+    # Login screen
+    url(r'^login/$', auth_views.login, name='login', kwargs={'redirect_authenticated_user': True}),
+    url(r'^logout/$', auth_views.logout, name='logout'),
 
     # Main view
     url(r'^todo/$', views.todo, name="todo"),
+
+    # Detail view
+    url(r'^todo/(?P<id>\d+)/$', views.todo_detail, name="todo_detail"),
+
+    # Archived (Completed) TODOs
+    url(r'^archive/$', views.archive, name="archive"),
 
     # Registrering
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
@@ -22,14 +29,22 @@ urlpatterns = [
     # Make new task
     url(r'^mktsk/$', views.TaskCreate.as_view(), name='make_task'),
 
+    # Update task v2
+    url(r'^todo/(?P<id>\d+)/edit/$', views.todo_update, name='update_task'),
+
     # Update task
-    url(r'^mktsk/(?P<pk>[0-9]+)/$', views.TaskUpdate.as_view(), name='update_task'),
+    # url(r'^mktsk/(?P<id>\d+)/$', views.TaskUpdate.as_view(), name='update_task'),
+
+    # Archive task
+    url(r'archive/(?P<pk>[0-9]+)/archive/$', views.task_checked, name='task_checked'),
 
     # Delete task
-    url(r'mktsk/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
+    url(r'delete/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete_task'),
+
+    # For Facebook login etc.
+    url(r'^settings/$', views.settings, name='settings'),
+    url(r'^settings/password/$', views.password, name='password'),
+
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+
 ]
-
-
-
-
-

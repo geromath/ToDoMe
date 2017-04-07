@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^quizzes/', include('quizzes.urls')),
 
 
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+
 ]

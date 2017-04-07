@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-{% extends 'todolist/base.html' %}
-{% block title %} My TODOs {% endblock %}
+<html lang="en" xmlns:todolist="http://www.w3.org/1999/xhtml">
+
+<head>
+    {% extends 'todolist/base.html' %}
+    {% load staticfiles %}
+    <title>{% block title %} My TODOs {% endblock title %}</title>
+</head>
 
 {% block body %}
-    <!-- All content for sub-pages goes between these block tags -->
+<!-- All content for sub-pages goes between these block tags -->
 
-<header>
+<header id="indexHeader">
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="clearfix">
                     <div class="pull-left">
-                        <h1 class="header-title">TODOs</h1>
+                        <h1 class="header-title">{{ user.username }}'s {{ title }} </h1>
                     </div>
                     <div class="pull-right">
-                        <!-- Currently 2 buttons to add TODOs, use only the first one when todos can be added with
-                        modal forms-->
-                        <button type="button" class="btn btn-success btn-lg" data-toggle="modal"
-                                data-target="#newTodoModal">New TODO</button>
-                        <a href="{% url 'todolist:make_task' %}" class="btn btn-success">New TODO</a>
+                        <button type="button" id="newTodo" class="btn btn-success btn-lg" data-toggle="modal"
+                                data-target="#newTodoModal">New TODO
+                        </button>
                     </div>
                 </div>
             </div>
@@ -28,144 +30,139 @@
 </header>
 
 <!-- Main container -->
+<div class="container">
 
-    <div class="container">
-
-                <!-- Modal Add New TODO-->
-        <div id="newTodoModal" class="modal fade" tabindex="-1" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Modal Content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Add new TODO</h3>
-              </div>
-              <div class="modal-body">
-
-                  <form role="form">
-                  <div class="form-group">
-                    <label for="inputTask">TODO</label>
-                      <input type="text" class="form-control"
-                      id="inputTask" placeholder="Task name"/>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputDesc">Description</label>
-                      <textarea class="form-control" rows="5" id="inputDesc" placeholder="Task description"></textarea>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-success">Add TODO</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-                <!-- Modal Edit TODO -->
-        <div id="editTodoModal" class="modal fade" tabindex="-1" role="dialog">
-          <div class="modal-dialog">
+    <!-- Modal Add New TODO-->
+    <div id="newTodoModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
 
             <!-- Modal Content-->
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Edit TODO</h3>
-              </div>
-              <div class="modal-body">
 
-                  <form role="form">
-                  <div class="form-group">
-                    <label for="inputEditTask">TODO</label>
-                      <input type="text" class="form-control" id="inputEditTask"
-                             value="{{ task_id }}">
-                  </div>
-                  <div class="form-group">
-                    <label for="inputEditDesc">Description</label>
-                      <textarea class="form-control" rows="4" id="inputEditDesc" value="{{ task_description }}"></textarea>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-success">Add TODO</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <ul class="list-group">
-
-                        <!-- Each TODO shows up as a list item under here -->
-                        {% if all_tasks %}
-                            {% for task in all_tasks %}
-                                    <li class="list-group-item">
-                                        <h4 class="list-group-item-heading">{{ task.task_text}} <span class="badge">Number of tasks</span></h4>
-                                        <p class="list-group-item-text">{{ task.description }}</p>
-                                        <div class="buttons">
-
-                                            <!-- Archive TODO, on click send TODO to a page for all completed TODOs -->
-                                            <form action="#" method="post" style="display: inline">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                                                <button type="submit" class="btn btn-info btn-xs"
-                                                        title="Archive">
-                                                    <span class="glyphicon glyphicon-ok"></span>
-                                                </button>
-                                            </form>
-
-                                            <!-- Edit TODO, on click send to page where you can edit this TODO -->
-                                            <!--<form method="post" style="display: inline">-->
-                                                <!--{% csrf_token %}-->
-                                                <!--<input type="hidden" name="task_id" value="{{ task.id }}"/>-->
-                                                <button type="button" class="btn btn-default btn-xs" title="Edit" data-toggle="modal" data-target="#editTodoModal">
-                                                    <span class="glyphicon glyphicon-edit"></span>
-                                                </button>
-                                            <!--</form>-->
-
-                                            <!-- Delete TODO, on click delete TODO -->
-                                            <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete">
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </button>
-                                            </form>
-
-                                        </div>
-                                    </li>
-                            {% endfor %}
-                        {% else %}
-                            <li class="list-group-item">
-                                <h4 class="list-group-item-heading">You do not have any TODOs yet</h4>
-                            </li>
-                        {% endif %}
-                        {% if error_message %}
-                            <li class="list-group-item">
-                                <h4 class="list-group-item-heading">Error message</h4>
-                            </li>
-                        {% endif %}
-
-                    </ul>
-
-                    <!--Footer-->
-                    <div class="panel-footer">
-                        <small>{{ task_count }} TODOs</small>
+                <form class="form-horisontal" action="" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">Add new TODO</h3>
                     </div>
+                    <div class="modal-body">
+                        <!-- Legge til ny TODO -->
+                        <div class="form-group">
 
-                </div>
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <div class="form-group">
+                                {% for field in form %}
+                                <div class="form-group">
+                                    {% if field.errors %}
+                                    <ul class="form-errors">
+                                        {% for error in field.errors %}
+                                        <li><span class="fa fa-exclamation-triangle"></span> <strong>
+                                            {{ error|escape
+                                            }}</strong>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    {{ field.label_tag }} {{ field }}
+                                    {% if field.help_text %}
+                                    <div class="form-helptext">{{ field.help_text }}</div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+
+                                <script>
+                                        $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+
+                                </script>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Add TODO</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                </form>
+
+
             </div>
+        </div>
 
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <ul class="list-group" id="todo_list">
+
+                <!-- Each TODO shows up as a list item under here -->
+                {% if all_tasks %}
+                {% for task in all_tasks %}
+                {% if task.archived == False %}
+                <li class="list-group-item" id="todo_list_item" title="Edit"
+                    onclick="location.href='/todo/{{task.id}}/edit/'">
+                    <h4 class="list-group-item-heading">{{ task.task_text }}
+                        {%if task.due_date %}
+                        <span class="badge">Due date: {{ task.due_date }}</span>
+                        {% endif %}
+                    </h4>
+                    <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
+
+                    <div class="buttons">
+
+                        <!-- Archive TODO as "Completed" -->
+                        <form action="{% url 'todolist:task_checked' task.id %}" method="post" style="display: inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                            <button type="submit" class="btn btn-info btn-sm" title="Archive">
+                                <span class="glyphicon glyphicon-check"></span>
+                            </button>
+                        </form>
+
+                        <!-- Delete TODO, on click delete TODO -->
+                        <form action="{% url 'todolist:delete_task' task.id %}" method="post" style="display: inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                            <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </form>
+                    </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                <!-- En quality of life improvement. Istedenfor å sjekke om all_tasks er true,
+                så sjekker den om man har laget en task tidligere eller om man ikke har gjort det-->
+
+                {% if not all_tasks %}
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">No TODOs found</h4>
+                </li>
+                {% elif task_count == 0 %}
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Make some more TODOs! You have completed all you previously
+                        made</h4>
+                </li>
+                {% endif %}
+                {% if error_message %}
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Error message</h4>
+                </li>
+                {% endif %}
+
+            </ul>
+
+            <!--Footer-->
+            <div class="panel-footer">
+                <small>{{ task_count }} active TODOs</small>
+            </div>
         </div>
     </div>
-
-<!-- End of body -->
-
-{% endblock %}
-
+</div>
+{% endblock body %}
+</html>
