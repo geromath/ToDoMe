@@ -26,9 +26,8 @@ install:
   - pip install nose
   - pip install Pillow
 # command to run tests
-before-script:
-  - python root/manage.py runserver $
 script:
+  - python root/manage.py runserver $
   - coverage run --source=root/todolist root/manage.py test todolist
   
 after_success: 
