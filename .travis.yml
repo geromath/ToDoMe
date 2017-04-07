@@ -27,7 +27,6 @@ install:
   - pip install Pillow
 # command to run tests
 script:
-  - python root/manage.py test
   - coverage run --source=root/ root/manage.py test todolist
   
 after_success: 
