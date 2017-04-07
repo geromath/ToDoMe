@@ -30,8 +30,8 @@ install:
 # command to run tests
 
 before_script:
-    - python manage.py makemigrations
-    - python manage.py migrate
+    - python root/manage.py makemigrations
+    - python root/manage.py migrate
 
 script:
   - python manage.py test
