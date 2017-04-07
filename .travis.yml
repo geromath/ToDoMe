@@ -25,13 +25,10 @@ install:
   - pip install django-nose
   - pip install nose
   - pip install Pillow
+  - pip install codecov tox
 # command to run tests
 script:
-  - python root/manage.py makemigrations
-  - python root/manage.py migrate
-  - python root/manage.py runserver &
-  - coverage run --source=root/todolist root/manage.py test todolist
+  - tox
   
 after_success: 
-  - coverage report
-  - coveralls
+  - codecov
