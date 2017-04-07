@@ -1,27 +1,16 @@
-from django.contrib.auth.forms import PasswordChangeForm, AdminPasswordChangeForm
-from django.http import HttpRequest
-from django.shortcuts import render, redirect, get_object_or_404, render_to_response
-from django.contrib.auth import authenticate, login, get_user_model, logout, update_session_auth_hash
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login
 from django.views.generic import View, CreateView, UpdateView, DeleteView
-from social_django.models import UserSocialAuth
-
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from .models import Task
-from .forms import TaskForm, LoginForm
+from .forms import TaskForm
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
+import datetime
 
-
-@login_required()
-def index(request):
-    context = {
-        'nbar': 'startpage'
-    }
-    return render(request, 'todolist/startpage.html', context)
 
 
 @login_required(login_url='todolist:login')
@@ -29,7 +18,7 @@ def archive(request):
     all_tasks = Task.objects.filter(user=request.user)
     task_count = Task.objects.filter(archived=True).filter(user=request.user).count()
 
-    # Search function for archive
+    # Search function for archived TODOs
     queryset_list = Task.objects.archived()
     query = request.GET.get("q")
     if query:
@@ -47,10 +36,24 @@ def archive(request):
     }
     return render(request, 'todolist/archive.html', context)
 
-
 @login_required(login_url='todolist:login')
 def avatar_screen(request):
-    return render(request, 'todolist/avatar_screen.html', None)
+    today = datetime.date.today()
+    overdue_tasks = Task.objects.filter(user=request.user).filter(due_date__lte=today)
+    close_tasks_all = Task.objects.filter(user=request.user).exclude(due_date__lte=today).order_by('due_date')
+
+    close_tasks = []
+    i = 0
+    for task in close_tasks_all:
+        if i < 3:
+            close_tasks.append(task)
+        i += 1
+
+    context = {
+        'overdue_tasks': overdue_tasks,
+        'close_tasks': close_tasks,
+    }
+    return render(request, 'todolist/avatar_screen.html', context)
 
 
 @login_required(login_url='todolist:login')
@@ -202,41 +205,3 @@ class UserFormView(View):
                         'todolist:todo')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
 
         return render(request, self.template_name, {'form': form})  # gir skjemaet paa nytt om noe gikk galt
-
-
-@login_required
-def settings(request):
-    user = request.user
-
-    try:
-        facebook_login = user.social_auth.get(provider='facebook')
-    except UserSocialAuth.DoesNotExist:
-        facebook_login = None
-
-    can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
-
-    return render(request, 'registration/settings.html', {
-        'facebook_login': facebook_login,
-        'can_disconnect': can_disconnect
-    })
-
-
-@login_required
-def password(request):
-    if request.user.has_usable_password():
-        PasswordForm = PasswordChangeForm
-    else:
-        PasswordForm = AdminPasswordChangeForm
-
-    if request.method == 'POST':
-        form = PasswordForm(request.user, request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('password')
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordForm(request.user)
-    return render(request, 'registration/password.html', {'form': form})
