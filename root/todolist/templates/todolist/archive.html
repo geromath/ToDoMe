@@ -38,7 +38,8 @@
                 {% if task.archived == True %}
 
                 <li class="list-group-item" id="todo_list_item_archived">
-                    <h4 class="list-group-item-heading">{{ task.task_text }}
+                    <h4 class="list-group-item-heading"><span class="badge" id="badge{{task.get_color}}">TODO</span>
+                        {{ task.task_text }}
                         {%if task.due_date %}
                         <span class="badge">Due date: {{ task.due_date }}</span>
                         {% endif %}
@@ -67,6 +68,11 @@
                         </form>
 
                     </div>
+                    <!--Allows list item to change color according to user choice-->
+                    <script>
+                        var e = document.getElementById("badge{{task.get_color}}");
+                            e.style.background = "{{task.get_color}}";
+                    </script>
                 </li>
                 {% endif %}
                 {% endfor %}

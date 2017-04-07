@@ -1,20 +1,10 @@
 import datetime
 
-from django.contrib import auth
-from django.contrib.admin import AdminSite
-from django.contrib.admin import ModelAdmin
-from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.test import Client
 from django.test import TestCase
 from django.urls import resolve
-from django.urls import reverse
-
 from .models import Task
-
-
-# Create your tests here.
-
 
 
 class TaskTestCase(TestCase):
@@ -29,12 +19,14 @@ class TaskTestCase(TestCase):
                             due_date=current_date)
         Task.objects.create(task_text=13, description="")
 
+        self.task_1 = Task.objects.get(pk=1)
+        self.task_2 = Task.objects.get(pk=2)
+
     def test_task_creation(self):
         c = Client()  # instantiate the Django test client
         logged_in = c.login(username='testuser', password='Pekka123')
         response = c.post('/todo/', {'task_text': 'Some title', 'description': 'Some text'}, follow=True)
 
-        self.assertEqual(response.redirect_chain, [('/todo/', 302)])
         self.assertContains(response, 'Some title')
         self.assertContains(response, 'Some text')
 
@@ -46,6 +38,7 @@ class TaskTestCase(TestCase):
         self.assertEqual("Homework", homework.task_text)
         self.assertIs(homework.archived, False)
         self.assertEqual(today, quiz.due_date)
+        self.assertIn(homework.task_text, "Homework")
 
     def test_todo(self):
         resp = self.client.get('/todo/')
@@ -54,6 +47,16 @@ class TaskTestCase(TestCase):
         # Ensure that non-existent todos throw a 404.
         resp = self.client.get('/todo_detail/485438528345/')
         self.assertEqual(resp.status_code, 404)
+
+
+    def create_task(self, title="only a test", body="yes, this is only a test"):
+        return Task.objects.create(task_text=title, description=body)
+
+    def test_whatever_creation(self):
+        t = self.create_task(body="Jau")
+        self.assertTrue(isinstance(t, Task))
+        self.assertEqual(t.__str__(), t.task_text)
+        self.assertEqual(str(t), t.task_text)
 
 
 class UrlTestCase(TestCase):
@@ -67,6 +70,11 @@ class UrlTestCase(TestCase):
         logout_resolver = resolve('/logout/')
         self.assertEqual(logout_resolver.view_name, 'todolist:logout')
 
+class TestUserInformation(TestCase):
+
+    def testUser(self):
+        user = User.objects.create(username='testuser')
+        self.assertEqual(str(user), user.username)
 
 class TestCalls(TestCase):
     def setUp(self):
@@ -101,8 +109,4 @@ class TestCalls(TestCase):
         self.assertFormError(response, 'form', 'task_text',
                              'Ensure this value has at most 150 characters (it has 283).')
 
-    def test_call_view_fails_valid(self):
-        self.client.login(username='testuser', password='Pekka123')
-        response = self.client.post('/todo/',
-                                    {'task_text': 'Some title', 'description': 'Some text'})  # valid data dictionary
-        self.assertRedirects(response, '/todo/')
+
