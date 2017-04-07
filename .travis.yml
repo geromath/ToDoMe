@@ -25,10 +25,10 @@ install:
   - pip install django-nose
   - pip install nose
   - pip install Pillow
-  - pip install codecov tox
 # command to run tests
 script:
-  - tox
+  - python root/manage.py test todolist
+  - coverage run --source=root/ root/manage.py test todolist
   
 after_success: 
-  - codecov
+  - coveralls
