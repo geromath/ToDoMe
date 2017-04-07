@@ -35,7 +35,7 @@ before_script:
 
 script:
   - python manage.py test
-  - coverage run --source=todolist manage.py test todolist
+  - coverage run --source=root root/manage.py test todolist
   
 after_success: 
   - coveralls
