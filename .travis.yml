@@ -29,7 +29,7 @@ install:
 before-script:
   - python root/manage.py runserver $
 script:
-  - coverage run root/manage.py test todolist
+  - coverage run --source=root root/manage.py test todolist
   
 after_success: 
   - coverage report
