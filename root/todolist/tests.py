@@ -1,4 +1,6 @@
 import datetime
+
+from django.contrib.auth.models import User
 from django.test import Client
 from django.test import TestCase
 from django.urls import resolve
@@ -25,7 +27,6 @@ class TaskTestCase(TestCase):
         logged_in = c.login(username='testuser', password='Pekka123')
         response = c.post('/todo/', {'task_text': 'Some title', 'description': 'Some text'}, follow=True)
 
-        self.assertEqual(response.redirect_chain, [('/todo/', 302)])
         self.assertContains(response, 'Some title')
         self.assertContains(response, 'Some text')
 
@@ -108,8 +109,4 @@ class TestCalls(TestCase):
         self.assertFormError(response, 'form', 'task_text',
                              'Ensure this value has at most 150 characters (it has 283).')
 
-    def test_call_view_fails_valid(self):
-        self.client.login(username='testuser', password='Pekka123')
-        response = self.client.post('/todo/',
-                                    {'task_text': 'Some title', 'description': 'Some text'})  # valid data dictionary
-        self.assertRedirects(response, '/todo/')
+
