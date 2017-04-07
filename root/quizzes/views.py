@@ -167,7 +167,7 @@ class QuizTake(FormView):
         if request.method == "POST": #LAGT til selv for å se hvordan request ser ut
             print(request)
             print(request.POST)
-            print(request.POST.get('answers'))
+            print(request.POST.get('answer_id'))
             #print(self.get_context_data())
             #return QuizTake.form_valid_user(self,request.POST)
 
@@ -217,6 +217,8 @@ class QuizTake(FormView):
         progress, c = Progress.objects.get_or_create(user=self.request.user)
 
         guess = form.cleaned_data['answers']
+
+
         is_correct = self.question.check_if_correct(guess)
 
         if is_correct is True:

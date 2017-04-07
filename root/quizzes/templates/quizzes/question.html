@@ -51,6 +51,7 @@
     <br />
 
 
+
     {% if question %}
 
 
@@ -84,7 +85,7 @@
 
         <form action="" method="POST">
             {% csrf_token %}
-            <input type=hidden name="answers" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
+            <input type=hidden name="answer_id" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
             <ul class="list-group">
 
                 <!--
@@ -93,7 +94,7 @@
 
                 {% for answer in form.question.get_answers %}
                   <li class="list-group-item">
-                      {{ answer }}<input type='radio' name='answers' value="{{ answer.id }}"> <!-- had 'guess' before -->
+                      {{ answer }}<input type='radio' name='answer_id' value="{{ answer.id }}"> <!-- had 'guess' before -->
 
 
                   </li>
@@ -112,6 +113,7 @@
 
         </form>
 
+    {{form.question.check_if_correct}}
     {% endif %}
 
 
