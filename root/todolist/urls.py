@@ -11,6 +11,9 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, name='login', kwargs={'redirect_authenticated_user': True}),
     url(r'^logout/$', auth_views.logout, name='logout'),
 
+    # Start page (?)
+    url(r'^$', views.avatar_screen, name='avatar_screen'),
+
     # Main view
     url(r'^todo/$', views.todo, name="todo"),
 
