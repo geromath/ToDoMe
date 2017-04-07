@@ -4,6 +4,9 @@ from .models import Answer
 
 
 class QuestionForm(forms.Form):
+
+    message = forms.CharField() #lagt til for å teste
+
     def __init__(self, question, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         choice_list = [x for x in question.get_answers_list()]

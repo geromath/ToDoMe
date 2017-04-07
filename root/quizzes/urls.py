@@ -29,6 +29,10 @@ urlpatterns = [
         view=QuizDetailView.as_view(),
         name='quiz_start_page'),
 
+    #  passes variable 'pk' to quiz_take view
+    url(regex=r'^(?P<pk>[\d.]+)/$',  #tester denne. Skal kontrollere om rett svar.
+        view=QuizTake.as_view(),
+        name='checkanswer'),
 
 
 

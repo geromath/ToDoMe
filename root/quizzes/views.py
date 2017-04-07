@@ -164,6 +164,14 @@ class QuizTake(FormView):
         if self.sitting is False:
             return render(request, 'quizzes/single_complete.html')
 
+        if request.method == "POST": #LAGT til selv for å se hvordan request ser ut
+            print(request)
+            print(request.POST)
+            print(request.POST.get('answers'))
+            #print(self.get_context_data())
+            #return QuizTake.form_valid_user(self,request.POST)
+
+
         return super(QuizTake, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None): #ENDRET fra form_class til form_class=None
@@ -207,6 +215,7 @@ class QuizTake(FormView):
 
     def form_valid_user(self, form):
         progress, c = Progress.objects.get_or_create(user=self.request.user)
+
         guess = form.cleaned_data['answers']
         is_correct = self.question.check_if_correct(guess)
 

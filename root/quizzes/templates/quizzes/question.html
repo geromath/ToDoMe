@@ -84,28 +84,31 @@
 
         <form action="" method="POST">
             {% csrf_token %}
-
-
-
-
-            <input type=hidden name="answer_id" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
-
+            <input type=hidden name="answers" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
             <ul class="list-group">
 
-
+                <!--
+                First name: <input type="text" name="FirstName" value="Mickey"><br>
+                -->
 
                 {% for answer in form.question.get_answers %}
                   <li class="list-group-item">
+                      {{ answer }}<input type='radio' name='answers' value="{{ answer.id }}"> <!-- had 'guess' before -->
 
-                      {{ answer }}<input type='radio' name='guess'>
 
                   </li>
                 {% endfor %}
 
+                {{ form.question.get_answers_list }}
             </ul>
 
-
+        <!--
         <input type="submit" value={% trans "Check" %} class="btn btn-large btn-block btn-warning" >
+        -->
+            <input type="submit" value="Check" class="btn btn-large btn-block btn-warning" >
+
+            {{form.question.check_if_correct}}
+
 
         </form>
 
