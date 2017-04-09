@@ -28,6 +28,9 @@
     <script src="{% static 'todolist/script.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'todolist/style.css' %}">
 
+    <!--Font Awesome-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 </head>
 <body>
@@ -106,5 +109,30 @@
 {% block body %}
 
 {% endblock body %}
+
+<!-- Footer -->
+    <footer class="footer-basic-centered footer navbar-fixed-bottom">
+
+        <p class="footer-company-motto">"Do yourself a favour - use ToDoMe"</p>
+        <p class="footer-links">
+            <a href="{% url 'todolist:avatar_screen' %}">Home</a>
+            ·
+            <a href="{% url 'todolist:todo' %}">Tasks</a>
+            ·
+            <a href="{% url 'todolist:archive' %}">Archive</a>
+            ·
+            <a href="#">Quizzes</a>
+            ·
+            <a href="{% url 'todolist:profile' %}">Profile</a>
+        </p>
+
+        <p class="footer-company-name">ToDoMe &copy;
+            <script type="text/javascript">
+        document.write(new Date().getFullYear());
+
+            </script>
+        </p>
+    </footer>
+
 </body>
 </html>

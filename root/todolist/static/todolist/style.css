@@ -1,6 +1,8 @@
 body {
     background: #F7FFF6 url('images/body-bg.png');
     padding-top: 50px;
+    padding-bottom: 150px;
+    overflow-x: hidden;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -29,6 +31,45 @@ body {
     color: dimgray;
 }
 
+/* Footer CSS */
+
+.footer-basic-centered{
+	background-color: #292c2f;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: center;
+	font: normal 14px sans-serif;
+	padding: 15px;
+	margin-top: 40px;
+}
+
+.footer-basic-centered .footer-company-motto{
+	color:  #8d9093;
+	font-size: 20px;
+	margin: 0;
+}
+
+.footer-basic-centered .footer-company-name{
+	color:  #8f9296;
+	font-size: 12px;
+	margin: 0;
+}
+
+.footer-basic-centered .footer-links{
+	list-style: none;
+	font-weight: bold;
+	color:  #ffffff;
+	padding: 20px 0 20px;
+	margin: 0;
+}
+
+.footer-basic-centered .footer-links a{
+	display:inline-block;
+	text-decoration: none;
+	color: inherit;
+}
+
 /* EVERYTHING BELOW THIS LINE IS FOR SUBPAGES, NOT JUST THE BASE.HTML TAGS*/
 /* ---------------------------------------------------------------------- */
 
@@ -54,7 +95,6 @@ body {
 header {
     height: 75px;
     width: 100%;
-
 }
 
 h1.header-title {

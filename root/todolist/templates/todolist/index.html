@@ -6,7 +6,7 @@
     {% load staticfiles %}
     <title>{% block title %} My TODOs {% endblock title %}</title>
 </head>
-
+<body>
 {% block body %}
 <!-- All content for sub-pages goes between these block tags -->
 
@@ -88,7 +88,7 @@
 </div>
 
 
-<div class="row">
+<div class="row" style="width: 100%;">
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <ul class="list-group" id="todo_list">
@@ -170,8 +170,7 @@
                 </li>
                 {% elif task_count == 0 %}
                 <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Make some more TODOs! You have completed all you previously
-                        made</h4>
+                    <h4 class="list-group-item-heading">Make some more TODOs! You have completed all you previously made</h4>
                 </li>
                 {% endif %}
                 {% if error_message %}
@@ -191,4 +190,6 @@
 </div>
 
 {% endblock body %}
+</body>
+
 </html>
