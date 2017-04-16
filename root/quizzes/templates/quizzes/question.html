@@ -20,8 +20,9 @@
     <p>{{ sitting}}</p>
 -->
 
-    {% if form.previous.answers %}
-        {{ form.previous.answers }}
+
+    {% if previous.answers %}
+        {{ previous.answers }}
 
 
       <p class="muted"><small>{% trans "The previous question" %}:</small></p>
@@ -106,19 +107,15 @@
         <form action="" method="POST">
             {% csrf_token %}
             <input type=hidden name="answer_id" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
+            <!--
             {{ sitting.get_first_question}}
             {{ progress }}
             {{ question }}
             {{ quiz.id }}
             {{ form_valid_user.previous }}
+            {{ quiz.id }}
+            -->
             <ul class="list-group">
-
-                <!--
-                First name: <input type="text" name="FirstName" value="Mickey"><br>
-
-                opprinnelig med "form." foran de under
-                -->
-
 
 
                 {% for answer in sitting.get_first_question.get_answers %}
@@ -129,30 +126,13 @@
                   </li>
                 {% endfor %}
 
-
-
             </ul>
 
-        <!--
-        <input type="submit" value={% trans "Check" %} class="btn btn-large btn-block btn-warning" >
-        -->
             {{ sitting.get_first_question.check_if_correct }}
-            <input type="submit" value="Check" class="btn btn-large btn-block btn-warning" >
-
-
-            {{form.question.check_if_correct}}
-
+            <input type="submit" value="Next" class="btn btn-large btn-block btn-warning">
 
         </form>
-
-
-
     {% endif %}
-    <!--
-endret fra endif
-    endfor
-    -->
-
 
 
 {% endif %}

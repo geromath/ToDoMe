@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, TemplateView, FormView
 
-from .forms import QuestionForm, QuestionForm2, AnswerIDForm
+from .forms import AnswerIDForm
 from .models import Quiz, Category, Progress, Sitting, Question, MCQuestion, Answer
 
 from django.http import HttpResponse
@@ -142,50 +142,11 @@ class QuizTake(FormView):
 
     form = AnswerIDForm #QuestionForm
     template_name = 'quizzes/question.html'
-    #success_url = '/thanks/' #lagt til for å teste
-    '''
-
-    #lagt til context for å teste det ut!
-    context = {
-        'form': form_class
-    }
-
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug']) #NB: Endret fra 'quiz_name'
-        if self.quiz.draft and not request.user.has_perm('quiz.change_quiz'):
-            raise PermissionDenied
-
-        self.logged_in_user = self.request.user.is_authenticated()
-
-        if self.logged_in_user:
-            self.sitting = Sitting.objects.user_sitting(request.user,
-                                                        self.quiz)
-
-        if self.sitting is False:
-            return render(request, 'quizzes/single_complete.html')
-
-        if request.method == "POST": #LAGT til selv for å se hvordan request ser ut
-            print(self)
-            print(request)
-            print(request.POST)
-            print(request.POST.get('answer_id'))
-
-            #det under skal kommenteres ut
-            form = QuestionForm(request.POST)  # A form bound to the POST data
-            if form.is_valid():  # All validation rules pass
-                print(form.cleaned_data['answers'])
-
-            #print(self.get_context_data())
-            #return QuizTake.form_valid(self, form=QuestionForm(request.POST))
-
-
-
-        return super(QuizTake, self).dispatch(request, *args, **kwargs)
-    '''
 
     def get(self, request, *args, **kwargs):
+        print()
+        print('Starter GET-metoden')
+        print()
         form = AnswerIDForm
 
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug'])  # NB: Endret fra 'quiz_name'
@@ -214,25 +175,30 @@ class QuizTake(FormView):
 
         self.logged_in_user = self.request.user.is_authenticated()
 
+
         if self.logged_in_user:
             self.sitting = Sitting.objects.user_sitting(request.user,
                                                         self.quiz)
 
         if self.sitting is False:
             return render(request, 'quizzes/single_complete.html')
-
-        print('Nå render vi question.html fra GET')
+        print('Sjekker hva som er spørsmålet når vi render fra GET: ', self.sitting.get_first_question())
+        print()
+        print('Nå render vi question.html fra GET og avslutter GET.')
+        print()
         return render(request, "quizzes/question.html", context)
 
     def post(self, request, *args, **kwargs):
-        print('Nå brukes post-metoden')
+        print()
+        print('Starter POST-metoden')
+        print()
 
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug'])  # NB: Endret fra 'quiz_name'
         self.sitting = Sitting.objects.user_sitting(request.user,
                                                        self.quiz)  # endret fra bare request.user
 
-        print('Sjekker score: ', str(self.sitting.get_current_score))
-        print('Sjekker maxscore: ', str(self.sitting.get_max_score))
+        #print('Sjekker score: ', str(self.sitting.get_current_score))
+        #print('Sjekker maxscore: ', str(self.sitting.get_max_score))
         print('Sjekker om quiz er fullført i starten av post-metoden: ', self.sitting.complete)
         if self.sitting.complete:
             print('Quizen er fullført!')
@@ -246,16 +212,8 @@ class QuizTake(FormView):
         self.questions = [Question.objects.filter(quiz=self.quiz)]
 
 
-        context = {
-            "form": self.form,
-            "quiz": self.quiz,
-            "progress": self.progress,
-            "created": created,
-            "question": self.questions,
-            "sitting": self.sitting,
-        }
 
-        print('context i POST: ', context)
+
 
         if self.form.is_valid():
 
@@ -273,7 +231,17 @@ class QuizTake(FormView):
             return render(self.request, "quizzes/result.html", results) #la til self. foran. Byttet ut context med results
 
 
+        context = {
+            "form": self.form,
+            "quiz": self.quiz,
+            "progress": self.progress,
+            "created": created,
+            "question": self.questions,
+            "sitting": self.sitting,
+        }
+
         print('rett før render av question.html i POST-metoden')
+        print('sjekker hva kommende spørsmål skal være: ', self.sitting.get_first_question())
         return render(self.request, "quizzes/question.html", context) #la til self. foran
 
 
@@ -287,6 +255,7 @@ class QuizTake(FormView):
             self.progress = self.sitting.progress()
 
         return self.get_form_kwargs() #form_class(**self.get_form_kwargs())
+
 
     def get_form_kwargs(self):
         kwargs = super(QuizTake, self).get_form_kwargs()
@@ -306,15 +275,15 @@ class QuizTake(FormView):
             print('etter form_valid_user')
 
             if self.sitting.get_first_question() is False:
-                print('HIT skal vi etter andre spørsmål')
-
+                print('HIT skal vi etter siste spørsmål')
                 return self.final_result_user()
+
             print('Vi skal hit etter første spørsmål')
 
         self.request.POST = {}
 
         return super(QuizTake, self).get(self, self.request) #Denne er den opprinnelige. Denne tar oss til get_form-metoden
-        #return super(QuizTake, self).form_valid(form)
+        #return self.get(self, self.request)
 
     def form_valid_user(self, form): #jeg la ved progress og created også
         print()
@@ -340,7 +309,7 @@ class QuizTake(FormView):
 
         #OBS: DERSOM ikke get_first_question gir neste spørsmål vil det gi logisk feil ved senere retting!!!
         self.question = MCQuestion.objects.get(id=self.sitting.get_first_question().id)
-        #NOTE2SELF: dette gir vel neste spørsmål? vi skal vel heller ha gjeldende spørsmål
+
 
         #answer = Answer.objects.get(id=guess)
         #self.question = MCQuestion.objects.get(id=)
@@ -409,13 +378,14 @@ class QuizTake(FormView):
             'percent': self.sitting.get_percent_correct,
             'sitting': self.sitting,
             'previous': self.previous,
+            'progress': self.progress
         }
 
         print('resultater: ', results)
 
         self.sitting.mark_quiz_complete()
         print('Ferdig med quiz? ', self.sitting.complete)
-        print('Melding på slutten av fullført quiz: ', self.sitting.result_message)
+
 
         if self.quiz.answers_at_end:
             results['questions'] =\

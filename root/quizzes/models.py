@@ -317,6 +317,12 @@ class Progress(models.Model):
         """
         return Sitting.objects.filter(user=self.user, complete=True)
 
+    def number_complete_exams(self):
+        '''
+        returns the number of all the user's complete exams
+        '''
+        return len(Sitting.objects.filter(user=self.user, complete=True))
+
 
 class SittingManager(models.Manager):
 
