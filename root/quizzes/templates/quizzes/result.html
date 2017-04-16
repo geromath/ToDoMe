@@ -6,7 +6,16 @@
 {% block title %} {{ quiz.title}} {% endblock %}
 {% block description %} {% trans "Exam Results for" %} {{ quiz.title }} {% endblock %}
 
+
 {% block body %}
+
+    <h1>RESULTATER</h1>
+<p>Quizen er nå fullført. Her kommer litt statistikk:</p>
+<p>Prosent korrekt: {{ sitting.get_percent_correct }}</p>
+<p>Antall rette svar: {{ sitting.current_score }}</p>
+
+{{ sitting.result_message }}
+
 
   {% if previous.answers %}
 
@@ -17,7 +26,7 @@
 	  {{ previous.previous_outcome|yesno:"correct,incorrect" }}
 	</strong>
   </p>
-  {% include 'correct_answer.html' %}
+  {% include 'quizzes/correct_answer.html' %}
   <p><strong>{% trans "Explanation" %}:</strong></p>
   <div class="well " style="background-color: #fcf8e3;">
     <p>{{ previous.previous_question.explanation }}</p>
@@ -45,13 +54,11 @@
 
 	{% endif %}
 
-	<p>{% trans "Review the questions below and try the exam again in the future"%}.</p>
-
 	{% if user.is_authenticated %}
-
 	  <p>{% trans "The result of this exam will be stored in your progress section so you can review and monitor your progression" %}.</p>
-
 	{% endif %}
+
+      <p>{% trans "Review the questions below and try the exam again in the future"%}.</p>
   </div>
 
 
@@ -70,18 +77,20 @@
 
   {% endif %}
 
-  {% if questions %}
 
-    {% for question in questions %}
+  {% if sitting.get_questions %}
+
+    {% for question in sitting.get_questions %}
 
       <p class="lead">
 		{{ question.content }}
 	  </p>
 
-	  {% correct_answer_for_all question %}
+
 
       {% if question.user_answer %}
       <p>{% trans "Your answer" %}: {{ question|answer_choice_to_string:question.user_answer }}</p>
+
       {% endif %}
 
 	  <p><strong>{% trans "Explanation" %}:</strong></p>

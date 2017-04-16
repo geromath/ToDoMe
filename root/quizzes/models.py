@@ -186,6 +186,22 @@ class ProgressManager(models.Manager):
         new_progress.save()
         return new_progress
 
+    # hele user_progress under er lagt til selv
+    def user_progress(self, user, quiz):
+        if quiz.single_attempt is True and self.filter(user=user,
+
+                                                       )\
+                                               .exists():
+            return False
+
+        try:
+            progress = self.get(user=user)
+        except Progress.DoesNotExist:
+            progress = self.new_progress(user)
+        except Progress.MultipleObjectsReturned:
+            progress = self.filter(user=user)[0]
+        return progress
+
 
 class Progress(models.Model):
     """
@@ -333,6 +349,7 @@ class SittingManager(models.Manager):
                                   complete=False,
                                   user_answers='{}')
         return new_sitting
+
 
     def user_sitting(self, user, quiz):
         if quiz.single_attempt is True and self.filter(user=user,
@@ -578,7 +595,7 @@ class Question(models.Model):
         ordering = ['category']
 
     def __str__(self):
-        return self.content
+        return str(self.content + ' (id:' + str(self.id) +')')
 
 
 

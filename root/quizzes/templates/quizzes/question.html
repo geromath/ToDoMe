@@ -15,12 +15,17 @@
 {% else %}
 
 
+<!--
+    <p>{{ sitting.get_incorrect_questions }}</p>
+    <p>{{ sitting}}</p>
+-->
 
-    {% if previous.answers %}
+    {% if form.previous.answers %}
+        {{ form.previous.answers }}
 
 
       <p class="muted"><small>{% trans "The previous question" %}:</small></p>
-      <p>{{ previous.previous_question }}</p>
+      <p>{{ sitting.previous.previous_question }}</p>
 
       {% if previous.previous_outcome %}
         <div class="alert alert-success">
@@ -50,27 +55,42 @@
 
     <br />
 
+    <h1>{{ quiz }}</h1>
 
 
-    {% if question %}
+<!--
+    <br>
+     quiz.get_questions
+    <br>
+     progress.score
+        for question in quiz.get_questions
+        question
+
+        endrer fra if question til for question
+
+-->
+    {% if sitting.get_first_question %}
+
 
 
         {% if progress %}
 
             <div style="float: right;">
-                {% trans "Question" %} {{ progress.0|add:1 }} {% trans "of" %} {{ progress.1 }}
+                Questions answered: {{ sitting.progress.0 }} of total {{ sitting.progress.1 }}
             </div>
         {% endif %}
 
         <p>
             <small class="muted">{% trans "Question category" %}:</small>
-            <strong>{{ question.category }}</strong>
+            <strong>{{ sitting.get_first_question.category }}</strong>
         </p>
 
-        <p class="lead"><strong>{{ question.content }}</strong></p>
+        <p class="lead"><strong>{{ sitting.get_first_question.content }}</strong></p>
 
     <!--
         <h1>{{question.content}}</h1>
+
+        Har byttet ut question. med sitting.get_first_question
 
         <strong>Løsningsforslag (dette skal ikke vises "live"): {{question.explanation}}</strong>
     -->
@@ -78,43 +98,60 @@
 
 
 
-        {% if question.figure %}
-            <img src="{{ question.figure.url }}" alt="{{ question.content }}" />
+        {% if sitting.get_first_question.figure %}
+            <img src="{{ sitting.get_first_question.figure.url }}" alt="{{ sitting.get_first_question.content }}" />
         {% endif %}
 
 
         <form action="" method="POST">
             {% csrf_token %}
             <input type=hidden name="answer_id" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
+            {{ sitting.get_first_question}}
+            {{ progress }}
+            {{ question }}
+            {{ quiz.id }}
+            {{ form_valid_user.previous }}
             <ul class="list-group">
 
                 <!--
                 First name: <input type="text" name="FirstName" value="Mickey"><br>
+
+                opprinnelig med "form." foran de under
                 -->
 
-                {% for answer in form.question.get_answers %}
+
+
+                {% for answer in sitting.get_first_question.get_answers %}
                   <li class="list-group-item">
                       {{ answer }}<input type='radio' name='answer_id' value="{{ answer.id }}"> <!-- had 'guess' before -->
-
+                      <input type="hidden" name="question_id" value="{{ question.id }}">
 
                   </li>
                 {% endfor %}
 
-                {{ form.question.get_answers_list }}
+
+
             </ul>
 
         <!--
         <input type="submit" value={% trans "Check" %} class="btn btn-large btn-block btn-warning" >
         -->
+            {{ sitting.get_first_question.check_if_correct }}
             <input type="submit" value="Check" class="btn btn-large btn-block btn-warning" >
+
 
             {{form.question.check_if_correct}}
 
 
         </form>
 
-    {{form.question.check_if_correct}}
+
+
     {% endif %}
+    <!--
+endret fra endif
+    endfor
+    -->
 
 
 
