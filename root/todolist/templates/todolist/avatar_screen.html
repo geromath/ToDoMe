@@ -38,6 +38,7 @@ Also in need of a footer and maybe a different navbar?-->
 
             <div class="panel panel-default">
                 <ul class="list-group" id="todo_list">
+                    {% if overdue_tasks %}
                     {% for task in overdue_tasks %}
                     <li class="list-group-item" id="todo_list_item" title="Edit"
                         onclick="location.href='/todo/{{task.id}}/edit/'">
@@ -72,31 +73,41 @@ Also in need of a footer and maybe a different navbar?-->
                         </div>
                     </li>
                     {% endfor %}
+                    {% else %}
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">You have no overdue tasks</h4>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
         <div class="col-md-6">
             <h1> Profile </h1>
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="padding: 10px;">
                 <h2><span class="fa fa-user"></span> {{user.username}} </h2>
-                <div class="profile-picture">
-                    Profilbilde
-                </div>
+                    <figure>
+                        <img src="{{ user.get_profile.profile_photo }}"
+                             class="img-circle img-responsive" onerror="this.src =
+                             '../../static/todolist/images/profile.svg';" style="width: 128px; height: 128px;"><br>
+
+                    </figure>
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-6">
             <h1> Upcoming Tasks </h1>
             <div class="panel panel-default">
                 <ul class="list-group" id="close_todo_list">
+                    {% if close_tasks %}
                     {% for task in close_tasks %}
 
                     <li class="list-group-item" id="close_todo_list_item" title="Edit"
                         onclick="location.href='/todo/{{task.id}}/edit/'">
                         <h4 class="list-group-item-heading">{{ task.task_text }}
                             {%if task.due_date %}
-                            <span class="badge" style="background-color: #ffa500;">Due date: {{ task.due_date }}</span>
+                            <span class="badge"">Due date: {{ task.due_date }}</span>
                             {% endif %}
                         </h4>
                         <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
@@ -125,12 +136,20 @@ Also in need of a footer and maybe a different navbar?-->
                         </div>
                     </li>
                     {% endfor %}
+                    {% else %}
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">You have no upcoming tasks</h4>
+                    </li>
+                    {% endif %}
+
                 </ul>
             </div>
         </div>
         <div class="col-md-6">
             <h1> Quiz Notifications </h1>
             <div class="panel panel-default">
+                <!--Make an if else, iterating through new quizzes-->
+
                 <ul class="list-group">
                     <li class="list-group-item">
                         <h4 class="list-group-item-heading"> Quiz notifications go here </h4>
@@ -149,7 +168,6 @@ Also in need of a footer and maybe a different navbar?-->
         </div>
     </div>
 </div>
-
 
 
 {% endblock body %}
