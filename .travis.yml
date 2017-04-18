@@ -34,8 +34,9 @@ before_script:
     - python root/manage.py migrate
 
 script:
-  - python root/manage.py test
-  - coverage run --source=root root/manage.py test todolist
+  - cd root
+  - python manage.py test
+  - coverage run --branch --source=quizzes,todolist ./manage.py test
   
 after_success: 
   - coveralls
