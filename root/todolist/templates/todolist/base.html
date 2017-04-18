@@ -110,8 +110,9 @@
 
 {% endblock body %}
 
+
 <!-- Footer -->
-    <footer class="footer-basic-centered footer navbar-fixed-bottom">
+    <footer class="footer-basic-centered">
 
         <p class="footer-company-motto">"Do yourself a favour - use ToDoMe"</p>
         <p class="footer-links">
@@ -121,7 +122,7 @@
             ·
             <a href="{% url 'todolist:archive' %}">Archive</a>
             ·
-            <a href="#">Quizzes</a>
+            <a href="{% url 'quizzes:quiz_index' %}">Quizzes</a>
             ·
             <a href="{% url 'todolist:profile' %}">Profile</a>
         </p>

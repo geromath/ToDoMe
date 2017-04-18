@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'todolist',
     'quizzes',
+    'django_forms_bootstrap',
+    'bootstrap',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
