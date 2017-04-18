@@ -30,15 +30,27 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'todolist',
+    'quizzes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+]
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'quizzes' app. Add more apps behind quizzes, separating with comma.
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=quizzes, todolist',
     'bootstrapform',
     'social_django',
     'django_nose',
+
 
 ]
 
@@ -86,13 +98,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-# Tell nose to measure coverage on the 'foo' and 'bar' apps
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=todolist, quizzes'
-]
 
 WSGI_APPLICATION = 'root.wsgi.application'
 
@@ -129,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 

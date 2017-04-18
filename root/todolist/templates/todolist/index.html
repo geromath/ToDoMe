@@ -38,6 +38,7 @@
 
             <!-- Modal Content-->
             <div class="modal-content">
+
                 <form class="form-horisontal" action="" method="post">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -69,7 +70,8 @@
                                 {% endfor %}
 
                                 <script>
-                                    $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+                                        $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+
                                 </script>
                             </div>
 
@@ -81,9 +83,9 @@
                         </div>
                 </form>
 
+
             </div>
         </div>
-
     </div>
 </div>
 
@@ -155,6 +157,7 @@
                             dateBadge.innerHTML = "Overdue: {{task.due_date}}";
                             dateBadge.style.background = "#ff0000";
                         }
+
                     </script>
                 </li>
                 {% endif %}
