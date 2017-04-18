@@ -39,19 +39,20 @@ def archive(request):
 @login_required(login_url='todolist:login')
 def avatar_screen(request):
     today = datetime.date.today()
-    overdue_tasks = Task.objects.filter(user=request.user).filter(due_date__lte=today)
+    overdue_tasks = Task.objects.filter(user=request.user).filter(due_date__lte=today).filter(archived=False)
     close_tasks_all = Task.objects.filter(user=request.user).exclude(due_date__lte=today).order_by('due_date')
 
     close_tasks = []
     i = 0
     for task in close_tasks_all:
-        if i < 3:
+        if (i < 3 and not task.archived):
             close_tasks.append(task)
-        i += 1
+            i += 1
 
     context = {
         'overdue_tasks': overdue_tasks,
         'close_tasks': close_tasks,
+        'title': 'ToDoMe',
     }
     return render(request, 'todolist/avatar_screen.html', context)
 
