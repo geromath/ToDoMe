@@ -5,13 +5,20 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Quizzes</h2>
+    <center><h2>Available Quizzes</h2></center>
     <ul>
         {% if object_list %}
             {% for quiz in object_list %}
 
-                <li class="list-group-item" id="quiz_list_item" title="Details">
-                    <a href="{% url 'quizzes:quiz_take' quiz.url %}"> {{ quiz.title }} </a></li>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <li class="list-group-item" id="quiz_list_item" title="Details">
+                                <a href="{% url 'quizzes:quiz_take' quiz.url %}"> {{ quiz.title }} </a>
+                            </li>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
 
         {% else %}

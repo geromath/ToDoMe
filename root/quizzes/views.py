@@ -171,9 +171,6 @@ class QuizTake(FormView):
         self.sitting = Sitting.objects.user_sitting(request.user,
                                                        self.quiz)
 
-        if self.sitting.complete:
-            return render(self.request, 'quizzes/result.html', {})
-
         self.form = AnswerIDForm(request.POST, data=request.POST)
         self.progress, created = Progress.objects.get_or_create(user=self.request.user)
         self.questions = [Question.objects.filter(quiz=self.quiz)]
