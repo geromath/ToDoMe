@@ -1,10 +1,8 @@
 from django import forms
-from django.forms.widgets import RadioSelect, Textarea
-from .models import Answer
 
 class AnswerIDForm(forms.Form):
 
-    # sent_in er det som blir sendt inn fra question.html (answer_id og csfr key)
+    # sent_in is what comes from question.html (answer_id, question_id and the csfr key)
 
     def __init__(self, sent_in, *args, **kwargs):
         super(AnswerIDForm, self).__init__(*args, **kwargs)

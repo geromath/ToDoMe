@@ -14,13 +14,6 @@
     <p>Sign in to take this quiz</p>
 {% else %}
 
-
-<!--
-    <p>{{ sitting.get_incorrect_questions }}</p>
-    <p>{{ sitting}}</p>
--->
-
-
     {% if previous.answers %}
         {{ previous.answers }}
 
@@ -58,21 +51,7 @@
 
     <h1>{{ quiz }}</h1>
 
-
-<!--
-    <br>
-     quiz.get_questions
-    <br>
-     progress.score
-        for question in quiz.get_questions
-        question
-
-        endrer fra if question til for question
-
--->
     {% if sitting.get_first_question %}
-
-
 
         {% if progress %}
 
@@ -88,16 +67,6 @@
 
         <p class="lead"><strong>{{ sitting.get_first_question.content }}</strong></p>
 
-    <!--
-        <h1>{{question.content}}</h1>
-
-        Har byttet ut question. med sitting.get_first_question
-
-        <strong>Løsningsforslag (dette skal ikke vises "live"): {{question.explanation}}</strong>
-    -->
-
-
-
 
         {% if sitting.get_first_question.figure %}
             <img src="{{ sitting.get_first_question.figure.url }}" alt="{{ sitting.get_first_question.content }}" />
@@ -107,16 +76,8 @@
         <form action="" method="POST">
             {% csrf_token %}
             <input type=hidden name="answer_id" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
-            <!--
-            {{ sitting.get_first_question}}
-            {{ progress }}
-            {{ question }}
-            {{ quiz.id }}
-            {{ form_valid_user.previous }}
-            {{ quiz.id }}
-            -->
-            <ul class="list-group">
 
+            <ul class="list-group">
 
                 {% for answer in sitting.get_first_question.get_answers %}
                   <li class="list-group-item">
@@ -128,12 +89,10 @@
 
             </ul>
 
-            {{ sitting.get_first_question.check_if_correct }}
             <input type="submit" value="Next" class="btn btn-large btn-block btn-warning">
 
         </form>
     {% endif %}
-
 
 {% endif %}
 

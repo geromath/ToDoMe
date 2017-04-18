@@ -13,11 +13,6 @@ from django.utils.timezone import now
 from django.utils.encoding import python_2_unicode_compatible
 from django.conf import settings
 
-
-#https://github.com/tomwalker/django_quiz/blob/master/quiz/models.py
-#se denne for inspirasjon
-
-
 class CategoryManager(models.Manager):
 
     def new_category(self, category):
@@ -66,8 +61,6 @@ class SubCategory(models.Model):
     def __str__(self):
         return self.sub_category + " (" + self.category.category + ")"
 
-
-#samling av sporsmaal
 class Quiz(models.Model):
     title = models.CharField(
         verbose_name=_("Title"),
@@ -186,10 +179,8 @@ class ProgressManager(models.Manager):
         new_progress.save()
         return new_progress
 
-    # hele user_progress under er lagt til selv
     def user_progress(self, user, quiz):
         if quiz.single_attempt is True and self.filter(user=user,
-
                                                        )\
                                                .exists():
             return False
@@ -550,11 +541,7 @@ class Sitting(models.Model):
         total = self.get_max_score
         return answered, total
 
-
-
-
 class Question(models.Model):
-    # relasjon til quiz-klassen
     """
     Base class for all question types.
     Shared properties placed here.
@@ -603,12 +590,6 @@ class Question(models.Model):
     def __str__(self):
         return str(self.content + ' (id:' + str(self.id) +')')
 
-
-
-
-
-#her kommer det multiplechoicefunksjonalitet
-
 ANSWER_ORDER_OPTIONS = (
     ('content', _('Content')),
     ('random', _('Random')),
@@ -617,6 +598,9 @@ ANSWER_ORDER_OPTIONS = (
 
 
 class MCQuestion(Question):
+    '''
+    Multiple choice question only type of question created for the ToDoMe application.
+    '''
 
     answer_order = models.CharField(
         max_length=30, null=True, blank=True,
@@ -656,9 +640,6 @@ class MCQuestion(Question):
     class Meta:
         verbose_name = _("Multiple Choice Question")
         verbose_name_plural = _("Multiple Choice Questions")
-
-
-#answer-klassen
 
 @python_2_unicode_compatible
 class Answer(models.Model):

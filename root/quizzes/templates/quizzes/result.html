@@ -10,13 +10,6 @@
 {% block body %}
 
     <h1>RESULTS</h1>
-<!--
-<p>Quizen er nå fullført. Her kommer litt statistikk:</p>
-<p>Prosent korrekt: {{ sitting.get_percent_correct }}</p>
-<p>Antall rette svar: {{ sitting.current_score }}</p>
-
-{{ sitting.result_message }}
--->
 
   {% if previous.answers %}
 
@@ -88,8 +81,6 @@
       <p class="lead">
 		{{ question.content }}
 	  </p>
-
-
 
       {% if question.user_answer %}
       <p>{% trans "Your answer" %}: {{ question|answer_choice_to_string:question.user_answer }}</p>
