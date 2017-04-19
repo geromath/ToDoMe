@@ -7,6 +7,7 @@ body {
     background: #F7FFF6 url('images/body-bg.png');
     padding-top: 50px;
     margin-bottom: 80px;
+    overflow-x: hidden;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -52,6 +53,7 @@ body {
     position: absolute;
     bottom: 0;
     height: 80px;
+    left: 0;
 }
 
 .footer-basic-centered .footer-company-motto {
