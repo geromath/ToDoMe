@@ -96,6 +96,10 @@ body {
     background: #3e4249 url('images/headerAvatarScreen.png');
 }
 
+#profileHeader {
+    background: #3e4249 url('images/headerProfile.png');
+}
+
 #indexHeader {
     background: #3e4249 url('images/headerIndex.png');
 }

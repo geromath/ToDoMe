@@ -6,10 +6,25 @@
 
 {% block body %}
 
+<header id="profileHeader" class="headerLine">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="clearfix">
+                    <div>
+                        <h1 class="header-title">{{ title }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
 {% if user.is_authenticated %}
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-<div class="container" style="margin-top: 25px;">
+<div class="container" style="margin-top: 25px; margin-bottom: 120px;">
     <div class="row">
         <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
             <div class="col-sm-12">
@@ -18,8 +33,12 @@
                     <p><span class="fa fa-vcard-o"></span> <strong>Name: </strong> {{user.first_name}}
                         {{user.last_name}} </p>
                     <p><span class="fa fa-envelope-o"></span> <strong>Email: </strong> {{user.email}} </p>
-                    <p><span class="fa fa-map-marker"></span> <strong>Country: </strong> Norway </p>
-                    <p><span class="fa fa-info"></span> <strong>About: </strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                    <!--Trenger kun "if" på location og about, da vi sikrer email og navn ved innlogging/sign up-->
+                    <p><span class="fa fa-map-marker"></span> <strong>Country: </strong> {% if user.user_location %}
+                        {{ user.user_location }} {% else %} <i>Not available</i> {% endif %} </p>
+
+                    <p><span class="fa fa-info"></span> <strong>About: </strong> {% if user.user_about_me %}
+                        {{ user.user_about_me }} {% else %} <i>Not available</i> {% endif %}
                     </p>
                 </div>
                 <div class="col-xs-12 col-sm-4 text-center">

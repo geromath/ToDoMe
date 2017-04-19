@@ -135,6 +135,7 @@ def profile(request):
         'last_name': user.last_name,
         'email': user.email,
         'username': user.username,
+        'title': 'Profile',
     }
     return render(request, 'todolist/profile.html', context)
 
