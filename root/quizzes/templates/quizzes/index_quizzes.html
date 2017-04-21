@@ -18,11 +18,10 @@
     </div>
 </header>
 
-    <center><h2>Available Quizzes</h2></center>
-    <ul>
-        {% if object_list %}
-            {% for quiz in object_list %}
-
+<center><h2>Available Quizzes</h2></center>
+<ul>
+    {% if object_list %}
+        {% for quiz in object_list %}
                 <div class="container">
                     <div class="row">
                         <a href="{% url 'quizzes:quiz_take' quiz.url %}"><div class="col-md-8 col-md-offset-2">
@@ -35,13 +34,13 @@
             {% endfor %}<br>
 
             <center><h2>Completed Quizzes</h2></center>
-            {% for quiz in object_list %}
-                {% if quiz.sitting.complete %}
+            {% for quiz in view.get_quizzes_done %}
+                {% if quiz %}
                     <div class="container">
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2">
                                 <li class="list-group-item" id="quiz_list_item" title="Details">
-                                    <a href="{% url 'quizzes:quiz_take' quiz.url %}"> {{ quiz.title }} </a>
+                                    <a href="{% url 'quizzes:quiz_take' quiz.url %}"> {{ quiz }} </a>
                                 </li>
                             </div>
                         </div>
