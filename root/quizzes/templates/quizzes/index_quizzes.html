@@ -18,16 +18,17 @@
     </div>
 </header>
 
-<center><h2>Available Quizzes</h2></center>
 <ul>
+    <center><h2>Available Quizzes</h2></center>
     {% if object_list %}
     {% for quiz in object_list %}
 
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <li class="list-group-item" id="quiz_list_item" title="Details">
-                    <a href="{% url 'quizzes:quiz_take' quiz.url %}"> {{ quiz.title }} </a>
+                <li class="list-group-item" onclick="location.href='/quizzes/{{quiz.url}}/'" id="quiz_list_item"
+                    title="Details">
+                    <h4> {{ quiz.title }} </h4>
                 </li>
             </div>
         </div>
