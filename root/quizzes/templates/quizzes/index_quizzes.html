@@ -1,8 +1,6 @@
 {% extends 'todolist/base.html' %}
 
-{% block title %}
-<h1>Quizzes</h1>
-{% endblock %}
+{% block title %}Quizzes{% endblock %}
 
 {% block body %}
 
@@ -34,6 +32,26 @@
                         </div>
                     </div>
                 </div>
+            {% endfor %}<br>
+
+            <center><h2>Completed Quizzes</h2></center>
+
+            {% for quiz in object_list %}
+
+                {% if quiz.sitting.complete %}
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <li class="list-group-item" id="quiz_list_item" title="Details">
+
+                                    <a href="{% url 'quizzes:quiz_take' quiz.url %}"> {{ quiz.title }} </a>
+
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
 
 
