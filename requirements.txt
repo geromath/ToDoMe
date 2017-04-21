@@ -4,3 +4,15 @@ django==1.10.5
 django-bootstrap3==8.1.0
 coverage==4.3.4
 codecov==2.0.5
+django-bootstrap-form
+django-model-utils
+django-nose
+httplib2
+nose
+oauth2
+oauthlib
+Pillow
+requests
+requests-oauthlib
+social-auth-app-django
+social-auth-core
