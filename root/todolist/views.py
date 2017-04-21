@@ -4,7 +4,7 @@ from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from .models import Task
 from .forms import TaskForm
 from django.core.urlresolvers import reverse_lazy, reverse
@@ -180,7 +180,8 @@ def task_checked(request, pk):
     else:
         task.archived = True
         task.save()
-        return HttpResponseRedirect(reverse("todolist:todo"))
+        print(referer)
+        return HttpResponseRedirect(referer)
 
 
 class UserFormView(View):
