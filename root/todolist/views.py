@@ -152,7 +152,22 @@ class TaskUpdate(UpdateView):
 
 class TaskDelete(DeleteView):
     model = Task
-    success_url = reverse_lazy('todolist:todo')
+
+    def get_success_url(self):
+        referer_url = self.request.META.get('HTTP_REFERER')  # get the referer url from request's 'META' dictionary
+        if referer_url:
+            return referer_url  # return referer url for redirection
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        # Does not redirect if valid
+        # return HttpResponseRedirect(self.get_success_url())
+
+        # Render the template
+        # get_context_data populates object in the context
+        # or you also get it with the name you want if you define context_object_name in the class
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 def task_checked(request, pk):
