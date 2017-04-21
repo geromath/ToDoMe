@@ -7,11 +7,13 @@ from django.views.generic import DetailView, ListView, TemplateView, FormView
 from .forms import AnswerIDForm
 from .models import Quiz, Category, Progress, Sitting, Question, MCQuestion
 
+
 class QuizMarkerMixin(object):
     @method_decorator(login_required)
     @method_decorator(permission_required('quiz.view_sittings'))
     def dispatch(self, *args, **kwargs):
         return super(QuizMarkerMixin, self).dispatch(*args, **kwargs)
+
 
 class SittingFilterTitleMixin(object):
     def get_queryset(self):
@@ -22,9 +24,10 @@ class SittingFilterTitleMixin(object):
 
         return queryset
 
+
 class QuizListView(ListView):
     model = Quiz
-    template_name = 'quizzes/index_quizzes.html' #lagt til selv. Dette er forsiden man kommer til.
+    template_name = 'quizzes/index_quizzes.html'  # lagt til selv. Dette er forsiden man kommer til.
 
     def get_queryset(self):
         queryset = super(QuizListView, self).get_queryset()
@@ -32,7 +35,6 @@ class QuizListView(ListView):
 
 
 class QuizDetailView(DetailView):
-
     model = Quiz
     slug_field = 'url'
     template_name = 'quizzes/detail.html'
@@ -46,8 +48,10 @@ class QuizDetailView(DetailView):
         context = self.get_context_data(object=self.object)
         return render(request, 'quizzes/detail.html', context)
 
+
 class CategoriesListView(ListView):
     model = Category
+
 
 class ViewQuizListByCategory(ListView):
     model = Quiz
@@ -59,11 +63,11 @@ class ViewQuizListByCategory(ListView):
             category=self.kwargs['category_name']
         )
 
-        return super(ViewQuizListByCategory, self).\
+        return super(ViewQuizListByCategory, self). \
             dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(ViewQuizListByCategory, self)\
+        context = super(ViewQuizListByCategory, self) \
             .get_context_data(**kwargs)
 
         context['category'] = self.category
@@ -73,12 +77,13 @@ class ViewQuizListByCategory(ListView):
         queryset = super(ViewQuizListByCategory, self).get_queryset()
         return queryset.filter(category=self.category, draft=False)
 
+
 class QuizUserProgressView(TemplateView):
     template_name = 'progress.html'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(QuizUserProgressView, self)\
+        return super(QuizUserProgressView, self) \
             .dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -88,18 +93,20 @@ class QuizUserProgressView(TemplateView):
         context['exams'] = progress.show_exams()
         return context
 
+
 class QuizMarkingList(QuizMarkerMixin, SittingFilterTitleMixin, ListView):
     model = Sitting
 
     def get_queryset(self):
-        queryset = super(QuizMarkingList, self).get_queryset()\
-                                               .filter(complete=True)
+        queryset = super(QuizMarkingList, self).get_queryset() \
+            .filter(complete=True)
 
         user_filter = self.request.GET.get('user_filter')
         if user_filter:
             queryset = queryset.filter(user__username__icontains=user_filter)
 
         return queryset
+
 
 class QuizMarkingDetail(QuizMarkerMixin, DetailView):
     model = Sitting
@@ -119,12 +126,12 @@ class QuizMarkingDetail(QuizMarkerMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(QuizMarkingDetail, self).get_context_data(**kwargs)
-        context['questions'] =\
+        context['questions'] = \
             context['sitting'].get_questions(with_answers=True)
         return context
 
-class QuizTake(FormView):
 
+class QuizTake(FormView):
     form = AnswerIDForm
     template_name = 'quizzes/question.html'
 
@@ -169,14 +176,13 @@ class QuizTake(FormView):
     def post(self, request, *args, **kwargs):
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug'])
         self.sitting = Sitting.objects.user_sitting(request.user,
-                                                       self.quiz)
+                                                    self.quiz)
 
         self.form = AnswerIDForm(request.POST, data=request.POST)
         self.progress, created = Progress.objects.get_or_create(user=self.request.user)
         self.questions = [Question.objects.filter(quiz=self.quiz)]
 
         if self.form.is_valid():
-
             results = self.form_valid(self.form)
 
         if not self.sitting.question_list:
@@ -245,7 +251,7 @@ class QuizTake(FormView):
                              'previous_question': self.question,
                              'answers': self.question.get_answers(),
                              'question_type': {self.question
-                                               .__class__.__name__: True}}
+                                                   .__class__.__name__: True}}
         else:
             self.previous = {}
 
@@ -276,13 +282,12 @@ class QuizTake(FormView):
         self.sitting.mark_quiz_complete()
 
         if self.quiz.answers_at_end:
-            results['questions'] =\
+            results['questions'] = \
                 self.sitting.get_questions(with_answers=True)
-            results['incorrect_questions'] =\
+            results['incorrect_questions'] = \
                 self.sitting.get_incorrect_questions
 
         if self.quiz.exam_paper is False:
             self.sitting.delete()
 
         return results
-

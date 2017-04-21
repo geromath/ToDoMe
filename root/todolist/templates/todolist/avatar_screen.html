@@ -31,70 +31,7 @@ Also in need of a footer and maybe a different navbar?-->
     <!-- Change out row class for something more fitting and that can be styled differently.
     See sketch on drive for how this should look -->
 
-    <!-- This is the overdue tasks -->
-    <div class="row">
-        <div class="col-md-6">
-            <h1> Overdue Tasks </h1>
-
-            <div class="panel panel-default">
-                <ul class="list-group" id="todo_list">
-                    {% if overdue_tasks %}
-                    {% for task in overdue_tasks %}
-                    <li class="list-group-item" id="todo_list_item" title="Edit"
-                        onclick="location.href='/todo/{{task.id}}/edit/'">
-                        <h4 class="list-group-item-heading">{{ task.task_text }}
-                            {%if task.due_date %}
-                            <span class="badge" style="background-color: #ff0000;">Due date: {{ task.due_date }}</span>
-                            {% endif %}
-                        </h4>
-                        <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
-
-                        <div class="buttons">
-
-                            <!-- Archive TODO as "Completed" -->
-                            <form action="{% url 'todolist:task_checked' task.id %}" method="post"
-                                  style="display: inline">
-                                {% csrf_token %}
-                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                                <button type="submit" class="btn btn-info btn-sm" title="Archive">
-                                    <span class="glyphicon glyphicon-check"></span>
-                                </button>
-                            </form>
-
-                            <!-- Delete TODO, on click delete TODO -->
-                            <form action="{% url 'todolist:delete_task' task.id %}" method="post"
-                                  style="display: inline">
-                                {% csrf_token %}
-                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
-                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </form>
-                        </div>
-                    </li>
-                    {% endfor %}
-                    {% else %}
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading">You have no overdue tasks</h4>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h1> Profile </h1>
-            <div class="panel panel-default" style="padding: 10px;">
-                <h2><span class="fa fa-user"></span> {{user.username}} </h2>
-                    <figure>
-                        <img src="{{ user.get_profile.profile_photo }}"
-                             class="img-circle img-responsive" onerror="this.src =
-                             '../../static/todolist/images/profile.svg';" style="width: 128px; height: 128px;"><br>
-
-                    </figure>
-            </div>
-        </div>
-    </div>
-
+    <!--Upcoming tasks-->
     <div class="row">
         <div class="col-md-6">
             <h1> Upcoming Tasks </h1>
@@ -145,6 +82,8 @@ Also in need of a footer and maybe a different navbar?-->
                 </ul>
             </div>
         </div>
+
+        <!--Quiz notifications-->
         <div class="col-md-6">
             <h1> Quiz Notifications </h1>
             <div class="panel panel-default">
@@ -163,6 +102,59 @@ Also in need of a footer and maybe a different navbar?-->
                         <h4 class="list-group-item-heading"> Heading </h4>
                         <p class="list-group-item-text"> Description </p>
                     </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- This is the overdue tasks -->
+    <div class="row">
+        <div class="col-md-6">
+            <h1> Overdue Tasks </h1>
+
+            <div class="panel panel-default">
+                <ul class="list-group" id="todo_list">
+                    {% if overdue_tasks %}
+                    {% for task in overdue_tasks %}
+                    <li class="list-group-item" id="todo_list_item" title="Edit"
+                        onclick="location.href='/todo/{{task.id}}/edit/'">
+                        <h4 class="list-group-item-heading">{{ task.task_text }}
+                            {%if task.due_date %}
+                            <span class="badge" style="background-color: #ff0000;">Due date: {{ task.due_date }}</span>
+                            {% endif %}
+                        </h4>
+                        <p class="list-group-item-text">{{ task.description|linebreaks }}</p>
+
+                        <div class="buttons">
+
+                            <!-- Archive TODO as "Completed" -->
+                            <form action="{% url 'todolist:task_checked' task.id %}" method="post"
+                                  style="display: inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                <button type="submit" class="btn btn-info btn-sm" title="Archive">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                </button>
+                            </form>
+
+                            <!-- Delete TODO, on click delete TODO -->
+                            <form action="{% url 'todolist:delete_task' task.id %}" method="post"
+                                  style="display: inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ task.id }}"/>
+                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% else %}
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">You have no overdue tasks</h4>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
