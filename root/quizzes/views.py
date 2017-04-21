@@ -45,7 +45,7 @@ class QuizListView(ListView):
         return quizzes_not_done
 
     def get_quizzes_done(self):
-        sittings = Sitting.objects.filter()
+        sittings = Sitting.objects.filter(user=self.request.user)
         sittings_list = []
         for sit in sittings:
             sittings_list.append(sit.quiz)
