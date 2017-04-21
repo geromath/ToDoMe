@@ -50,9 +50,10 @@
                     </figure>
                 </div>
             </div>
-            <!--Score-->
+
+            <!--Completed quizzes-->
             <div class="col-xs-16 divider text-center">
-                <div class="col-xs-8 col-sm-6">
+                <div id="stickyNote">
                     <h2><strong>{{ quizcount }}</strong></h2>
                     <p>
                         <small>Completed quizzes</small>
@@ -60,11 +61,21 @@
                     <button class="btn btn-info btn-block" onclick="location.href='/quizzes/{{quiz.url}}'">View quizzes
                     </button>
                 </div>
+            </div>
+
+            <div class="col-xs-16 divider text-center">
                 <div id="stickyNote">
-                    QUOTE
+                    <h2><strong>{{  }}</strong></h2>
+                    <p>
+                        <small>Completed quizzes</small>
+                    </p>
+                    <button class="btn btn-info btn-block" onclick="location.href='/quizzes/{{quiz.url}}'">View quizzes
+                    </button>
                 </div>
             </div>
+
         </div>
+
     </div>
 </div>
 {% endif %}
