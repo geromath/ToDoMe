@@ -10,104 +10,109 @@
 
 
 {% if not user.is_authenticated %}
-    <p>This quiz is only accessible to signed in users.</p>
-    <p>Sign in to take this quiz</p>
+<p>This quiz is only accessible to signed in users.</p>
+<p>Sign in to take this quiz</p>
 {% else %}
 
 
-    {% if context.answers %}
-        {{ context.answers }}
+{% if context.answers %}
+{{ context.answers }}
 
 
-      <p class="muted"><small>{% trans "The previous question" %}:</small></p>
-      <p>{{ sitting.previous.previous_question }}</p>
+<p class="muted">
+    <small>{% trans "The previous question" %}:</small>
+</p>
+<p>{{ sitting.previous.previous_question }}</p>
 
-      {% if previous.previous_outcome %}
-        <div class="alert alert-success">
-      {% else %}
-        <div class="alert alert-warning">
-      {% endif %}
-          <p><small>
-            {% trans "Your answer was" %} </small>
+{% if previous.previous_outcome %}
+<div class="alert alert-success">
+    {% else %}
+    <div class="alert alert-warning">
+        {% endif %}
+        <p>
+            <small>
+                {% trans "Your answer was" %}
+            </small>
             <strong>
-              {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+                {{ previous.previous_outcome|yesno:"correct,incorrect" }}
             </strong>
-          </p>
+        </p>
 
-        </div>
-            </div>
-
-        {% include 'quizzes/correct_answer.html' %}
-
-        <p><strong>{% trans "Explanation" %}:</strong></p>
-        <div class="well " style="background-color: #fcf8e3;">
-          <p>{{ previous.previous_question.explanation }}</p>
-        </div>
-
-        <hr>
-
-    {% endif %}
-
-    <br />
-
-    <div class="container">
-        <div class="col-md-8 col-md-offset-2">
-
-            <h1>{{ quiz }}</h1>
-
-            {% if sitting.get_first_question %}
-
-                {% if progress %}
-
-                    <div style="float: right;">
-                        Questions answered: {{ sitting.progress.0 }} of total {{ sitting.progress.1 }}
-                    </div>
-                {% endif %}
-
-                <p>
-                    <small class="muted">{% trans "Question category" %}:</small>
-                    <strong>{{ sitting.get_first_question.category }}</strong>
-                </p>
-
-                        <p class="lead"><strong>{{ sitting.get_first_question.content }}</strong></p>
-
-
-
-                {% if sitting.get_first_question.figure %}
-                    <img src="{{ sitting.get_first_question.figure.url }}" alt="{{ sitting.get_first_question.content }}" />
-                {% endif %}
-        </div>
     </div>
+</div>
 
-        <form action="" method="POST">
-            {% csrf_token %}
-            <input type=hidden name="answer_id" value="{{ answer.id }}"> <!-- changed from "question_id" and "{{ question.id}}" -->
+{% include 'quizzes/correct_answer.html' %}
 
-            <ul class="list-group">
+<p><strong>{% trans "Explanation" %}:</strong></p>
+<div class="well " style="background-color: #fcf8e3;">
+    <p>{{ previous.previous_question.explanation }}</p>
+</div>
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            {% for answer in sitting.get_first_question.get_answers %}
+<hr>
 
-                                  <li class="list-group-item">
-                                      <input type='radio' name='answer_id' id="answer_id{{ forloop.counter }}" value="{{ answer.id }}">
-                                      <input type="hidden" name="question_id" value="{{ question.id }}">
-                                      <label for="answer_id{{ forloop.counter }}">{{ answer }}</label>
-                                  </li>
+{% endif %}
 
+<br/>
+
+<div class="container">
+    <div class="col-md-8 col-md-offset-2">
+
+        <h1>{{ quiz }}</h1>
+
+        {% if sitting.get_first_question %}
+
+        {% if progress %}
+
+        <div style="float: right;">
+            Questions answered: {{ sitting.progress.0 }} of total {{ sitting.progress.1 }}
+        </div>
+        {% endif %}
+
+        <p>
+            <small class="muted">{% trans "Question category" %}:</small>
+            <strong>{{ sitting.get_first_question.category }}</strong>
+        </p>
+
+        <p class="lead"><strong>{{ sitting.get_first_question.content }}</strong></p>
+
+
+        {% if sitting.get_first_question.figure %}
+        <img src="{{ sitting.get_first_question.figure.url }}" alt="{{ sitting.get_first_question.content }}"/>
+        {% endif %}
+    </div>
+</div>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type=hidden name="answer_id" value="{{ answer.id }}">
+    <!-- changed from "question_id" and "{{ question.id}}" -->
+
+    <ul class="list-group">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    {% for answer in sitting.get_first_question.get_answers %}
+
+                        <li class="list-group-item">
+                            <input type='radio' name='answer_id' id="answer_id{{ forloop.counter }}"
+                                   value="{{ answer.id }}">
+                            <input type="hidden" name="question_id" value="{{ question.id }}">
+                            <label for="answer_id{{ forloop.counter }}">{{ answer }}</label>
+                        </li>
 
                             {% endfor %}
 
+                    {% endfor %}
 
 
-            <input type="submit" value="Next" class="btn btn-large btn-block btn-warning">
-                        </div>
-                    </div>
+                    <input type="submit" value="Next" class="btn btn-large btn-block btn-warning">
                 </div>
-            </ul>
-        </form>
-    {% endif %}
+            </div>
+        </div>
+    </ul>
+</form>
+{% endif %}
 
 {% endif %}
 

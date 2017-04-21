@@ -242,6 +242,6 @@ class UserFormView(View):
                     login(request, user)
 
                     return redirect(
-                        'todolist:todo')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
+                        'todolist:avatar_screen')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
 
         return render(request, self.template_name, {'form': form})  # gir skjemaet paa nytt om noe gikk galt
