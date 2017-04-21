@@ -51,7 +51,6 @@ NOSE_ARGS = [
     'social_django',
     'django_nose',
 
-
 ]
 
 MIDDLEWARE = [
@@ -150,7 +149,7 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
 
-LOGIN_REDIRECT_URL = '/todo'
+LOGIN_REDIRECT_URL = '/'
 redirect_uri = 'http://localhost:8000/_oauth/facebook?close'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '1141126915996317'  # App ID

@@ -87,29 +87,21 @@ Also in need of a footer and maybe a different navbar?-->
         <div class="col-md-6">
             <h1> Quiz Notifications </h1>
             <div class="panel panel-default">
-                <!--Make an if else, iterating through new quizzes-->
 
                 <ul class="list-group">
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading"> Quiz notifications go here </h4>
-                        <p class="list-group-item-text"> Description </p>
-                    </li>
                     {% if quiz_notify %}
-                        {% for quiz in quiz_notify %}
-                            <li class="list-group-item">
-                                <h4 class="list-group-item-heading"> {{ quiz.title }} </h4>
-                                <p class="list-group-item-text"> {{ quiz.description }} </p>
-                            </li>
-                        {% endfor %}
+                    {% for quiz in quiz_notify %}
+                        <li class="list-group-item" onclick="location.href='/quizzes/{{quiz.url}}/'" title="Take Quiz">
+                            <h4 class="list-group-item-heading"> {{ quiz.title }} </h4>
+                            <p class="list-group-item-text"> {{ quiz.description }} </p>
+                        </li>
+                    {% endfor %}
+                    {% else %}
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading"> There are currently no available quizzes </h4>
+                    </li>
+
                     {% endif %}
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading"> Heading </h4>
-                        <p class="list-group-item-text"> Description </p>
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading"> Heading </h4>
-                        <p class="list-group-item-text"> Description </p>
-                    </li>
                 </ul>
             </div>
         </div>
