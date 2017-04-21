@@ -196,3 +196,26 @@ input.task-input {
 input.task-input:focus, input.task-input:active {
     outline: none;
 }
+
+#stickyNote {
+    display: block;
+    padding: 25px 25px 40px;
+    margin: 0 auto 20px auto;
+    width: 200px;
+    height: 200px;
+    font: 20px 'Gloria Hallelujah', cursive;
+    line-height: 1.5;
+    border: 0;
+    border-radius: 3px;
+    background: -webkit-linear-gradient(#F9EFAF, #F7E98D);
+    background: -moz-linear-gradient(#F9EFAF, #F7E98D);
+    background: -o-linear-gradient(#F9EFAF, #F7E98D);
+    background: -ms-linear-gradient(#F9EFAF, #F7E98D);
+    background: linear-gradient(#F9EFAF, #F7E98D);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: box-shadow 0.5s ease;
+    font-smoothing: subpixel-antialiased;
+    max-width: 520px;
+    max-height: 250px;
+}

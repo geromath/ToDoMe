@@ -94,14 +94,12 @@
                 <div class="col-md-8 col-md-offset-2">
                     {% for answer in sitting.get_first_question.get_answers %}
 
-                        <li class="list-group-item">
-                            <input type='radio' name='answer_id' id="answer_id{{ forloop.counter }}"
-                                   value="{{ answer.id }}">
-                            <input type="hidden" name="question_id" value="{{ question.id }}">
-                            <label for="answer_id{{ forloop.counter }}">{{ answer }}</label>
-                        </li>
-
-                            {% endfor %}
+                    <li class="list-group-item">
+                        <input type='radio' name='answer_id' id="answer_id{{ forloop.counter }}"
+                               value="{{ answer.id }}">
+                        <input type="hidden" name="question_id" value="{{ question.id }}">
+                        <label for="answer_id{{ forloop.counter }}">{{ answer }}</label>
+                    </li>
 
                     {% endfor %}
 
