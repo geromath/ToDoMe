@@ -35,7 +35,7 @@
     </div>
     {% endfor %}<br>
 
-    <center><h2>Completed Quizzes</h2></center>
+    <center><h2>Your last Quizzes</h2></center>
     {% for quiz in view.get_quizzes_done %}
     {% if quiz %}
     <div class="container">
@@ -43,8 +43,10 @@
             <div class="col-md-8 col-md-offset-2">
                 <li class="list-group-item" onclick="location.href='/quizzes/{{quiz.url}}/'" id="quiz_list_item"
                     title="Details">
+
                     <h5 class="list-group-item-heading"> {{ quiz.title }} </h5>
                     <p class="list-group-item-text"> {{ quiz.description }} </p>
+                    Quiz taken: {{view.get_start_time}}
                 </li>
             </div>
         </div>
