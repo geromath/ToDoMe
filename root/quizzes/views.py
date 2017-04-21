@@ -30,8 +30,27 @@ class QuizListView(ListView):
     template_name = 'quizzes/index_quizzes.html'  # lagt til selv. Dette er forsiden man kommer til.
 
     def get_queryset(self):
-        queryset = super(QuizListView, self).get_queryset()
-        return queryset.filter(draft=False)
+        user = self.request.user
+        quizzes = Quiz.objects.all()
+        sittings = Sitting.objects.filter(user=user)
+        sittings_list = []
+        for sit in sittings:
+            sittings_list.append(str(sit.quiz.title))
+
+        quizzes_not_done = []
+        for quiz in quizzes:
+            if str(quiz) not in sittings_list:
+                quizzes_not_done.append(quiz)
+        print(quizzes_not_done)
+        return quizzes_not_done
+
+    def get_quizzes_done(self):
+        sittings = Sitting.objects.filter(user=self.request.user)
+        sittings_list = []
+        for sit in sittings:
+            sittings_list.append(sit.quiz)
+        print(sittings_list)
+        return sittings_list
 
 
 class QuizDetailView(DetailView):
@@ -136,9 +155,6 @@ class QuizTake(FormView):
     template_name = 'quizzes/question.html'
 
     def get(self, request, *args, **kwargs):
-        print()
-        print('Starter GET-metoden')
-        print()
         form = AnswerIDForm
 
         self.quiz = get_object_or_404(Quiz, url=self.kwargs['slug'])

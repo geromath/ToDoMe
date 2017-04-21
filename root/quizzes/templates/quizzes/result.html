@@ -10,25 +10,6 @@
 {% block body %}
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
-        <h1>RESULTS</h1>
-
-      {% if previous.answers %}
-
-          <p class="muted"><small>{% trans "The previous question" %}:</small></p>
-          <p>{{ previous.previous_question }}</p>
-          <p>Your answer was
-            <strong>
-              {{ previous.previous_outcome|yesno:"correct,incorrect" }}
-            </strong>
-          </p>
-          {% include 'quizzes/correct_answer.html' %}
-          <p><strong>{% trans "Explanation" %}:</strong></p>
-          <div class="well " style="background-color: #fcf8e3;">
-            <p>{{ previous.previous_question.explanation }}</p>
-          </div>
-          <hr>
-
-      {% endif %}
 
       {% if max_score %}
               <div>
@@ -81,6 +62,12 @@
           <p class="lead">
             {{ question.content }}
           </p>
+
+            {% for ans in question.get_answers %}
+                {% if ans.correct %}
+                    The answer was: {{ ans }}
+                {% endif %}
+            {% endfor %}
 
           {% if question.user_answer %}
             <p>{% trans "Your answer" %}: {{ question|answer_choice_to_string:question.user_answer }}</p>
