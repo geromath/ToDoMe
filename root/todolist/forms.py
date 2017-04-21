@@ -50,13 +50,15 @@ class UserProfileForm(forms.ModelForm):
 class BootstrapModelForm(ModelForm):
     task_text = forms.CharField(label='Title', widget=forms.TextInput(attrs={'placeholder': 'Name your TODO'}))
     description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'placeholder':
-                                                                                              'Describe your TODO'}))
+                                                                                        'Describe your TODO',
+                                                                                    'rows': 6}))
     due_date = forms.DateTimeField(label='Due Date', required=False, widget=forms.DateInput(attrs={'id':
                                                                                                        'inputDate',
                                                                                                    'placeholder':
                                                                                                        'Select Due '
                                                                                                        'Date ('
-                                                                                                       'Optional)'}))
+                                                                                                       'Optional)',
+                                                                                                   'weekStart': 1}))
     color = forms.CharField(label="Color", widget=forms.TextInput(attrs={'type': 'color', 'value': '#808080'}))
 
     def __init__(self, *args, **kwargs):

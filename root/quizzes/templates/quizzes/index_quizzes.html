@@ -18,45 +18,49 @@
     </div>
 </header>
 
-<center><h2>New Quizzes</h2></center>
 <ul>
+    <center><h2>New Quizzes</h2></center>
     {% if view.get_quizzes_done or view.get_queryset %}
-        {% for quiz in object_list %}
-                <div class="container">
-                    <div class="row">
-                        <a href="{% url 'quizzes:quiz_take' quiz.url %}"><div class="col-md-8 col-md-offset-2">
-                            <li class="list-group-item" id="quiz_list_item" title="Details">
-                                {{ quiz.title }}
-                            </li>
-                        </div></a>
-                    </div>
-                </div>
-            {% endfor %}<br>
-
-            <center><h2>Completed Quizzes</h2></center>
-            {% for quiz in view.get_quizzes_done %}
-                {% if quiz %}
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-8 col-md-offset-2">
-                                <li class="list-group-item" id="quiz_list_item" title="Details">
-                                    <a href="{% url 'quizzes:quiz_take' quiz.url %}"> {{ quiz }} </a>
-                                </li>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-
-
-        {% else %}
+    {% for quiz in object_list %}
+    <div class="container">
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <li class="list-group-item">
-                        <h4 class="list-group-item-heading">You do not have any quizzes to take yet</h4>
-                    </li>
-        {% endif %}
-                </div>
+                <li class="list-group-item" onclick="location.href='/quizzes/{{quiz.url}}/'" id="quiz_list_item"
+                    title="Details">
+                    <h5 class="list-group-item-heading"> {{ quiz.title }} </h5>
+                    <p class="list-group-item-text"> {{ quiz.description }} </p>
+                </li>
             </div>
-        </ul>
+        </div>
+    </div>
+    {% endfor %}<br>
+
+    <center><h2>Completed Quizzes</h2></center>
+    {% for quiz in view.get_quizzes_done %}
+    {% if quiz %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <li class="list-group-item" onclick="location.href='/quizzes/{{quiz.url}}/'" id="quiz_list_item"
+                    title="Details">
+                    <h5 class="list-group-item-heading"> {{ quiz.title }} </h5>
+                    <p class="list-group-item-text"> {{ quiz.description }} </p>
+                </li>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+    {% else %}
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">You do not have any quizzes to take yet</h4>
+            </li>
+            {% endif %}
+        </div>
+    </div>
+</ul>
 {% endblock %}

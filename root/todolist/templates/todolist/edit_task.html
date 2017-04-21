@@ -34,7 +34,10 @@
 </form>
 
 <script>
-    $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+    $('#inputDate').datepicker({
+        dateFormat: 'dd/mm/YY', minDate: 0, weekStart: 1, todayHighlight: true
+    });
+
 </script>
 
 {% endblock body %}
