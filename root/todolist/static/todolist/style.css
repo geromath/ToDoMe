@@ -1,4 +1,4 @@
-html{
+html {
     position: relative;
     min-height: 100%;
 }
@@ -24,7 +24,7 @@ body {
     font-weight: bold;
     letter-spacing: -2px;
     padding-right: 3px;
-    color: #eee;
+    color: #FF5700;
 }
 
 .navbar-default {

@@ -22,7 +22,6 @@ def archive(request):
     queryset_list = Task.objects.archived()
     query = request.GET.get("q")
     if query:
-        print("ASJDHJKASHD")
         all_tasks = queryset_list.filter(
             Q(task_text__icontains=query) |
             Q(description__icontains=query)
