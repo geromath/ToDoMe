@@ -37,6 +37,16 @@ body {
     max-width: 100%;
 }
 
+/* Sign in page */
+
+#signinlogo {
+    font-family: 'Satisfy', cursive;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -2px;
+    color: #FF5700;
+}
+
 /* Footer CSS */
 
 .footer-basic-centered {
