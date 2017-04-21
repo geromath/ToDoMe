@@ -102,29 +102,10 @@ body {
     margin-bottom: 20px;
 }
 
-#avatarScreenHeader {
-    background: #3e4249 url('images/headerAvatarScreen.png');
-}
-
-#profileHeader {
-    background: #3e4249 url('images/headerProfile.png');
-}
-
-#indexHeader {
-    background: #3e4249 url('images/headerIndex.png');
-}
-
-#archiveHeader {
-    background: #3e4249 url('images/headerArchive.png');
-}
-
-#quizzesHeader {
-    background: #3e4249 url('images/headerQuizzes.png');
-}
-
 header, .headerLine {
     height: 75px;
     width: 100%;
+    background: #3e4249 url('images/headerIndex.png');
 }
 
 h1.header-title {
