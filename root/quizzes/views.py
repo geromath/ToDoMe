@@ -41,7 +41,7 @@ class QuizListView(ListView):
         for quiz in quizzes:
             if str(quiz) not in sittings_list:
                 quizzes_not_done.append(quiz)
-
+        print(quizzes_not_done)
         return quizzes_not_done
 
     def get_quizzes_done(self):
@@ -49,6 +49,7 @@ class QuizListView(ListView):
         sittings_list = []
         for sit in sittings:
             sittings_list.append(sit.quiz)
+        print(sittings_list)
         return sittings_list
 
 

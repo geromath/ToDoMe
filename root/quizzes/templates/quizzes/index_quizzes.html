@@ -20,7 +20,7 @@
 
 <center><h2>Available Quizzes</h2></center>
 <ul>
-    {% if object_list %}
+    {% if view.get_quizzes_done or view.get_queryset %}
         {% for quiz in object_list %}
                 <div class="container">
                     <div class="row">
