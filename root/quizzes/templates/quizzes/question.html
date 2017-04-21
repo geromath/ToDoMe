@@ -14,7 +14,6 @@
     <p>Sign in to take this quiz</p>
 {% else %}
 
-
     {% if context.answers %}
         {{ context.answers }}
 
@@ -91,8 +90,9 @@
                             {% for answer in sitting.get_first_question.get_answers %}
 
                                   <li class="list-group-item">
-                                      <input type='radio' name='answer_id' value="{{ answer.id }}"> {{ answer }}
+                                      <input type='radio' name='answer_id' id="answer_id"{{ forloop.counter }} value="{{ answer.id }}"> {{ answer }}
                                       <input type="hidden" name="question_id" value="{{ question.id }}">
+
                                   </li>
 
                             {% endfor %}

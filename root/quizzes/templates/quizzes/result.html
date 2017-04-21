@@ -57,8 +57,6 @@
 
                   <p>{% trans "Review the questions below and try the quiz again in the future"%}.</p>
               </div>
-
-
       {% endif %}
 
 
@@ -69,9 +67,7 @@
           <p class="lead">
             {% trans "Your session score is" %} {{ session }} {% trans "out of a possible" %} {{ possible }}
           </p>
-
           <hr>
-
       {% endif %}
 
       {% if sitting.get_questions %}
@@ -82,8 +78,29 @@
             {{ question.content }}
           </p>
 
-          {% if question.user_answer %}
+        {% comment %}
+
+            TEST
+            {{ sitting.user_answers }}
+
+            {% for ans in question.get_answers %}
+                {{ ans }} {{ans.id}}
+
+                {% if ans.id in sitting.user_answers %}
+                    You answered {{ ans }}
+                {% endif %}
+
+            {% endfor %}
+
+            {{ previous.answers }}
+            {{ question }}
+        {{ question.category }}
+
+        {% endcomment %}
+
+          {% if previous.previous_question.user_answer %} {# question.user_answer #}
             <p>{% trans "Your answer" %}: {{ question|answer_choice_to_string:question.user_answer }}</p>
+                TEST222
 
           {% endif %}
 
@@ -94,8 +111,7 @@
 
           <hr>
 
-      {% endfor %}
-
+        {% endfor %}
       {% endif %}
     </div>
 </div>
