@@ -147,6 +147,10 @@ def todo_update(request, id=None):
 def profile(request):
     user = request.user
 
+    progress, created = Progress.objects.get_or_create(user=user)
+    quizcount = progress.number_complete_exams()
+
+
     context = {
         'nbar': 'profile',
         'first_name': user.first_name,
@@ -154,6 +158,7 @@ def profile(request):
         'email': user.email,
         'username': user.username,
         'title': 'Profile',
+        'quizcount': quizcount,
     }
     return render(request, 'todolist/profile.html', context)
 
