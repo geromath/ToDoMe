@@ -94,6 +94,14 @@ Also in need of a footer and maybe a different navbar?-->
                         <h4 class="list-group-item-heading"> Quiz notifications go here </h4>
                         <p class="list-group-item-text"> Description </p>
                     </li>
+                    {% if quiz_notify %}
+                        {% for quiz in quiz_notify %}
+                            <li class="list-group-item">
+                                <h4 class="list-group-item-heading"> {{ quiz.title }} </h4>
+                                <p class="list-group-item-text"> {{ quiz.description }} </p>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
                     <li class="list-group-item">
                         <h4 class="list-group-item-heading"> Heading </h4>
                         <p class="list-group-item-text"> Description </p>

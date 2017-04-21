@@ -588,7 +588,7 @@ class Question(models.Model):
         ordering = ['category']
 
     def __str__(self):
-        return str(self.content + ' (id:' + str(self.id) +')')
+        return self.content
 
 ANSWER_ORDER_OPTIONS = (
     ('content', _('Content')),

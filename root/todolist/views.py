@@ -9,6 +9,10 @@ from .models import Task
 from .forms import TaskForm
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
+from quizzes.models import Progress
+from quizzes.models import Quiz
+from quizzes.models import Sitting
+
 import datetime
 
 
@@ -48,9 +52,24 @@ def avatar_screen(request):
             close_tasks.append(task)
             i += 1
 
+    sittings = Sitting.objects.filter(user=request.user)
+    quizzes_done = []
+    for sit in sittings:
+        quizzes_done.append(sit.quiz.title)
+
+    quizzes = Quiz.objects.all()
+    quiz_notify = []
+    for element in quizzes:
+        if element.title not in quizzes_done:
+            quiz_notify.append(element)
+
+
+#    print("You have taken" ,len(quizzes_done), "quiz, and it is ... ", quizzes_done) if we want to show quizzes done
+
     context = {
         'overdue_tasks': overdue_tasks,
         'close_tasks': close_tasks,
+        'quiz_notify': quiz_notify,
         'title': 'ToDoMe',
     }
     return render(request, 'todolist/avatar_screen.html', context)
@@ -179,7 +198,6 @@ def task_checked(request, pk):
     else:
         task.archived = True
         task.save()
-        print(referer)
         return HttpResponseRedirect(referer)
 
 
