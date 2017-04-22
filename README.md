@@ -21,33 +21,22 @@ ToDoMe is a web-based task manager that lets you organize your tasks for the day
 You earn credits for completing tasks you set for yourself and for passing the quizzes created by your teacher. 
 ToDoMe helps the students repeat the curriculum throughout the semester and it gives the professors a better overview of their students progress.
 
-# Getting Started
 
-- Clone the repo with "git clone https://github.com/geromath/ToDoMe.git"   
+# Prerequisites
+
+Downloading Python: https://www.python.org/downloads/
+
+- Python 2.7+ 
+
+# Installation  
+
+- Clone the repo by typing the following command in terminal:
+"git clone https://github.com/geromath/ToDoMe.git"   
 - Navigate to the ToDoMe directory and type the following command in terminal:
 "pip install -r requirements.txt" 
 - Navigate into the root directory (/ToDoMe/root) and type the following command in terminal:
-"python3 manage.py migrate"
+"python3 manage.py migrate" (alternatively "python manage.py migrate")
 
-
-# Prerequisites
-<What things you need to install the software and how to install them> 
-<Give examples>  
-
-- Python 2.7+ 
-- Django 1.10+ 
-
-
-# Installation  
-Downloading Python: https://www.python.org/downloads/
-
-Installing all plugins:
-
- - Type "pip install -r requirements.txt" in terminal
-
-Installing Django (included in the above installation):
-
-- Type "pip install django" in terminal
 
 
 # Running the tests  
