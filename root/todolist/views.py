@@ -146,10 +146,9 @@ def todo_update(request, id=None):
 @login_required(login_url='todolist:login')
 def profile(request):
     user = request.user
-
     progress, created = Progress.objects.get_or_create(user=user)
     quizcount = progress.number_complete_exams()
-
+    task_count = Task.objects.filter(user=request.user).count()
 
     context = {
         'nbar': 'profile',
@@ -159,6 +158,7 @@ def profile(request):
         'username': user.username,
         'title': 'Profile',
         'quizcount': quizcount,
+        'task_count': task_count,
     }
     return render(request, 'todolist/profile.html', context)
 
