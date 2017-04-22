@@ -100,13 +100,6 @@
                         <input type="hidden" name="question_id" value="{{ question.id }}">
                         <label for="answer_id{{ forloop.counter }}">{{ answer }}</label>
                     </li>
-                        <li class="list-group-item">
-                            <input type='radio' name='answer_id' id="answer_id{{ forloop.counter }}"
-                                   value="{{ answer.id }}">
-                            <input type="hidden" name="question_id" value="{{ question.id }}">
-                            <label for="answer_id{{ forloop.counter }}">{{ answer }}</label>
-                        </li>
-
 
                     {% endfor %}
 
