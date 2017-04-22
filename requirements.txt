@@ -2,7 +2,6 @@ pytest
 packaging
 pyparsing
 appdirs
-setuptools
 mock>=1.0.0; python_version<='3.3'
 django==1.10.5
 django-bootstrap3==8.1.0
