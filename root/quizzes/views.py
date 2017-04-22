@@ -29,10 +29,9 @@ class QuizListView(ListView):
     model = Quiz
     template_name = 'quizzes/index_quizzes.html'  # lagt til selv. Dette er forsiden man kommer til.
 
-    def get_queryset(self):
-        user = self.request.user
+    def get_quizzes_not_done(self, **kwargs):
         quizzes = Quiz.objects.all()
-        sittings = Sitting.objects.filter(user=user)
+        sittings = Sitting.objects.filter(user=self.request.user)
         sittings_list = []
         for sit in sittings:
             sittings_list.append(str(sit.quiz.title))
@@ -41,7 +40,7 @@ class QuizListView(ListView):
         for quiz in quizzes:
             if str(quiz) not in sittings_list:
                 quizzes_not_done.append(quiz)
-        print(quizzes_not_done)
+        print("Quizzes not done: ", quizzes_not_done)
         return quizzes_not_done
 
     def get_quizzes_done(self):
@@ -49,7 +48,7 @@ class QuizListView(ListView):
         sittings_list = []
         for sit in sittings:
             sittings_list.append(sit.quiz)
-        print(sittings_list)
+        print("Quizzes done: ", sittings_list)
         return sittings_list
 
     def get_start_time(self):
