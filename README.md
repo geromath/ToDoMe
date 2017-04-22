@@ -24,7 +24,9 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 # Getting Started
 
 - Clone the repo with "git clone https://github.com/geromath/ToDoMe.git"   
-- Navigate into the root directory (/ToDoMe/root) and type in the following command in terminal:
+- Navigate to the ToDoMe directory and type the following command in terminal:
+"pip install -r requirements.txt" 
+- Navigate into the root directory (/ToDoMe/root) and type the following command in terminal:
 "python3 manage.py migrate"
 
 
@@ -43,7 +45,7 @@ Installing all plugins:
 
  - Type "pip install -r requirements.txt" in terminal
 
-Installing Django:
+Installing Django (included in the above installation):
 
 - Type "pip install django" in terminal
 
