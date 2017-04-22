@@ -9,8 +9,7 @@ from django.test import TestCase
 from django.utils.module_loading import import_module
 from django.utils.six import StringIO
 from .models import Category, SubCategory, Quiz, Question, MCQuestion, Answer, Progress, Sitting
-from .views import (anon_session_score, QuizListView, CategoriesListView,
-                    QuizDetailView)
+from .views import QuizListView, CategoriesListView, QuizDetailView
 
 
 class TestCategory(TestCase):
@@ -79,12 +78,6 @@ class TestQuiz(TestCase):
 
     def test_get_questions(self):
         self.assertIn(self.question1, self.quiz1.get_questions())
-
-    def test_anon_score_id(self):
-        self.assertEqual(self.quiz1.anon_score_id(), '1_score')
-
-    def test_anon_q_list(self):
-        self.assertEqual(self.quiz1.anon_q_list(), '1_q_list')
 
     def test_pass_mark(self):
         self.assertEqual(self.quiz1.pass_mark, False)
@@ -295,6 +288,7 @@ class TestSitting(TestCase):
         self.sitting.add_user_answer(self.question1, '123')
         self.assertEqual(self.sitting.progress(), (1, 2))
 
+
 class TestNonQuestionViews(TestCase):
     '''
     Starting on views not directly involved with questions.
@@ -323,31 +317,9 @@ class TestNonQuestionViews(TestCase):
                                          url='draft',
                                          draft=True)
 
-        view = QuizListView()
-        self.assertEqual(view.get_queryset().count(), 2)
+        view = QuizListView().as_view()
+        self.assertEqual(view.get_quizzes_done().count(), 2)
 
-    def test_progress_anon(self):
-        response = self.client.get('/progress/', follow=False)
-        self.assertTemplateNotUsed(response, 'progress.html')
-
-    def test_anon_session_score(self):
-        request = HttpRequest()
-        engine = import_module(settings.SESSION_ENGINE)
-        request.session = engine.SessionStore(None)
-        score, possible = anon_session_score(request.session)
-        self.assertEqual((score, possible), (0, 0))
-
-        score, possible = anon_session_score(request.session, 1, 0)
-        self.assertEqual((score, possible), (0, 0))
-
-        score, possible = anon_session_score(request.session, 1, 1)
-        self.assertEqual((score, possible), (1, 1))
-
-        score, possible = anon_session_score(request.session, -0.5, 1)
-        self.assertEqual((score, possible), (0.5, 2))
-
-        score, possible = anon_session_score(request.session)
-        self.assertEqual((score, possible), (0.5, 2))
 
 '''
     def test_index(self):

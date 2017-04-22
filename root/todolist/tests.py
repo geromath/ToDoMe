@@ -22,9 +22,12 @@ class TaskTestCase(TestCase):
         self.task_1 = Task.objects.get(pk=1)
         self.task_2 = Task.objects.get(pk=2)
 
+        c = Client()
+        c.post('/login', {'username': 'testuser', 'password': 'Pekka123'})
+
     def test_task_creation(self):
         c = Client()  # instantiate the Django test client
-        logged_in = c.login(username='testuser', password='Pekka123')
+        c.login(username='testuser', password='Pekka123')
         response = c.post('/todo/', {'task_text': 'Some title', 'description': 'Some text'}, follow=True)
 
         self.assertContains(response, 'Some title')

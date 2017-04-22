@@ -47,10 +47,6 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=quizzes, todolist',
-    'bootstrapform',
-    'social_django',
-    'django_nose',
-
 ]
 
 MIDDLEWARE = [

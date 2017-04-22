@@ -21,7 +21,7 @@
 <ul>
     <center><h2>New Quizzes</h2></center>
     {% if view.get_quizzes_done or view.get_queryset %}
-    {% for quiz in object_list %}
+    {% for quiz in view.get_quizzes_not_done %}
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
