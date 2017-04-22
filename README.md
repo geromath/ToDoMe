@@ -8,7 +8,7 @@
 - Project description 
 - Getting started 
 - Prerequisites 
-- Installing 
+- Installation 
 - Running the tests 
 - Built with 
 - Contributing 
@@ -29,7 +29,6 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 
 
 # Prerequisites
-
 <What things you need to install the software and how to install them> 
 <Give examples>  
 
@@ -37,10 +36,14 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 - Django 1.10+ 
 
 
-# Installing  
-Python: https://www.python.org/downloads/
+# Installation  
+Downloading Python: https://www.python.org/downloads/
 
-To install Django:
+Installing all plugins:
+
+ - Type "pip install -r requirements.txt" in terminal
+
+Installing Django:
 
 - Type "pip install django" in terminal
 
@@ -54,7 +57,7 @@ Break down into end to end tests
  And coding style tests
 
 Navigate to the folder where the manage.py file is and
-- type "python3 manage.py test" in the Terminal
+- type "python3 manage.py test" or "python manage.py test" in the Terminal
 
 
 
@@ -63,7 +66,11 @@ Navigate to the folder where the manage.py file is and
 - Django - The web framework used 
 - Python
 -  Bootstrap 
-- React
+- Javascript
+- JQuery
+- HTML
+- CSS
+
 
 # Contributing
 - Make sure you have a GitHub account
