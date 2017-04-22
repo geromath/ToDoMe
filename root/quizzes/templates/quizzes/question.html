@@ -103,6 +103,12 @@
 
                     {% endfor %}
 
+                    <script>
+                        $('li').click(function () {
+                            index = $(this).index();
+                            $(':radio').eq(index).prop('checked', true);
+                        });
+                    </script>
 
                     <input type="submit" value="Next" class="btn btn-large btn-block btn-warning">
                 </div>
