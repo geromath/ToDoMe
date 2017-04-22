@@ -1,7 +1,4 @@
-pytest
-packaging==16.8
-pyparsing==2.2.0
-appdirs==1.4.3
+setuptools
 mock
 django==1.10.5
 django-bootstrap3==8.1.0
@@ -11,6 +8,7 @@ django-model-utils
 django-nose
 httplib2
 nose
+pytest
 oauth2
 oauthlib
 Pillow
