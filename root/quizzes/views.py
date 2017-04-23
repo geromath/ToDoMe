@@ -49,9 +49,7 @@ class QuizListView(ListView):
             sittings_list.append(sit.quiz)
         return sittings_list
 
-    def get_start_time(self):
-        sitting = Sitting.objects.filter(user=self.request.user)[:1].get()
-        return sitting.start
+
 
 
 class QuizDetailView(DetailView):
