@@ -29,11 +29,11 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 # Installation  
 
 - Clone the repo by typing the following command in terminal:
-> "git clone https://github.com/geromath/ToDoMe.git"   
+'git clone https://github.com/geromath/ToDoMe.git'
 - Navigate to the ToDoMe directory and type the following command in terminal:
-> "pip install -r requirements.txt" 
+'pip install -r requirements.txt' 
 - Navigate into the root directory (/ToDoMe/root) and type the following command in terminal:
-> "python3 manage.py migrate" (alternatively "python manage.py migrate")
+'python3 manage.py migrate' alternatively 'python manage.py migrate'
 
 
 
@@ -46,7 +46,7 @@ Break down into end to end tests
  And coding style tests
 
 Navigate to the folder where the manage.py file is and
-- In the terminal, type: > "python manage.py test"
+- In the terminal, type: 'python manage.py test'
 
 
 # Built With
@@ -64,9 +64,9 @@ Navigate to the folder where the manage.py file is and
 # Contributing
 - Make sure you have a GitHub account
 - Fork the repository on GitHub
-- Create a new branch: > git checkout -b newbranchname
-- Commit changes: > git commit -m "Your text"
-- Push to branch: > git push origin newbranchname
+- Create a new branch: 'git checkout -b newbranchname'
+- Commit changes: 'git commit -m "Your text"'
+- Push to branch: 'git push origin newbranchname'
 - Submit pull request
 
 __Making changes:__
@@ -75,7 +75,7 @@ Create a topic branch from where you want to base your work.
 This is usually the master branch.
 Please avoid working directly on the master branch.
 
-To create a new branch, type > "git checkout -b newbranchname"
+To create a new branch, type 'git checkout -b newbranchname'
 
 Make commits of logical units.
 Check for unnecessary whitespace with "git diff --check" before committing.
