@@ -207,17 +207,17 @@ def task_checked(request, pk):
 
 
 class UserFormView(View):
-    form_class = UserForm  # blueprint til det vi skal bruke
+    form_class = UserForm
 
     template_name = 'todolist/registration_form.html'
 
     # display blank form
-    def get(self, request):  # innebygd funksjon for get-requests. f.eks. laste inn skjema som skal fylles ut
+    def get(self, request):
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
 
-    # legge til brukeren i databasen
-    def post(self, request):  # innebygd funksjon for post-requests
+    # Used to add user in database
+    def post(self, request):
         form = self.form_class(request.POST)
 
         if form.is_valid():
@@ -231,7 +231,7 @@ class UserFormView(View):
             last_name = form.cleaned_data['last_name']
 
             user.set_password(password)
-            user.save()  # lagrer brukeren i databasen
+            user.save()  # Save the user in the database
 
             # Returns User object if credentials are correct
             user = authenticate(username=username, password=password)
@@ -242,6 +242,6 @@ class UserFormView(View):
                     login(request, user)
 
                     return redirect(
-                        'todolist:avatar_screen')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
+                        'todolist:avatar_screen')  #Sending the user to the main page
 
-        return render(request, self.template_name, {'form': form})  # gir skjemaet paa nytt om noe gikk galt
+        return render(request, self.template_name, {'form': form})  # Render the form once more if something went wrong.
