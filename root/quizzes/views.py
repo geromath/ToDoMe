@@ -40,7 +40,6 @@ class QuizListView(ListView):
         for quiz in quizzes:
             if str(quiz) not in sittings_list:
                 quizzes_not_done.append(quiz)
-        print("Quizzes not done: ", quizzes_not_done)
         return quizzes_not_done
 
     def get_quizzes_done(self):
@@ -48,7 +47,6 @@ class QuizListView(ListView):
         sittings_list = []
         for sit in sittings:
             sittings_list.append(sit.quiz)
-        print("Quizzes done: ", sittings_list)
         return sittings_list
 
     def get_start_time(self):
@@ -176,8 +174,6 @@ class QuizTake(FormView):
             "question": self.question,
             "sitting": self.sitting,
         }
-
-        print('context in get-method: ', context)
 
         if self.quiz.draft and not request.user.has_perm('quiz.change_quiz'):
             raise PermissionDenied
