@@ -6,11 +6,11 @@
     {% load staticfiles %}
     <title>{% block title %} My TODOs {% endblock title %}</title>
 </head>
-
+<body>
 {% block body %}
 <!-- All content for sub-pages goes between these block tags -->
 
-<header id="indexHeader">
+<header class="headerLine">
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -38,6 +38,7 @@
 
             <!-- Modal Content-->
             <div class="modal-content">
+
                 <form class="form-horisontal" action="" method="post">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -69,7 +70,9 @@
                                 {% endfor %}
 
                                 <script>
-                                    $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+                                    $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0, weekStart: 1, todayHighlight: true
+                                    });
+
                                 </script>
                             </div>
 
@@ -81,9 +84,9 @@
                         </div>
                 </form>
 
+
             </div>
         </div>
-
     </div>
 </div>
 
@@ -137,7 +140,7 @@
 
                         var dateBadge = document.getElementById("badge{{task.due_date}}");
 
-//                      Endrer Due Date badge til Overdue, og farge rød
+                        //                      Endrer Due Date badge til Overdue, og farge rød
                         var date = new Date("{{task.due_date}}");
                         var now = new Date();
                         now.setHours(0, 0, 0, 0);
@@ -145,16 +148,17 @@
                         var sameMonth = new Date();
                         sameMonth.setDate(date.getDate() + 7);
 
-//                        If upcoming (currently set to TODOs within same month)
+                        //                        If upcoming (currently set to TODOs within same month)
                         if (date <= sameMonth) {
                             dateBadge.innerHTML = "Due date: {{task.due_date}}";
                             dateBadge.style.background = "#ffa500";
                         }
-//                        If overdue
-                        if (date < now) {
+                        //                        If overdue
+                        if (date <= now) {
                             dateBadge.innerHTML = "Overdue: {{task.due_date}}";
                             dateBadge.style.background = "#ff0000";
                         }
+
                     </script>
                 </li>
                 {% endif %}
@@ -191,4 +195,7 @@
 </div>
 
 {% endblock body %}
+
+</body>
+
 </html>

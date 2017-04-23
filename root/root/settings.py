@@ -30,16 +30,23 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'todolist',
+    'quizzes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrapform',
-    'social_django',
-    'django_nose',
 
+]
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'quizzes' app. Add more apps behind quizzes, separating with comma.
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=quizzes, todolist',
 ]
 
 MIDDLEWARE = [
@@ -86,13 +93,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-# Tell nose to measure coverage on the 'foo' and 'bar' apps
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=todolist, quizzes'
-]
 
 WSGI_APPLICATION = 'root.wsgi.application'
 
@@ -129,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 
@@ -145,7 +145,7 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
 
-LOGIN_REDIRECT_URL = '/todo'
+LOGIN_REDIRECT_URL = '/'
 redirect_uri = 'http://localhost:8000/_oauth/facebook?close'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '1141126915996317'  # App ID
@@ -168,5 +168,5 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/profile/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False

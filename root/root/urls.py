@@ -20,6 +20,8 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^', include('todolist.urls')),
+    url(r'^quizzes/', include('quizzes.urls')),
+
 
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 

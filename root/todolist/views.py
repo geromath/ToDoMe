@@ -4,11 +4,15 @@ from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from .models import Task
 from .forms import TaskForm
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
+from quizzes.models import Progress
+from quizzes.models import Quiz
+from quizzes.models import Sitting
+
 import datetime
 
 
@@ -22,7 +26,6 @@ def archive(request):
     queryset_list = Task.objects.archived()
     query = request.GET.get("q")
     if query:
-        print("ASJDHJKASHD")
         all_tasks = queryset_list.filter(
             Q(task_text__icontains=query) |
             Q(description__icontains=query)
@@ -39,19 +42,35 @@ def archive(request):
 @login_required(login_url='todolist:login')
 def avatar_screen(request):
     today = datetime.date.today()
-    overdue_tasks = Task.objects.filter(user=request.user).filter(due_date__lte=today)
+    overdue_tasks = Task.objects.filter(user=request.user).filter(due_date__lte=today).filter(archived=False)
     close_tasks_all = Task.objects.filter(user=request.user).exclude(due_date__lte=today).order_by('due_date')
 
     close_tasks = []
     i = 0
     for task in close_tasks_all:
-        if i < 3:
+        if (i < 3 and not task.archived):
             close_tasks.append(task)
-        i += 1
+            i += 1
+
+    sittings = Sitting.objects.filter(user=request.user)
+    quizzes_done = []
+    for sit in sittings:
+        quizzes_done.append(sit.quiz.title)
+
+    quizzes = Quiz.objects.all()
+    quiz_notify = []
+    for element in quizzes:
+        if element.title not in quizzes_done:
+            quiz_notify.append(element)
+
+
+#    print("You have taken" ,len(quizzes_done), "quiz, and it is ... ", quizzes_done) if we want to show quizzes done
 
     context = {
         'overdue_tasks': overdue_tasks,
         'close_tasks': close_tasks,
+        'quiz_notify': quiz_notify,
+        'title': 'ToDoMe',
     }
     return render(request, 'todolist/avatar_screen.html', context)
 
@@ -127,6 +146,9 @@ def todo_update(request, id=None):
 @login_required(login_url='todolist:login')
 def profile(request):
     user = request.user
+    progress, created = Progress.objects.get_or_create(user=user)
+    quizcount = progress.number_complete_exams()
+    task_count = Task.objects.filter(user=request.user).count()
 
     context = {
         'nbar': 'profile',
@@ -134,6 +156,9 @@ def profile(request):
         'last_name': user.last_name,
         'email': user.email,
         'username': user.username,
+        'title': 'Profile',
+        'quizcount': quizcount,
+        'task_count': task_count,
     }
     return render(request, 'todolist/profile.html', context)
 
@@ -150,7 +175,22 @@ class TaskUpdate(UpdateView):
 
 class TaskDelete(DeleteView):
     model = Task
-    success_url = reverse_lazy('todolist:todo')
+
+    def get_success_url(self):
+        referer_url = self.request.META.get('HTTP_REFERER')  # get the referer url from request's 'META' dictionary
+        if referer_url:
+            return referer_url  # return referer url for redirection
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        # Does not redirect if valid
+        # return HttpResponseRedirect(self.get_success_url())
+
+        # Render the template
+        # get_context_data populates object in the context
+        # or you also get it with the name you want if you define context_object_name in the class
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 def task_checked(request, pk):
@@ -163,7 +203,7 @@ def task_checked(request, pk):
     else:
         task.archived = True
         task.save()
-        return HttpResponseRedirect(reverse("todolist:todo"))
+        return HttpResponseRedirect(referer)
 
 
 class UserFormView(View):
@@ -202,6 +242,6 @@ class UserFormView(View):
                     login(request, user)
 
                     return redirect(
-                        'todolist:todo')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
+                        'todolist:avatar_screen')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
 
         return render(request, self.template_name, {'form': form})  # gir skjemaet paa nytt om noe gikk galt

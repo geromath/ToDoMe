@@ -27,14 +27,17 @@
     </div>
     {% endfor %}
 
-    <div class="pull-right">
+    <div class="pull-right" style="margin-bottom: 100px;">
         <button type="submit" class="btn btn-success ">Save Changes</button>
         <a href="{% url 'todolist:todo' %}" class="btn btn-default">Dismiss</a>
     </div>
 </form>
 
 <script>
-    $('#inputDate').datepicker({dateFormat: 'dd/mm/YY', minDate: 0});
+    $('#inputDate').datepicker({
+        dateFormat: 'dd/mm/YY', minDate: 0, weekStart: 1, todayHighlight: true
+    });
+
 </script>
 
 {% endblock body %}

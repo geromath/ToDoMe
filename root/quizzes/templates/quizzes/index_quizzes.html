@@ -1,0 +1,68 @@
+{% extends 'todolist/base.html' %}
+
+{% block title %}Quizzes{% endblock %}
+
+{% block body %}
+
+<header class="headerLine">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="clearfix">
+                    <div>
+                        <h1 class="header-title">Quizzes</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<ul style="margin-bottom: 100px;">
+    <center><h2>New Quizzes</h2></center>
+    {% if view.get_quizzes_done or view.get_queryset %}
+    {% for quiz in view.get_quizzes_not_done %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <li class="list-group-item" onclick="location.href='/quizzes/{{quiz.url}}/'" id="quiz_list_item"
+                    title="Details">
+                    <h5 class="list-group-item-heading"> {{ quiz.title }} </h5>
+                    <p class="list-group-item-text"> {{ quiz.description }} </p>
+                </li>
+            </div>
+        </div>
+    </div>
+    {% endfor %}<br>
+
+    <center><h2>Your last Quizzes</h2></center>
+    {% for quiz in view.get_quizzes_done %}
+    {% if quiz %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <li class="list-group-item" onclick="location.href='/quizzes/{{quiz.url}}/'" id="quiz_list_item"
+                    title="Details">
+
+                    <h5 class="list-group-item-heading"> {{ quiz.title }} </h5>
+                    <p class="list-group-item-text"> {{ quiz.description }} </p>
+
+                </li>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+    {% else %}
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">You do not have any quizzes to take yet</h4>
+            </li>
+            {% endif %}
+        </div>
+    </div>
+</ul>
+{% endblock %}
