@@ -39,6 +39,13 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 
 NOTE: If you run into an unexpected error, it is likely to be due to you not having setuptools installed. Install setuptools by typing `pip install setuptools`, then continue with the installation from the point where the error occured.
 
+# Running the application
+
+- You are now ready start ToDoMe
+- In terminal, type the following command:
+`python manage.py runserver`
+- The server is now running, and you can navigate to ToDoMe using your preferred browser, and entering "http://localhost:8000/" into the search bar
+
 # Running the tests  
 
 Explain how to run the automated tests for this system 
