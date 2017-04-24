@@ -179,3 +179,41 @@ class QuizTake(FormView):
             self.sitting.delete()
 
         return results
+
+class CategoriesListView(ListView):
+    model = Category
+
+class ViewQuizListByCategory(ListView):
+    model = Quiz
+    template_name = 'view_quiz_category.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.category = get_object_or_404(
+            Category,
+            category=self.kwargs['category_name']
+        )
+
+        return super(ViewQuizListByCategory, self). \
+            dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ViewQuizListByCategory, self) \
+            .get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
+
+    def get_queryset(self):
+        queryset = super(ViewQuizListByCategory, self).get_queryset()
+        return queryset.filter(category=self.category, draft=False)
+
+class QuizDetailView(DetailView):
+    model = Quiz
+    slug_field = 'url'
+    template_name = 'quizzes/detail.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.draft and not request.user.has_perm('quiz.change_quiz'):
+            raise PermissionDenied
+        context = self.get_context_data(object=self.object)
+        return render(request, 'quizzes/detail.html', context)
