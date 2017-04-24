@@ -42,7 +42,7 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 
 # Running the application
 
-- You are now ready start ToDoMe
+- You are now ready to start using ToDoMe
 - In terminal, type the following command:
 `python manage.py runserver`
 - The server is now running, and you can navigate to ToDoMe using your preferred browser, and entering "http://localhost:8000/" into the search bar
