@@ -14,5 +14,6 @@ oauth2
 oauthlib
 requests
 requests-oauthlib
+python-social-auth==0.2.21
 social-auth-app-django
 social-auth-core
