@@ -11,7 +11,6 @@ from django.utils.six import StringIO
 from .models import Category, SubCategory, Quiz, Question, MCQuestion, Answer, Progress, Sitting
 from .views import QuizListView, CategoriesListView, QuizDetailView
 
-
 class TestCategory(TestCase):
 
     def setUp(self):
@@ -155,7 +154,6 @@ class TestProgress(TestCase):
         self.p1.update_score(question2, -1, 1)
         self.assertEqual([4, 6, 67], self.p1.list_all_cat_scores['cheese'])
 
-
 class TestSitting(TestCase):
     def setUp(self):
         self.quiz1 = Quiz.objects.create(id=1,
@@ -288,7 +286,6 @@ class TestSitting(TestCase):
         self.sitting.add_user_answer(self.question1, '123')
         self.assertEqual(self.sitting.progress(), (1, 2))
 
-
 class TestNonQuestionViews(TestCase):
     '''
     Starting on views not directly involved with questions.
@@ -333,7 +330,6 @@ class TestNonQuestionViews(TestCase):
         self.assertContains(response, 'test quiz 1')
         self.assertTemplateUsed('quiz_list.html')
 '''
-
 
 '''
     def test_list_categories(self):
@@ -394,13 +390,10 @@ class TestNonQuestionViews(TestCase):
         self.assertTemplateUsed(response, 'quiz/quiz_detail.html')
 '''
 
-
 class TestQuestionMarking(TestCase):
     urls = 'quiz.urls'
 
     #Maa lages naar vi har lagd views
-
-
 
 '''
 class TestQuestion(TestCase):
@@ -427,7 +420,3 @@ class TestQuestion(TestCase):
         #self.assertEqual(self.q1.explanation, 'Dette er forklaringen')
 
 '''
-
-
-
-

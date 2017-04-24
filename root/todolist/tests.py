@@ -33,7 +33,7 @@ class TaskTestCase(TestCase):
         self.assertContains(response, 'Some title')
         self.assertContains(response, 'Some text')
 
-    def testTaskInfo(self):
+    def test_task_info(self):
         homework = Task.objects.get(task_text="Homework")
         quiz = Task.objects.get(description="Complete quiz regarding TDT4145")
         today = datetime.date(2017, 3, 27)

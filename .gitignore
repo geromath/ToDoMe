@@ -3,6 +3,7 @@
 *.pyc
 /root/.DS_Store
 /root/todolist/migrations/
+/root/quizzes/migrations/
 .DS_Store
 
 ### Intellij ###
