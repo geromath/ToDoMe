@@ -9,6 +9,7 @@
 - Getting started 
 - Prerequisites 
 - Installation 
+- Running the application
 - Running the tests 
 - Built with 
 - Contributing 
