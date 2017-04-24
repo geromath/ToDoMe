@@ -3,6 +3,7 @@ mock
 django==1.10.5
 django-bootstrap3==8.1.0
 coverage==4.3.4
+Pillow==4.0.0
 django-bootstrap-form
 django-model-utils
 django-nose
@@ -11,7 +12,6 @@ nose
 pytest
 oauth2
 oauthlib
-Pillow
 requests
 requests-oauthlib
 social-auth-app-django
