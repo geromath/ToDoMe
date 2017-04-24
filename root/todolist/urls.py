@@ -17,9 +17,6 @@ urlpatterns = [
     # Main view
     url(r'^todo/$', views.todo, name="todo"),
 
-    # Detail view
-    url(r'^todo/(?P<id>\d+)/$', views.todo_detail, name="todo_detail"),
-
     # Archived (Completed) TODOs
     url(r'^archive/$', views.archive, name="archive"),
 

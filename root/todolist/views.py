@@ -4,15 +4,14 @@ from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from .models import Task
 from .forms import TaskForm
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from quizzes.models import Progress
 from quizzes.models import Quiz
 from quizzes.models import Sitting
-
 import datetime
 
 
@@ -111,17 +110,6 @@ def todo(request):
     }
 
     return render(request, 'todolist/index.html', context)
-
-
-@login_required(login_url='todolist:login')
-def todo_detail(request, id=None):
-    instance = get_object_or_404(Task, id=id)
-    context = {
-        "title": 'Detail',
-        "instance": instance,
-    }
-    return render(request, "todolist/todo_detail.html", context)
-
 
 # Made a separate method for updating todos, seems to work, just need to implement it with modals somehow..
 @login_required(login_url='todolist:login')
