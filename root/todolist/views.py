@@ -214,12 +214,39 @@ class UserFormView(View):
     # display blank form
     def get(self, request):  # innebygd funksjon for get-requests. f.eks. laste inn skjema som skal fylles ut
         form = self.form_class(None)
+
         return render(request, self.template_name, {'form': form})
 
     # legge til brukeren i databasen
     def post(self, request):  # innebygd funksjon for post-requests
-        form = self.form_class(request.POST)
+        if request.method == 'POST':
+            form = self.form_class(request.POST)
 
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.user = request.user
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                email = form.cleaned_data['email']
+                first_name = form.cleaned_data['first_name']
+                last_name = form.cleaned_data['last_name']
+                obj.set_password(password)
+                obj.save()
+
+                user = authenticate(username=username, password=password)
+
+                if user is not None:
+                    if user.is_active:
+                        login(request, user)
+                        return redirect(
+                            'todolist:avatar_screen')
+            else:
+                messages.error(request, message="error")
+        else:
+            form = self.form_class(request.POST)
+        return render(request, self.template_name, {'form': form})
+
+        '''
         if form.is_valid():
             user = form.save(commit=False)
 
@@ -241,7 +268,7 @@ class UserFormView(View):
 
                     login(request, user)
 
-                    return redirect(
-                        'todolist:avatar_screen')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
+                    return redirect('todolist:avatar_screen')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
 
         return render(request, self.template_name, {'form': form})  # gir skjemaet paa nytt om noe gikk galt
+        '''
