@@ -49,15 +49,10 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 
 # Running the tests  
 
-Explain how to run the automated tests for this system 
-Break down into end to end tests
- Explain what these tests test and why
- Give an example
- And coding style tests
-
 Navigate to the folder where the manage.py file is and
 - In the terminal, type: 'python manage.py test'
 
+NOTE: Currently, test coverage is at approximately 42 %, yet Coveralls does not run our tests, and thus only displays 20 %. During Sprint delivery 4, we were at a steady ≈ 70 % coverage, however after Coveralls/Travis CI issues occured, many tests fail to run. We are yet to find a solution to this problem.
 
 # Built With
 
