@@ -4,15 +4,14 @@ from django.views.generic import View, CreateView, UpdateView, DeleteView
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from .models import Task
 from .forms import TaskForm
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from quizzes.models import Progress
 from quizzes.models import Quiz
 from quizzes.models import Sitting
-
 import datetime
 
 
@@ -112,17 +111,6 @@ def todo(request):
 
     return render(request, 'todolist/index.html', context)
 
-
-@login_required(login_url='todolist:login')
-def todo_detail(request, id=None):
-    instance = get_object_or_404(Task, id=id)
-    context = {
-        "title": 'Detail',
-        "instance": instance,
-    }
-    return render(request, "todolist/todo_detail.html", context)
-
-
 # Made a separate method for updating todos, seems to work, just need to implement it with modals somehow..
 @login_required(login_url='todolist:login')
 def todo_update(request, id=None):
@@ -207,12 +195,12 @@ def task_checked(request, pk):
 
 
 class UserFormView(View):
-    form_class = UserForm  # blueprint til det vi skal bruke
+    form_class = UserForm
 
     template_name = 'todolist/registration_form.html'
 
     # display blank form
-    def get(self, request):  # innebygd funksjon for get-requests. f.eks. laste inn skjema som skal fylles ut
+    def get(self, request):
         form = self.form_class(None)
 
         return render(request, self.template_name, {'form': form})
@@ -258,7 +246,7 @@ class UserFormView(View):
             last_name = form.cleaned_data['last_name']
 
             user.set_password(password)
-            user.save()  # lagrer brukeren i databasen
+            user.save()  # Save the user in the database
 
             # Returns User object if credentials are correct
             user = authenticate(username=username, password=password)
@@ -268,7 +256,14 @@ class UserFormView(View):
 
                     login(request, user)
 
+<<<<<<< HEAD
                     return redirect('todolist:avatar_screen')  # maa ogsaa lages! Sender brukeren til startsiden etter registrering?(login)
 
         return render(request, self.template_name, {'form': form})  # gir skjemaet paa nytt om noe gikk galt
         '''
+=======
+                    return redirect(
+                        'todolist:avatar_screen')  #Sending the user to the main page
+
+        return render(request, self.template_name, {'form': form})  # Render the form once more if something went wrong.
+>>>>>>> dev
