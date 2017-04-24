@@ -31,14 +31,14 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 
 - Clone the repo by typing the following command in terminal:
 `git clone https://github.com/geromath/ToDoMe.git`
+- Ensure you have setuptools installed, by typing the following command in terminal:
+`pip install setuptools`
 - Navigate to the ToDoMe directory and type the following command in terminal:
 `pip install -r requirements.txt` 
 - Navigate into the root directory (/ToDoMe/root) and type the following command in terminal:
 - `python manage.py migrate` alternatively `python3 manage.py migrate`
 - `python manage.py makemigrations todolist quizzes`
 - `python manage.py migrate`
-
-NOTE: If you run into an unexpected error, it is likely to be due to you not having setuptools installed. Install setuptools by typing `pip install setuptools`, then continue with the installation from the point where the error occured.
 
 # Running the application
 
