@@ -261,9 +261,4 @@ class UserFormView(View):
 
         return render(request, self.template_name, {'form': form})  # gir skjemaet paa nytt om noe gikk galt
         '''
-=======
-                    return redirect(
-                        'todolist:avatar_screen')  #Sending the user to the main page
 
-        return render(request, self.template_name, {'form': form})  # Render the form once more if something went wrong.
->>>>>>> dev
