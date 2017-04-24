@@ -10,6 +10,8 @@ from django.utils.module_loading import import_module
 from django.utils.six import StringIO
 from .models import Category, SubCategory, Quiz, Question, MCQuestion, Answer, Progress, Sitting
 from .views import QuizListView, CategoriesListView, QuizDetailView
+import unittest
+from django.test import Client
 
 
 class TestCategory(TestCase):
@@ -105,6 +107,12 @@ class TestProgress(TestCase):
 
         self.p1 = Progress.objects.new_progress(self.user)
 
+
+
+    def test_progress_score(self):
+        self.p1.score = 75
+        self.assertEqual(self.p1.score, 75)
+
     def test_list_all_empty(self):
         self.assertEqual(self.p1.score, '')
 
@@ -189,19 +197,7 @@ class TestSitting(TestCase):
                                              password='top_secret')
 
         self.sitting = Sitting.objects.new_sitting(self.user, self.quiz1)
-    '''
-    def test_max_questions_subsetting(self):
-        quiz2 = Quiz.objects.create(id=2,
-                                    title='test quiz 2',
-                                    description='d2',
-                                    url='tq2',
-                                    )
-        self.question1.quiz.add(quiz2)
-        self.question2.quiz.add(quiz2)
-        sub_sitting = Sitting.objects.new_sitting(self.user, quiz2)
 
-        self.assertNotIn('2', sub_sitting.question_list)
-    '''
 
     def test_get_next_remove_first(self):
         self.assertEqual(self.sitting.get_first_question(),
@@ -289,6 +285,10 @@ class TestSitting(TestCase):
         self.sitting.add_user_answer(self.question1, '123')
         self.assertEqual(self.sitting.progress(), (1, 2))
 
+    def test_correct_answer(self):
+        self.assertFalse(self.answer1.correct)
+        self.assertTrue(self.answer2.correct)
+
 
 class TestNonQuestionViews(TestCase):
     '''
@@ -322,20 +322,28 @@ class TestNonQuestionViews(TestCase):
         self.assertEqual(view.get_quizzes_done().count(), 2)
 
 
-'''
+
     def test_index(self):
         # unit
         view = QuizListView()
         self.assertEqual(view.get_queryset().count(), 2)
 
         # integration test
-        response = self.client.get('/')
-        self.assertContains(response, 'test quiz 1')
-        self.assertTemplateUsed('quiz_list.html')
-'''
+        response = self.client.get('/quizzes/')
+        print('RESPONSEN: ', response)
+        quiz = response.context[-1]['object_list'][:1].get()
+        print('QUIZ-variabel: ', quiz)
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(quiz.category, self.c1)
+        self.assertEqual(quiz.title, 'test quiz 1')
+
+        self.assertTemplateUsed('index_quizzes.html')
 
 
-'''
+
+    '''
     def test_list_categories(self):
         # unit
         view = CategoriesListView()
@@ -358,10 +366,10 @@ class TestNonQuestionViews(TestCase):
 
         self.assertContains(response, 'test quiz 1')
         self.assertNotContains(response, 'test quiz 2')
-'''
+    '''
 
-'''
-    def test_progress_user(self):
+
+    def test_progress_user2(self):
         user = User.objects.create_user(username='jacob',
                                         email='jacob@jacob.com',
                                         password='top_secret')
@@ -386,23 +394,23 @@ class TestNonQuestionViews(TestCase):
         self.assertEqual(view.get_object().category, self.c1)
 
         # integration test
-        response = self.client.get('/tq1/')
+        response = self.client.get('/quizzes/')
 
-        self.assertContains(response, 'd1')
+        #self.assertContains(response.context[-1]['object_list'][:1].get(), 'd1')
         self.assertContains(response, 'attempt')
-        self.assertContains(response, 'href="/tq1/take/"')
-        self.assertTemplateUsed(response, 'quiz/quiz_detail.html')
-'''
+        self.assertContains(response, 'href="/tq1/take/"') #'href="/tq1/take/"')
+        self.assertTemplateUsed(response, 'quizzes/detail.html')
+
 
 
 class TestQuestionMarking(TestCase):
     urls = 'quiz.urls'
 
-    #Maa lages naar vi har lagd views
 
 
 
-'''
+
+
 class TestQuestion(TestCase):
     def setUp(self):
         self.quiz1 = Quiz.objects.create(id=1,
@@ -411,22 +419,24 @@ class TestQuestion(TestCase):
                                          url='url1')
         self.c1 = Category.objects.new_category(category='testcategory')
         self.sub1 = SubCategory.objects.create(sub_category='testsub', category=self.c1)
-        self.q1 = Question.objects.create(id=1,
-                                          quiz=self.quiz1,
+        self.q1 = MCQuestion.objects.create(id=1,
+                                          #quiz=self.quiz1,
                                           category=self.c1,
                                           sub_category=self.sub1,
-                                          #content='Dette er en test',
-                                          #explanation='Dette er forklaringen'
+                                          content='Dette er en test',
+                                          explanation='Dette er forklaringen'
                                           )
 
+
+
+
     def test_create_question(self):
-        self.assertEqual(self.q1.quiz, self.quiz1)
+        #self.assertEqual(self.q1.quiz, self.quiz1)
         self.assertEqual(self.q1.category, self.c1)
         self.assertEqual(self.q1.sub_category, self.sub1)
-        #self.assertEqual(self.q1.content, 'Dette er en test')
-        #self.assertEqual(self.q1.explanation, 'Dette er forklaringen')
+        self.assertEqual(self.q1.content, 'Dette er en test')
+        self.assertEqual(self.q1.explanation, 'Dette er forklaringen')
 
-'''
 
 
 
