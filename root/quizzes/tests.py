@@ -294,7 +294,6 @@ class TestNonQuestionViews(TestCase):
     Starting on views not directly involved with questions.
     '''
     urls = 'quiz.urls'
-    view = QuizListView().as_view()
 
     def setUp(self):
         self.c1 = Category.objects.new_category(category='elderberries')
