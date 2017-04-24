@@ -10,25 +10,6 @@
 {% block body %}
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
-        <h1>RESULTS</h1>
-
-      {% if previous.answers %}
-
-          <p class="muted"><small>{% trans "The previous question" %}:</small></p>
-          <p>{{ previous.previous_question }}</p>
-          <p>Your answer was
-            <strong>
-              {{ previous.previous_outcome|yesno:"correct,incorrect" }}
-            </strong>
-          </p>
-          {% include 'quizzes/correct_answer.html' %}
-          <p><strong>{% trans "Explanation" %}:</strong></p>
-          <div class="well " style="background-color: #fcf8e3;">
-            <p>{{ previous.previous_question.explanation }}</p>
-          </div>
-          <hr>
-
-      {% endif %}
 
       {% if max_score %}
               <div>
@@ -78,27 +59,14 @@
             {{ question.content }}
           </p>
 
-        {% comment %}
-
-            TEST
-            {{ sitting.user_answers }}
-
             {% for ans in question.get_answers %}
-                {{ ans }} {{ans.id}}
-
-                {% if ans.id in sitting.user_answers %}
-                    You answered {{ ans }}
+                {% if ans.correct %}
+                    The answer was: {{ ans }}
                 {% endif %}
-
             {% endfor %}
 
-            {{ previous.answers }}
-            {{ question }}
-        {{ question.category }}
+          {% if question.user_answer %}
 
-        {% endcomment %}
-
-          {% if previous.previous_question.user_answer %} {# question.user_answer #}
             <p>{% trans "Your answer" %}: {{ question|answer_choice_to_string:question.user_answer }}</p>
                 TEST222
 
@@ -113,6 +81,10 @@
 
         {% endfor %}
       {% endif %}
+        <p>
+        <button class="btn btn-warning btn-block" onclick="location.href='/quizzes/'">Back to QUIZZES</button>
+        </p>
+
     </div>
 </div>
 

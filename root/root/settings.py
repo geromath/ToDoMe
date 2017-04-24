@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'todolist',
     'quizzes',
+    'social_django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,11 +48,6 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=quizzes, todolist',
-    'bootstrapform',
-    'social_django',
-    'django_nose',
-
-
 ]
 
 MIDDLEWARE = [
@@ -150,7 +146,7 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
 
-LOGIN_REDIRECT_URL = '/todo'
+LOGIN_REDIRECT_URL = '/'
 redirect_uri = 'http://localhost:8000/_oauth/facebook?close'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '1141126915996317'  # App ID
@@ -173,5 +169,5 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/profile/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False

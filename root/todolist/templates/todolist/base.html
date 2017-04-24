@@ -58,10 +58,12 @@
                         <span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp; TODOs
                     </a>
                 </li>
-                <!-- Archived (Completed) tasks/TODOs -->
-                <li class="{% if nbar == 'archive' %}active{% endif %}">
-                    <a href="{% url 'todolist:archive' %}">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Archive
+
+                <!-- Quizzes -->
+                <li class="">
+                    <!--TODO: ADD  {% if nbar == 'quizzes' %}active{% endif %}  to href-->
+                    <a href="{% url 'quizzes:quiz_index' %}">
+                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp; Quizzes
                     </a>
                 </li>
 
@@ -76,13 +78,14 @@
             </form>
 
             <ul class="nav navbar-nav navbar-right">
-                <!-- Quizzes -->
-                <li class="">
-                    <!--TODO: ADD  {% if nbar == 'quizzes' %}active{% endif %}  to href-->
-                    <a href="{% url 'quizzes:quiz_index' %}">
-                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp; Quizzes
+
+                <!-- Archived (Completed) tasks/TODOs -->
+                <li class="{% if nbar == 'archive' %}active{% endif %}">
+                    <a href="{% url 'todolist:archive' %}">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Archive
                     </a>
                 </li>
+
                 <!-- My Profile -->
                 <li class="dropdown {% if nbar == 'profile' %}active{% endif %}">
                     <a href="{% url 'todolist:profile' %}" data-toggle="dropdown" class="dropdown-toggle disabled">
@@ -104,35 +107,35 @@
     </div>
 </nav>
 
-
 <!-- Everything dynamic (changes from page to page) goes between the below 2 lines -->
 {% block body %}
 
 {% endblock body %}
 
+
 <!-- Footer -->
-    <footer class="footer-basic-centered footer navbar-fixed-bottom">
+<footer class="footer-basic-centered">
 
-        <p class="footer-company-motto">"Do yourself a favour - use ToDoMe"</p>
-        <p class="footer-links">
-            <a href="{% url 'todolist:avatar_screen' %}">Home</a>
-            ·
-            <a href="{% url 'todolist:todo' %}">Tasks</a>
-            ·
-            <a href="{% url 'todolist:archive' %}">Archive</a>
-            ·
-            <a href="#">Quizzes</a>
-            ·
-            <a href="{% url 'todolist:profile' %}">Profile</a>
-        </p>
+    <p class="footer-company-motto">"Do yourself a favour - use ToDoMe"</p>
+    <p class="footer-links">
+        <a href="{% url 'todolist:avatar_screen' %}">Home</a>
+        ·
+        <a href="{% url 'todolist:todo' %}">Tasks</a>
+        ·
+        <a href="{% url 'quizzes:quiz_index' %}">Quizzes</a>
+        ·
+        <a href="{% url 'todolist:archive' %}">Archive</a>
+        ·
+        <a href="{% url 'todolist:profile' %}">Profile</a>
+    </p>
 
-        <p class="footer-company-name">ToDoMe &copy;
-            <script type="text/javascript">
-        document.write(new Date().getFullYear());
+    <p class="footer-company-name">ToDoMe &copy;
+        <script type="text/javascript">
+            document.write(new Date().getFullYear());
 
-            </script>
-        </p>
-    </footer>
+        </script>
+    </p>
+</footer>
 
 </body>
 </html>

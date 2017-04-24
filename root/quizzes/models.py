@@ -86,9 +86,7 @@ class Quiz(models.Model):
                     "a random order or as they "
                     "are set?"))
 
-    max_questions = models.PositiveIntegerField(
-        blank=True, null=True, verbose_name=_("Max Questions"),
-        help_text=_("Number of questions to be answered on each attempt."))
+
 
     answers_at_end = models.BooleanField(
         blank=False, default=False,
@@ -97,7 +95,7 @@ class Quiz(models.Model):
         verbose_name=_("Answers at end"))
 
     exam_paper = models.BooleanField(
-        blank=False, default=False,
+        blank=False, default=True,
         help_text=_("If yes, the result of each"
                     " attempt by a user will be"
                     " stored. Necessary for marking."),
@@ -160,16 +158,6 @@ class Quiz(models.Model):
     @property
     def get_max_score(self):
         return self.get_questions().count()
-
-    def anon_score_id(self):
-        return str(self.id) + "_score"
-
-    def anon_q_list(self):
-        return str(self.id) + "_q_list"
-
-    def anon_q_data(self):
-        return str(self.id) + "_data"
-
 
 class ProgressManager(models.Manager):
 
@@ -332,8 +320,6 @@ class SittingManager(models.Manager):
             raise ImproperlyConfigured('Question set of the quiz is empty. '
                                        'Please configure questions properly')
 
-        if quiz.max_questions and quiz.max_questions < len(question_set):
-            question_set = question_set[:quiz.max_questions]
 
         questions = ",".join(map(str, question_set)) + ","
 
