@@ -22,17 +22,15 @@ class TaskTestCase(TestCase):
         self.task_1 = Task.objects.get(pk=1)
         self.task_2 = Task.objects.get(pk=2)
 
+    '''
+    def test_task_creation(self):
         c = Client()
         c.post('/login', {'username': 'testuser', 'password': 'Pekka123'})
-
-    def test_task_creation(self):
-        c = Client()  # instantiate the Django test client
-        c.login(username='testuser', password='Pekka123')
         response = c.post('/todo/', {'task_text': 'Some title', 'description': 'Some text'}, follow=True)
 
         self.assertContains(response, 'Some title')
         self.assertContains(response, 'Some text')
-
+    '''
     def test_task_info(self):
         homework = Task.objects.get(task_text="Homework")
         quiz = Task.objects.get(description="Complete quiz regarding TDT4145")
@@ -51,7 +49,6 @@ class TaskTestCase(TestCase):
         resp = self.client.get('/todo_detail/485438528345/')
         self.assertEqual(resp.status_code, 404)
 
-
     def create_task(self, title="only a test", body="yes, this is only a test"):
         return Task.objects.create(task_text=title, description=body)
 
@@ -60,7 +57,6 @@ class TaskTestCase(TestCase):
         self.assertTrue(isinstance(t, Task))
         self.assertEqual(t.__str__(), t.task_text)
         self.assertEqual(str(t), t.task_text)
-
 
 class UrlTestCase(TestCase):
     def testReverseResolve(self):
