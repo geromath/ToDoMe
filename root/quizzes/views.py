@@ -1,33 +1,13 @@
-from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, render
-from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, TemplateView, FormView
-
 from .forms import AnswerIDForm
 from .models import Quiz, Category, Progress, Sitting, Question, MCQuestion
 
 
-class QuizMarkerMixin(object):
-    @method_decorator(login_required)
-    @method_decorator(permission_required('quiz.view_sittings'))
-    def dispatch(self, *args, **kwargs):
-        return super(QuizMarkerMixin, self).dispatch(*args, **kwargs)
-
-
-class SittingFilterTitleMixin(object):
-    def get_queryset(self):
-        queryset = super(SittingFilterTitleMixin, self).get_queryset()
-        quiz_filter = self.request.GET.get('quiz_filter')
-        if quiz_filter:
-            queryset = queryset.filter(quiz__title__icontains=quiz_filter)
-
-        return queryset
-
-
 class QuizListView(ListView):
     model = Quiz
-    template_name = 'quizzes/index_quizzes.html'  # lagt til selv. Dette er forsiden man kommer til.
+    template_name = 'quizzes/index_quizzes.html'
 
     def get_quizzes_not_done(self, **kwargs):
         quizzes = Quiz.objects.all()
@@ -48,105 +28,6 @@ class QuizListView(ListView):
         for sit in sittings:
             sittings_list.append(sit.quiz)
         return sittings_list
-
-
-
-
-class QuizDetailView(DetailView):
-    model = Quiz
-    slug_field = 'url'
-    template_name = 'quizzes/detail.html'
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-
-        if self.object.draft and not request.user.has_perm('quiz.change_quiz'):
-            raise PermissionDenied
-
-        context = self.get_context_data(object=self.object)
-        return render(request, 'quizzes/detail.html', context)
-
-
-class CategoriesListView(ListView):
-    model = Category
-
-
-class ViewQuizListByCategory(ListView):
-    model = Quiz
-    template_name = 'view_quiz_category.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        self.category = get_object_or_404(
-            Category,
-            category=self.kwargs['category_name']
-        )
-
-        return super(ViewQuizListByCategory, self). \
-            dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(ViewQuizListByCategory, self) \
-            .get_context_data(**kwargs)
-
-        context['category'] = self.category
-        return context
-
-    def get_queryset(self):
-        queryset = super(ViewQuizListByCategory, self).get_queryset()
-        return queryset.filter(category=self.category, draft=False)
-
-
-class QuizUserProgressView(TemplateView):
-    template_name = 'progress.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(QuizUserProgressView, self) \
-            .dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(QuizUserProgressView, self).get_context_data(**kwargs)
-        progress, c = Progress.objects.get_or_create(user=self.request.user)
-        context['cat_scores'] = progress.list_all_cat_scores
-        context['exams'] = progress.show_exams()
-        return context
-
-
-class QuizMarkingList(QuizMarkerMixin, SittingFilterTitleMixin, ListView):
-    model = Sitting
-
-    def get_queryset(self):
-        queryset = super(QuizMarkingList, self).get_queryset() \
-            .filter(complete=True)
-
-        user_filter = self.request.GET.get('user_filter')
-        if user_filter:
-            queryset = queryset.filter(user__username__icontains=user_filter)
-
-        return queryset
-
-
-class QuizMarkingDetail(QuizMarkerMixin, DetailView):
-    model = Sitting
-
-    def post(self, request, *args, **kwargs):
-        sitting = self.get_object()
-
-        q_to_toggle = request.POST.get('qid', None)
-        if q_to_toggle:
-            q = Question.objects.get_subclass(id=int(q_to_toggle))
-            if int(q_to_toggle) in sitting.get_incorrect_questions:
-                sitting.remove_incorrect_question(q)
-            else:
-                sitting.add_incorrect_question(q)
-
-        return self.get(request)
-
-    def get_context_data(self, **kwargs):
-        context = super(QuizMarkingDetail, self).get_context_data(**kwargs)
-        context['questions'] = \
-            context['sitting'].get_questions(with_answers=True)
-        return context
 
 
 class QuizTake(FormView):
@@ -258,15 +139,14 @@ class QuizTake(FormView):
             self.sitting.add_incorrect_question(self.question)
             self.progress.update_score(self.question, 0, 1)
 
-        if self.quiz.answers_at_end is not True:
-            self.previous = {'previous_answer': guess,
-                             'previous_outcome': is_correct,
-                             'previous_question': self.question,
-                             'answers': self.question.get_answers(),
-                             'question_type': {self.question
-                                                   .__class__.__name__: True}}
-        else:
-            self.previous = {}
+
+        self.previous = {'previous_answer': guess,
+                         'previous_outcome': is_correct,
+                         'previous_question': self.question,
+                         'answers': self.question.get_answers(),
+                         'question_type': {self.question
+                                               .__class__.__name__: True}}
+
 
         self.sitting.add_user_answer(self.question, guess)
         self.sitting.remove_first_question()
@@ -294,11 +174,6 @@ class QuizTake(FormView):
 
         self.sitting.mark_quiz_complete()
 
-        if self.quiz.answers_at_end:
-            results['questions'] = \
-                self.sitting.get_questions(with_answers=True)
-            results['incorrect_questions'] = \
-                self.sitting.get_incorrect_questions
 
         if self.quiz.exam_paper is False:
             self.sitting.delete()
