@@ -33,9 +33,11 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 - Navigate to the ToDoMe directory and type the following command in terminal:
 `pip install -r requirements.txt` 
 - Navigate into the root directory (/ToDoMe/root) and type the following command in terminal:
-`python3 manage.py migrate` alternatively `python manage.py migrate`
+- `python manage.py migrate` alternatively `python3 manage.py migrate`
+- `python manage.py makemigrations todolist quizzes`
+- `python manage.py migrate`
 
-
+NOTE: If you run into an unexpected error, it is likely to be due to you not having setuptools installed. Install setuptools by typing `pip install setuptools`, then continue with the installation from the point where the error occured.
 
 # Running the tests  
 
