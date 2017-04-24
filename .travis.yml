@@ -36,7 +36,7 @@ before_script:
 script:
   - cd root
   - python manage.py test
-  - coverage run --branch --source=quizzes,todolist ./manage.py test
+  - coverage run --branch --source=quizzes,todolist manage.py test
   
 after_success: 
   - coveralls
