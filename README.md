@@ -1,4 +1,4 @@
-﻿# ToDoMe  [![Build Status](https://travis-ci.org/geromath/ToDoMe.svg?branch=master)](https://travis-ci.org/geromath/ToDoMe)  [![Coverage Status](https://coveralls.io/repos/github/geromath/ToDoMe/badge.svg?branch=master)](https://coveralls.io/github/geromath/ToDoMe?branch=master)
+﻿# ToDoMe  [![Build Status](https://travis-ci.org/geromath/ToDoMe.svg?branch=master)](https://travis-ci.org/geromath/ToDoMe)  [
 
 ![ToDoMe](https://raw.github.com/geromath/ToDoMe/dev/images/todome_logo.png)
 
@@ -6,7 +6,6 @@
 
 # Table of contents 
 - Project description 
-- Getting started 
 - Prerequisites 
 - Installation 
 - Running the application
@@ -50,9 +49,9 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 # Running the tests  
 
 Navigate to the folder where the manage.py file is and
-- In the terminal, type: 'python manage.py test'
+- In the terminal, type: `python manage.py test`
 
-NOTE: Currently, test coverage is at approximately 42 %, yet Coveralls does not run our tests, and thus only displays 20 %. During Sprint delivery 4, we were at a steady ≈ 70 % coverage, however after Coveralls/Travis CI issues occured, many tests fail to run. We are yet to find a solution to this problem.
+NOTE: Currently, test coverage is at approximately 50 %, yet Coveralls does not run our tests, and thus only displayed 21 %. During Sprint delivery 4, we were at a steady ≈ 72 % coverage, however after Coveralls/Travis CI issues occured, many tests fail to run. We are yet to find a solution to this problem, and have temporarily discarded Coveralls.
 
 # Built With
 
@@ -98,9 +97,14 @@ Make sure your commit messages are in the proper format.
 This project is licensed under the MIT License - see the LICENSE.md file for details  .
 
 # Acknowledgments  
-NTNU TDT4140 course staff - Spring 2017.
+The team is grateful for much help from Kari E. Strandjord, our student supervisor, and Pekka Abrahamsson for making it possible to learn software development in practice.
 
+Also, we want to express gratitude towards Magnus L. Hetland for participating in our video.
 
+This has been a long, but joyful journey,
+and we have learned incredibly much.
+
+Thank you!
 
 
 
