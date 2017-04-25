@@ -1,4 +1,4 @@
-﻿# ToDoMe  [![Build Status](https://travis-ci.org/geromath/ToDoMe.svg?branch=master)](https://travis-ci.org/geromath/ToDoMe)  [
+﻿# ToDoMe  [![Build Status](https://travis-ci.org/geromath/ToDoMe.svg?branch=master)](https://travis-ci.org/geromath/ToDoMe)
 
 ![ToDoMe](https://raw.github.com/geromath/ToDoMe/dev/images/todome_logo.png)
 
@@ -18,8 +18,8 @@
 
 # Project description 
 ToDoMe is a web-based task manager that lets you organize your tasks for the day and week in an easy manner. 
-You earn credits for completing tasks you set for yourself and for passing the quizzes created by your teacher. 
-ToDoMe helps the students repeat the curriculum throughout the semester and it gives the professors a better overview of their students progress.
+You earn credits for creating and completing tasks you set for yourself and for passing the quizzes created by your teacher. 
+ToDoMe helps the students repeat the curriculum throughout the semester and it gives the professors a better overview of their students' progress.
 
 
 # Prerequisites
@@ -46,12 +46,18 @@ ToDoMe helps the students repeat the curriculum throughout the semester and it g
 `python manage.py runserver`
 - The server is now running, and you can navigate to ToDoMe using your preferred browser, and entering "http://localhost:8000/" into the search bar
 
+NOTE: For simplicity's sake, we have added a pre-defined admin user and 2 quizzes for users to take. 
+- To go to Admin page, allocate to /admin/ (http://localhost:8000/admin/) and input the following information:
+- Username: `Pekka`
+- Password: `Pekka123`
+This is mainly to explore admin rights.
+
 # Running the tests  
 
-Navigate to the folder where the manage.py file is and
+- Navigate to the folder where the manage.py file is (ToDoMe/root)
 - In the terminal, type: `python manage.py test`
 
-NOTE: Currently, test coverage is at approximately 50 %, yet Coveralls does not run our tests, and thus only displayed 21 %. During Sprint delivery 4, we were at a steady ≈ 72 % coverage, however after Coveralls/Travis CI issues occured, many tests fail to run. We are yet to find a solution to this problem, and have temporarily discarded Coveralls.
+NOTE: Currently, test coverage is at approximately 66 %, yet Coveralls did not run our tests, and thus only displayed 21 %. During Sprint delivery 4, we were at a steady ≈ 72 % coverage, however after Coveralls/Travis CI issues occured, many tests fail to run. We are yet to find a solution to this problem, and have temporarily discarded Coveralls. Hence, we display test coverage using terminal.
 
 # Built With
 
