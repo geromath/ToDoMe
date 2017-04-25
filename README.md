@@ -55,7 +55,9 @@ This is mainly to explore admin rights.
 # Running the tests  
 
 - Navigate to the folder where the manage.py file is (ToDoMe/root)
-- In the terminal, type: `python manage.py test`
+- In the terminal, type: `coverage run manage.py test` (The displayed test coverage here is highly inaccurate, but needs to be run to create a .coverage file)
+- In the terminal, type: `python manage.py test` (This is the accurately displayed test coverage, as 'coverage run' incorrectly runs our tests, discards tests, etc. It )
+
 
 NOTE: Currently, test coverage is at approximately 66 %, yet Coveralls did not run our tests, and thus only displayed 21 %. During Sprint delivery 4, we were at a steady ≈ 72 % coverage, however after Coveralls/Travis CI issues occured, many tests fail to run. We are yet to find a solution to this problem, and have temporarily discarded Coveralls. Hence, we display test coverage using terminal.
 
